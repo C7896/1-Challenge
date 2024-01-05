@@ -6,7 +6,6 @@ const backgroundChallengeOne = require('./assets/backgroundChallengeOne.png');
 const HomeScreen = () => {
     return (
       <SafeAreaView style={styles.container}>
-      <Journal month="Oct" day="20" challenge="Say thanks!"/>
       <View style={{flex: 1}}/>
       <ImageBackground source={backgroundChallengeOne} style={styles.backgroundimage}>
         <Text style={styles.timer}>
