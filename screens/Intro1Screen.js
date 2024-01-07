@@ -1,16 +1,20 @@
-import { View, Text, StyleSheet, SafeAreaView, Pressable } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import { withSafeAreaInsets } from "react-native-safe-area-context";
 import ClearButton from "../components/clearButton";
+import LargeImage from "../components/largeImage";
+const joy = require("../assets/Joy.png");
 
 export default function Intro1Screen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.container}/>
-            <View style={[styles.container, styles.textContainer]}>
-                <Text style={[styles.text, styles.title]}>Our Mission</Text>
-                <Text style={[styles.text, styles.body]}>Improve the world</Text>
-                <Text style={[styles.text, styles.body]}>by 1% everyday.</Text>
-                <ClearButton title="Next" nav={navigation} destination="Intro2" />
+            <LargeImage src={joy} />
+            <View style={styles.hContainer} >
+                <View style={[styles.container, styles.textContainer]}>
+                    <Text style={[styles.text, styles.title]}>Our Mission</Text>
+                    <Text style={[styles.text, styles.body]}>Improve the world</Text>
+                    <Text style={[styles.text, styles.body]}>by 1% everyday.</Text>
+                    <ClearButton title="Next" nav={navigation} destination="Intro2" />
+                </View>
             </View>
         </SafeAreaView>
     );
@@ -20,12 +24,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFCF5B",
-        alignItems: "left",
-        justifyContent: "center",
+        alignItems: "center",
+        justifyContent: "space-evenly",
     },
     textContainer: {
-        flex: 1,
+        flexGrow: 6,
+        alignItems: "left",
         paddingLeft: "10%",
+    },
+    hContainer: {
+        flexDirection: "row",
     },
     text: {
         color: "white",
