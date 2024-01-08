@@ -1,5 +1,6 @@
 import { SafeAreaView, View, Text, ImageBackground, Image, Pressable, StyleSheet } from "react-native";
 import TabBar from "../components/tabBar";
+import NewChallengeButton from "../components/newChallenge";
 const blob = require("../assets/blob.png");
 const blueCloud = require("../assets/blue_cloud.png");
 const redCloud = require("../assets/red_cloud.png");
@@ -8,6 +9,12 @@ const travels = require("../assets/Travels.png");
 const globe = require("../assets/Globe.png");
 
 const HomeScreen = ( {navigation} ) => {
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let day = new Date().getDate();
+    let monthIndex = new Date().getMonth();
+    let month = months[monthIndex];
+
     return (
         <View style={styles.orangeContainer} >
             <SafeAreaView style={styles.orangeContainer} >
@@ -44,6 +51,8 @@ const HomeScreen = ( {navigation} ) => {
                     <Image source={travels} style={styles.travels} />
             </ImageBackground>
             <TabBar nav={navigation} />
+
+            <NewChallengeButton nav={navigation} month={month} day={day} />
         </View>
     );
 };
@@ -116,6 +125,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 35,
         fontWeight: "bold",
+        top: "1.5%",
     },
     subtitle: {
         color: "white",

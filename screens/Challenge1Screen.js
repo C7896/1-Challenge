@@ -1,43 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-const backgroundChallengeOne = require('./assets/backgroundChallengeOne.png');
+const backgroundChallengeOne = require('../assets/backgroundChallengeOne.png');
 
-const HomeScreen = () => {
+const HomeScreen = ( {route} ) => {
+  const { challenge } = route.params;
+
     return (
       <SafeAreaView style={styles.container}>
       <View style={{flex: 1}}/>
-      <ImageBackground source={backgroundChallengeOne} style={styles.backgroundimage}>
-        <Text style={styles.timer}>
-          10:29 left
-        </Text>
-        <Text>
-
-        </Text>
-        <Text style={styles.titleText}>
-          New Challenge
-        </Text>
-        <Text>
-
-        </Text>
+      <ImageBackground source={backgroundChallengeOne} style={styles.image}>
+        <Text style={[styles.text, styles.timerText]}>10:29 left</Text>
+        <Text style={[styles.text, styles.title]}>{challenge.challenge}</Text>
       </ImageBackground>
-
-      <View style={{flex: 0.6}}/>
-
+      <View style={{ flex: 0.6 }}/>
       <View style={styles.bottomContainer}>
-        <View style={styles.streak}>
-          <Text style={styles.streakText}>10 🔥</Text>
+        <View style={styles.streakContainer}>
+          <Text style={[styles.text, styles.streakText]}>10 🔥</Text>
         </View>
         <View style={{flex: 0.2}}/>
-        <View style={styles.button}>
-          <Pressable style={{alignItems: 'center'}} onPress={() => console.log('Pressed')}>
-            <Text style={styles.unlockText}>
-              Unlock
-            </Text>
-          </Pressable>
-        </View>
+        <Pressable style={styles.buttonContainer} onPress={() => console.log('Pressed')}>
+          <Text style={[styles.text, styles.unlockText]}>Unlock</Text>
+        </Pressable>
       </View>
-      
     </SafeAreaView>
     );
 };
@@ -51,24 +36,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  backgroundimage: {
+  image: {
     justifyContent: 'center',
     width: '100%',
     height: 402.94,
   },
-  titleText: {
-    fontSize: 35,
-    fontWeight: 'bold',
-    color: "#FFF",
-    textAlign: 'center',
-  },
-  timer: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: "#FFF",
-    textAlign: 'center',
-  },
-  button: {
+  buttonContainer: {
     borderWidth: 2,
     borderColor: "#FFF",
     borderRadius: 15,
@@ -80,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  streak: {
+  streakContainer: {
     backgroundColor: '#FFC0A2',
     width: 82,
     height: 60,
@@ -88,15 +61,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 15,
   },
+  text: {
+    fontWeight: "bold",
+    color: "white",
+    textAlign: "center",
+  },
+  title: {
+    fontSize: 35,
+    paddingBottom: 12,
+  },
+  timerText: {
+    fontSize: 30,
+    paddingBottom: 12,
+  },
   streakText: {
     fontSize: 20,
-    fontWeight: 'Bold',
-    color: "#FFF",
   },
   unlockText: {
     fontSize: 30,
-    fontWeight: 'bold',
-    color: '#fff', 
   },
 
 });
