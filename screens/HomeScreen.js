@@ -8,7 +8,7 @@ const yellowCloud = require("../assets/yellow_cloud.png");
 const travels = require("../assets/Travels.png");
 const globe = require("../assets/Globe.png");
 
-const HomeScreen = ( {navigation} ) => {
+export default function HomeScreen( {navigation} ) {
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let day = new Date().getDate();
@@ -55,9 +55,7 @@ const HomeScreen = ( {navigation} ) => {
             <NewChallengeButton nav={navigation} month={month} day={day} />
         </View>
     );
-};
-
-export default HomeScreen;
+}
 
 const styles = StyleSheet.create({
     orangeContainer: {

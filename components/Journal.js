@@ -26,14 +26,12 @@ const styles = StyleSheet.create({
   },
   month: {
     color: 'rgba(173, 173, 173, 1)',
-    fontFamily: 'SF Compact Rounded',
     fontSize: 20,
     fontStyle: 'normal',
     fontWeight: '600',
   },
   day: {
     color: 'rgba(0, 0, 0, 1)',
-    fontFamily: 'SF Compact Rounded',
     fontSize: 30,
     fontStyle: 'normal',
     fontWeight: '600',
@@ -50,7 +48,6 @@ const styles = StyleSheet.create({
   text: {
     maxWidth: "65%",
     color: 'rgba(255, 255, 255, 1)',
-    fontFamily: 'SF Compact Rounded',
     fontSize: 20,
     fontStyle: 'normal',
     fontWeight: '600',

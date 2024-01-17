@@ -19,7 +19,7 @@ export default function NewChallengeButton( {nav, month, day} ) {
     });
 
     return (
-        <Pressable style={styles.container} onPress={() => nav.navigate("Challenge1", {challenge: nextChallenge,})}>
+        <Pressable style={styles.container} onPress={() => nav.navigate("Challenge1", {navigation: nav, challenge: nextChallenge,})}>
             <Image source={challenge} style={styles.image} />
             <Text style={styles.text}>New</Text>
             <Text style={styles.text}>Challenge!</Text>
@@ -34,20 +34,26 @@ const styles = StyleSheet.create({
         bottom: "70%",
         width: 125,
         height: 100,
-        backgroundColor: "black",
+        backgroundColor: "#FFCF5B",
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 2,
-        borderColor: "gold",
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
+        shadowColor: "#333333",
+        shadowOffset: {
+            width: 6,
+            height: 6,
+        },
+        shadowOpacity: 0.6,
+        shadowRadius: 4,
+        elevation: 10,
     },
     image: {
         width: 50,
         height: 50,
     },
     text: {
-        color: "gold",
+        color: "white",
         fontSize: 15,
         fontWeight: "bold",
     },

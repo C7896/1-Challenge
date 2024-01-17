@@ -5,7 +5,13 @@ import NewChallengeButton from "../components/newChallenge";
 import pastChallengesList from "../past-challenges.json";
 const purpleBlob = require("../assets/purpleBlob.png");
 
-const LogScreen = ( {navigation} ) => {
+export default function LogScreen( {navigation} ) {
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let day = new Date().getDate();
+    let monthIndex = new Date().getMonth();
+    let month = months[monthIndex];
+
     return (
         <View style={styles.purpleContainer}>
             <View style={{ flex: 7 }} />
@@ -28,12 +34,10 @@ const LogScreen = ( {navigation} ) => {
             </ImageBackground>
             <TabBar nav={navigation} />
 
-            <NewChallengeButton nav={navigation} month="Jan" day="7" />
+            <NewChallengeButton nav={navigation} month={month} day={day} />
         </View>
     );
-};
-
-export default LogScreen;
+}
 
 const styles = StyleSheet.create({
     purpleContainer: {

@@ -14,7 +14,7 @@ export default function Intro3Screen({ navigation }) {
                     <Text style={[styles.text, styles.body]}>A 1% improvement</Text>
                     <Text style={[styles.text, styles.body]}>everyday is a 37x</Text>
                     <Text style={[styles.text, styles.body]}>improvement a year!</Text>
-                    <ClearButton title="Next" nav={navigation} destination="Home Tabs" />
+                    <ClearButton title="Next" nav={navigation} destination="Home Tabs" top={20} />
                 </View>
             </View>
         </SafeAreaView>

@@ -1,33 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import ChallengeButton from "../components/challengeButton";
+import StreakContainer from "../components/streakContainer";
 
 const backgroundChallengeOne = require('../assets/backgroundChallengeOne.png');
 
-const HomeScreen = ( {route} ) => {
+export default function Challenge1Screen( {route} ) {
+  const { navigation } = route.params;
   const { challenge } = route.params;
 
     return (
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={{flex: 1}}/>
       <ImageBackground source={backgroundChallengeOne} style={styles.image}>
         <Text style={[styles.text, styles.timerText]}>10:29 left</Text>
-        <Text style={[styles.text, styles.title]}>{challenge.challenge}</Text>
+        <Text style={[styles.text, styles.title]}>New Challenge</Text>
       </ImageBackground>
-      <View style={{ flex: 0.6 }}/>
+      <View style={{ flex: 2 }} />
       <View style={styles.bottomContainer}>
-        <View style={styles.streakContainer}>
-          <Text style={[styles.text, styles.streakText]}>10 🔥</Text>
-        </View>
-        <View style={{flex: 0.2}}/>
-        <Pressable style={styles.buttonContainer} onPress={() => console.log('Pressed')}>
-          <Text style={[styles.text, styles.unlockText]}>Unlock</Text>
-        </Pressable>
+        <StreakContainer />
+        <ChallengeButton title="Next" nav={navigation} destination="Challenge2" challenge={challenge} />
       </View>
+      <View style={{flex: 0.5}} />
     </SafeAreaView>
     );
-};
-
-export default HomeScreen;
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -41,25 +37,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 402.94,
   },
-  buttonContainer: {
-    borderWidth: 2,
-    borderColor: "#FFF",
-    borderRadius: 15,
-    width: 182,
-    height: 60, 
-    justifyContent: 'center',
-  },
   bottomContainer: {
     flex: 1,
     alignItems: 'center',
-  },
-  streakContainer: {
-    backgroundColor: '#FFC0A2',
-    width: 82,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 15,
+    justifyContent: "center",
   },
   text: {
     fontWeight: "bold",
@@ -73,9 +54,6 @@ const styles = StyleSheet.create({
   timerText: {
     fontSize: 30,
     paddingBottom: 12,
-  },
-  streakText: {
-    fontSize: 20,
   },
   unlockText: {
     fontSize: 30,

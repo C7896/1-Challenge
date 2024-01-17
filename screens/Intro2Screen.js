@@ -14,7 +14,7 @@ export default function Intro2Screen({ navigation }) {
                     <Text style={[styles.text, styles.body]}>Daily challenges that</Text>
                     <Text style={[styles.text, styles.body]}>improve you and</Text>
                     <Text style={[styles.text, styles.body]}>those around you.</Text>
-                    <ClearButton title="Next" nav={navigation} destination="Intro3" />
+                    <ClearButton title="Next" nav={navigation} destination="Intro3" top={20} />
                 </View>
             </View>
         </SafeAreaView>
