@@ -7,7 +7,7 @@ export default function SplashScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Pressable onPress={() => navigation.navigate("Intro1")}>
+            <Pressable onPress={() => navigation.navigate("Login0")}>
                 <View style={styles.container}>
                     <Text style={[styles.title, {fontSize: windowWidth > 500 ? 70 : 35}]}>1%</Text>
                     <Text style={[styles.title, {fontSize: windowWidth > 500 ? 70 : 35}]}>Challenge</Text>
