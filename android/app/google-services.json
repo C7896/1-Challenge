@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "86438317972",
+    "firebase_url": "https://one-percent-challenge-default-rtdb.firebaseio.com",
+    "project_id": "one-percent-challenge",
+    "storage_bucket": "one-percent-challenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86438317972:android:88b33ad98218c41d5e8981",
+        "android_client_info": {
+          "package_name": "com.onepercentchallenge.onepercentchallenge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArN_D_FHlYEPR2BZjI-Iw-WI8La0cBm-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

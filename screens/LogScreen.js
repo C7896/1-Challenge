@@ -3,9 +3,48 @@ import TabBar from "../components/tabBar";
 import Journal from "../components/Journal";
 import NewChallengeButton from "../components/newChallenge";
 import pastChallengesList from "../past-challenges.json";
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { initializeApp } from "@firebase/app";
+import { firebaseConfig } from "./firebase-config";
+import { firebase } from "@react-native-firebase/auth";
+import { error } from "console";
 const purpleBlob = require("../assets/purpleBlob.png");
 
 export default function LogScreen( {navigation} ) {
+
+    const [email, setEmail] = React.useState('')
+    const [ password, setPassword] = React.useState('')
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const handleCreateAccount = () => {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log('Account created!')
+            const user = userCredential.user;
+            console.log(user)
+            navigation.navigate('');
+        })
+        .catch(error => {
+            console.log(error)
+            Alert.alert(error.message)
+        })
+    }
+
+    const handleSignIn = () => {
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log('Signed in!')
+            const user = userCredential.user;
+            console.log(user)
+            navigation.navigate('');
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let day = new Date().getDate();
