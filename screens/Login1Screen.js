@@ -4,6 +4,10 @@ import LoginScreenButton from "../components/loginScreenButton";
 import LoginChallengeButton from "../components/loginChallengeButton";
 import pastChallengesList from "../past-challenges.json";
 import newChallengesList from "../next-challenges.json";
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, userCredential} from '@react-native-firebase/auth';
+import {initializeApp} from 'firebase/app';
+import { firebaseConfig } from "../firebase-config";
+
 const location = require("../assets/Location.png");
 const mail = require("../assets/mail.png");
 const lock = require("../assets/lock.png");
@@ -39,6 +43,22 @@ export default function Login0Screen( {navigation} ) {
     }
 
     
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const handleSignIn = () => {
+        signInWithEmailAndPassword(auth, email, password)
+        .then ((userCredential) => {
+            console.log('Account Created!')
+            //Add Screen Navigation
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
 
     return(
         <View style={styles.container}>

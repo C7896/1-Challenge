@@ -1,9 +1,16 @@
-import { View, Text, Image, TextInput, StyleSheet } from "react-native";
+import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
 import LoginChallengeButton from "../components/loginChallengeButton";
 import pastChallengesList from "../past-challenges.json";
 import newChallengesList from "../next-challenges.json";
+import { isSearchBarAvailableForCurrentPlatform } from "react-native-screens";
+
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, userCredential} from '@react-native-firebase/auth';
+import {initializeApp} from 'firebase/app';
+import { firebaseConfig } from "../firebase-config";
+
 const mountain = require("../assets/Victory.png");
 const user = require("../assets/user.png");
 const mail = require("../assets/mail.png");
@@ -39,6 +46,26 @@ export default function SignupScreen( {navigation} ) {
     }
 
 
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const handleCreateAccount = () => {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then ((userCredential) => {
+            console.log('Account Created!')
+            const user = userCredential.user;
+            console.log(user)
+            //Add Screen Navigation
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
+
     return(
         <View style={styles.container}>
             <View style={styles.topContainer}>
@@ -52,13 +79,32 @@ export default function SignupScreen( {navigation} ) {
                 </View>
                 <View style={styles.inputContainer}>
                     <Image source={mail} style={styles.icon} />
-                    <TextInput style={styles.input} placeholder="Email"/>
+                    <TextInput
+                        placeholder="Email"
+                        onChangeText={(text) => setEmail(text)}
+                        style={styles.input}
+                    />
                 </View>
                 <View style={[styles.inputContainer, {marginBottom: 15}]}>
                     <Image source={lock} style={styles.icon} />
-                    <TextInput style={styles.input} placeholder="Password" secureTextEntry/>
+                    <TextInput
+                        placeholder="Password"
+                        onChangeText={(text) => setPassword(text)}
+                        style={styles.input}
+                        secureTextEntry
+                    />
                 </View>
-                <LoginChallengeButton title="Sign up" nav={navigation} dest="Intro1" newChallenge={newChallenge} challenge={nextChallenge} />
+                {/* <TouchableOpacity onPress={handleCreateAccount}>
+                    <Text>Create Account</Text>
+                </TouchableOpacity> */}
+                <LoginChallengeButton
+                    title="Sign up" 
+                    nav={navigation} 
+                    onPress={handleCreateAccount} 
+                    dest="Intro1" 
+                    newChallenge={newChallenge} 
+                    challenge={nextChallenge} 
+                />
             </View>
             <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
                 <LoginScreenButton title="Login" nav={navigation} dest="Login1" background={false} />
