@@ -7,6 +7,7 @@ import newChallengesList from "../next-challenges.json";
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, userCredential} from '@react-native-firebase/auth';
 import {initializeApp} from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
+import React, { useState } from 'react';
 
 const location = require("../assets/Location.png");
 const mail = require("../assets/mail.png");
