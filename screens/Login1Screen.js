@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, StyleSheet } from "react-native";
+import { View, Text, Image, TextInput, StyleSheet, Pressable } from "react-native";
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
 import LoginChallengeButton from "../components/loginChallengeButton";
@@ -53,7 +53,7 @@ export default function Login0Screen( {navigation} ) {
     const handleSignIn = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then ((userCredential) => {
-            console.log('Account Created!')
+            console.log('User Signed In!')
             //Add Screen Navigation
         })
         .catch(error => {
@@ -70,13 +70,15 @@ export default function Login0Screen( {navigation} ) {
             <View style={styles.container}>
                 <View style={styles.inputContainer}>
                     <Image source={mail} style={styles.icon} />
-                    <TextInput style={styles.input} placeholder="Email"/>
+                    <TextInput style={styles.input} onChangeText={(text) => setEmail(text)} placeholder="Email"/>
                 </View>
                 <View style={[styles.inputContainer, {marginBottom: 15}]}>
                     <Image source={lock} style={styles.icon} />
-                    <TextInput style={styles.input} placeholder="Password" secureTextEntry/>
+                    <TextInput style={styles.input} onChangeText={(text) => setPassword(text)} placeholder="Password" secureTextEntry/>
                 </View>
-                <LoginChallengeButton title="Login" nav={navigation} dest="Home Tabs" newChallenge={newChallenge} challenge={nextChallenge} />
+                <Pressable style={[styles.buttoncontainer, {backgroundColor:"#FFC0A2"}]} onPress={handleSignIn}>
+                    <Text style={styles.buttontext}>Login</Text>
+                </Pressable>
             </View>
             <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
                 <LoginScreenButton title="Sign up" nav={navigation} dest="Sign up" background={false} />
@@ -120,6 +122,18 @@ const styles = StyleSheet.create({
     title: {
         color: "white",
         fontSize: 50,
+        fontWeight: "bold",
+    },
+    buttoncontainer: {
+        width: 211,
+        height: 56,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    buttontext: {
+        color: "white",
+        fontSize: 22,
         fontWeight: "bold",
     },
 });

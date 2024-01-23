@@ -2,14 +2,14 @@ import { Pressable, Text, StyleSheet } from "react-native";
 
 export default function LoginChallengeButton( { title, nav, dest, newChallenge, challenge } ) {
     return(
-        <Pressable style={styles.container} onPress={() => nav.navigate(newChallenge ? "Challenge1" : dest, {navigation: nav, challenge: challenge,})}>
-            <Text style={styles.text}>{title}</Text>
+        <Pressable style={styles.buttoncontainer} onPress={() => nav.navigate(newChallenge ? "Challenge1" : dest, {navigation: nav, challenge: challenge,})}>
+            <Text style={styles.buttontext}>{title}</Text>
         </Pressable>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    buttoncontainer: {
         backgroundColor: "#FFC0A2",
         width: 211,
         height: 56,
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    text: {
+    buttontext: {
         color: "white",
         fontSize: 22,
         fontWeight: "bold",

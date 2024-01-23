@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 import React, { useState } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
@@ -94,17 +94,9 @@ export default function SignupScreen( {navigation} ) {
                         secureTextEntry
                     />
                 </View>
-                {/* <TouchableOpacity onPress={handleCreateAccount}>
-                    <Text>Create Account</Text>
-                </TouchableOpacity> */}
-                <LoginChallengeButton
-                    title="Sign up" 
-                    nav={navigation} 
-                    onPress={handleCreateAccount} 
-                    dest="Intro1" 
-                    newChallenge={newChallenge} 
-                    challenge={nextChallenge} 
-                />
+                <Pressable style={styles.buttoncontainer} onPress={handleCreateAccount}>
+                     <Text style={styles.buttontext}>Create Account</Text>
+                </Pressable>
             </View>
             <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
                 <LoginScreenButton title="Login" nav={navigation} dest="Login1" background={false} />
@@ -153,6 +145,19 @@ const styles = StyleSheet.create({
     title: {
         color: "white",
         fontSize: 50,
+        fontWeight: "bold",
+    },
+    buttoncontainer: {
+        backgroundColor: "#FFC0A2",
+        width: 211,
+        height: 56,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    buttontext: {
+        color: "white",
+        fontSize: 22,
         fontWeight: "bold",
     },
 });
