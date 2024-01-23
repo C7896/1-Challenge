@@ -7,7 +7,7 @@ import pastChallengesList from "../past-challenges.json";
 import newChallengesList from "../next-challenges.json";
 import { isSearchBarAvailableForCurrentPlatform } from "react-native-screens";
 
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, userCredential} from '@react-native-firebase/auth';
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, userCredential} from 'firebase/auth';
 import {initializeApp} from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
 

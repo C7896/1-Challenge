@@ -4,7 +4,7 @@ import LoginScreenButton from "../components/loginScreenButton";
 import LoginChallengeButton from "../components/loginChallengeButton";
 import pastChallengesList from "../past-challenges.json";
 import newChallengesList from "../next-challenges.json";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, userCredential} from '@react-native-firebase/auth';
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, userCredential} from 'firebase/auth';
 import {initializeApp} from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
 import React, { useState } from 'react';
