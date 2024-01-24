@@ -1,19 +1,25 @@
-import { View, Text, Image, TextInput, StyleSheet, Pressable } from "react-native";
+import { View, Text, Image, TextInput, StyleSheet, Pressable, Alert } from "react-native";
+import React, { useState } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
-import LoginChallengeButton from "../components/loginChallengeButton";
-import pastChallengesList from "../past-challenges.json";
-import newChallengesList from "../next-challenges.json";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, userCredential} from 'firebase/auth';
-import {initializeApp} from 'firebase/app';
+
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
-import React, { useState } from 'react';
+import { getFirestore, collection, query, where, doc, getDocs, getDoc } from "firebase/firestore"
 
 const location = require("../assets/Location.png");
 const mail = require("../assets/mail.png");
 const lock = require("../assets/lock.png");
 
 export default function Login0Screen( {navigation} ) {
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
     // get challenge object from new-challenges.json if today's date is not in past-challenges.json
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -23,41 +29,57 @@ export default function Login0Screen( {navigation} ) {
     let year = new Date().getFullYear();
 
     let newChallenge = true;
+    let nextChallenge;
+    let index;
+    // get today's challenge document reference
+    const challengesRef = collection(db, 'challenges');
+    const q = query(challengesRef, where('day', '==', day), where('month', '==', month), where('year', '==', year));
 
-    if (pastChallengesList[pastChallengesList.length-1].day === day) {
-        if (pastChallengesList[pastChallengesList.length-1].month === month) {
-            if (pastChallengesList[pastChallengesList.length-1].year === year){
-                newChallenge = false;
-            }
-        }
-    }
-
-    const nextChallenge = newChallengesList.find(item => {
-        if (item.month !== month || item.day !== day) {
-            newChallenge = false;
-            return false;
-        }
-        return true;
-    });
-    if (nextChallenge === undefined) {
+    // get today's challenge document data and store it in nextChallenge
+    getDocs(q)
+    .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+        // Access the document data here
+        index = doc.id;
+        nextChallenge = doc.data();
+        console.log(nextChallenge.challenge);
+        });
+    })
+    .catch(error => {
         newChallenge = false;
-    }
+        console.error('Error getting documents: ', error);
+    });
 
-    
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
 
     const handleSignIn = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then ((userCredential) => {
-            console.log('User Signed In!')
-            //Add Screen Navigation
+            console.log('User Signed In!');
+
+            // check if user has already completed today's challenge (if it exists)
+            if (index != undefined) {
+                const journalRef = doc(db, "users", userCredential.user.uid, "journals", index);
+
+                getDoc(journalRef)
+                    .then(docSnapshot => {
+                        if (docSnapshot.exists()) {
+                            newChallenge = false;
+                            console.log("Today's challenge has been completed");
+                        } else {
+                            console.log("Today's challenge has not been completed");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error getting document: ", error);
+                    })
+            }
+
+            navigation.navigate(newChallenge ? "Challenge1" : "Home Tabs", {navigation: navigation, challenge: nextChallenge,});
         })
         .catch(error => {
-            console.log(error)
+            console.log(error);
+            Alert.alert(error.message);
+
         })
     }
 
@@ -70,11 +92,11 @@ export default function Login0Screen( {navigation} ) {
             <View style={styles.container}>
                 <View style={styles.inputContainer}>
                     <Image source={mail} style={styles.icon} />
-                    <TextInput style={styles.input} onChangeText={(text) => setEmail(text)} placeholder="Email"/>
+                    <TextInput style={styles.input} onChangeText={(text) => setEmail(text)} placeholder="Email" autoCapitalize="none"/>
                 </View>
                 <View style={[styles.inputContainer, {marginBottom: 15}]}>
                     <Image source={lock} style={styles.icon} />
-                    <TextInput style={styles.input} onChangeText={(text) => setPassword(text)} placeholder="Password" secureTextEntry/>
+                    <TextInput style={styles.input} onChangeText={(text) => setPassword(text)} autoCapitalize="none" placeholder="Password" secureTextEntry/>
                 </View>
                 <Pressable style={[styles.buttoncontainer, {backgroundColor:"#FFC0A2"}]} onPress={handleSignIn}>
                     <Text style={styles.buttontext}>Login</Text>
