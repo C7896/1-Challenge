@@ -13,7 +13,6 @@ import Challenge2Screen from "./screens/Challenge2Screen";
 import Challenge3Screen from "./screens/Challenge3Screen";
 import Challenge4Screen from "./screens/Challenge4Screen";
 
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -50,13 +49,7 @@ export default function App() {
           headerShadowVisible: false,
         }} />
         <Stack.Screen name="Challenge4" component={Challenge4Screen} options={{
-          headerShown: true,
-          title: "",
-          headerStyle: {
-            backgroundColor: "#FF815E",
-          },
-          headerTintColor: "#FFF",
-          headerShadowVisible: false,
+          headerShown: false,
         }} />
       </Stack.Navigator>
     </NavigationContainer>

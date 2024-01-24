@@ -1,10 +1,62 @@
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TextInput, StyleSheet } from "react-native";
-import ChallengeButton from "../components/challengeButton";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TextInput, Pressable, StyleSheet } from "react-native";
+import React, { useState } from "react";
+
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from "../firebase-config";
+import { getFirestore, doc, setDoc, updateDoc, increment } from "firebase/firestore"
+
 const topBlob = require("../assets/topBlob.png");
+
 
 export default function Challenge3Screen( {route} ) {
     const { navigation } = route.params;
     const { challenge } = route.params;
+
+    const [action, setAction] = useState('');
+    const [reflection, setReflection] = useState('');
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const createJournalDoc = () => {
+        const user = auth.currentUser;
+        if (user != null) {
+
+            // add journal to user
+            setDoc(doc(db, "users", user.uid, "Journals", String(challenge.ID)), {
+                day: challenge.day,
+                month: challenge.month,
+                year: challenge.year,
+                challenge: challenge.challenge,
+                action: action,
+                reflection: reflection,
+            })
+            .then(() => {
+                console.log("Journal doc created, id = ", challenge.ID);
+            })
+            .catch(error => {
+                console.error("Error adding document: ", error);
+            });
+
+            /*
+            updateDoc(doc(db, "users", user.uid), {
+                total_completed_challenges: increment(1), 
+            })
+            .then(() => {
+                console.log("User's total_completed_challenges incremented by 1");
+            })
+            .catch(error => {
+                console.error("Error incrementing user's total_completed_challenges: ", error);
+            });
+            */
+
+            navigation.navigate("Challenge4", {navigation: navigation, challenge: challenge});
+        } else {
+            console.log("User is not signed in");
+        }
+    }
 
     return(
         <View style={styles.container}>
@@ -17,12 +69,24 @@ export default function Challenge3Screen( {route} ) {
                 <View style={{flex: 0.5}} />
                 <KeyboardAvoidingView behavior="padding" style={[styles.textContainer, {flex: 6, flexWrap: "no-wrap",}]}>
                     <Text style={styles.body}>What did you do?</Text>
-                    <TextInput style={styles.questionInput} placeholder="I..." multiline/>
+                    <TextInput
+                        style={styles.questionInput}
+                        placeholder="I..."
+                        multiline
+                        onChangeText={(text) => setAction(text)}
+                    />
                     <Text style={styles.body}>How did it make you feel?</Text>
-                    <TextInput style={[styles.questionInput, {height: 300}]} placeholder="I felt..." multiline/>
+                    <TextInput
+                        style={[styles.questionInput, {height: 300}]}
+                        placeholder="I felt..."
+                        multiline
+                        onChangeText={(text) => setReflection(text)}
+                    />
                 </KeyboardAvoidingView>
                 <View style={{flex: 0.5}} />
-                <ChallengeButton title="Complete" nav={navigation} destination="Challenge4" challenge={challenge}/>
+                <Pressable style={styles.buttonContainer} onPress={createJournalDoc}>
+                    <Text style={styles.buttonText}>Complete</Text>
+                </Pressable>
             </SafeAreaView>
         </View>
     );
@@ -72,6 +136,21 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         elevation: 5,
+    },
+    buttonContainer: {
+        borderWidth: 2,
+        borderColor: "white",
+        borderRadius: 15,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: 42,
+        paddingVertical: 12,
+        marginTop: 10,
+    },
+    buttonText: {
+        color: "white",
+        fontSize: 30,
+        fontWeight: "bold"
     },
     title: {
         color: "white",

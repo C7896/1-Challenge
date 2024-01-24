@@ -42,7 +42,6 @@ export default function Login0Screen( {navigation} ) {
         // Access the document data here
         index = doc.id;
         nextChallenge = doc.data();
-        console.log(nextChallenge.challenge);
         });
     })
     .catch(error => {
