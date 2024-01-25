@@ -3,8 +3,7 @@ import LargeImage from "../components/largeImage";
 import ChallengeButton from "../components/challengeButton";
 const message = require("../assets/message.png");
 
-export default function Challenge2Screen( {route} ) {
-    const { navigation } = route.params;
+export default function Challenge2Screen({ navigation, route }) {
     const { challenge } = route.params;
 
     return(

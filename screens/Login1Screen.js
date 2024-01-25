@@ -7,6 +7,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
 import { getFirestore, collection, query, where, doc, getDocs, getDoc } from "firebase/firestore"
+import { beginAsyncEvent } from "react-native/Libraries/Performance/Systrace";
 
 const location = require("../assets/Location.png");
 const mail = require("../assets/mail.png");
@@ -52,14 +53,14 @@ export default function Login0Screen( {navigation} ) {
 
     const handleSignIn = () => {
         signInWithEmailAndPassword(auth, email, password)
-        .then ((userCredential) => {
+        .then (async (userCredential) => {
             console.log('User Signed In!');
 
             // check if user has already completed today's challenge (if it exists)
             if (index != undefined) {
                 const journalRef = doc(db, "users", userCredential.user.uid, "journals", index);
 
-                getDoc(journalRef)
+                await getDoc(journalRef)
                     .then(docSnapshot => {
                         if (docSnapshot.exists()) {
                             newChallenge = false;

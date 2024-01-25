@@ -4,7 +4,9 @@ import ClearButton from "../components/clearButton";
 import LargeImage from "../components/largeImage";
 const relationship = require("../assets/Relationship.png");
 
-export default function Intro2Screen({ navigation }) {
+export default function Intro2Screen({ navigation, route }) {
+    const { challenge } = route.params;
+
     return (
         <SafeAreaView style={styles.container}>
             <LargeImage src={relationship} />
@@ -14,7 +16,7 @@ export default function Intro2Screen({ navigation }) {
                     <Text style={[styles.text, styles.body]}>Daily challenges that</Text>
                     <Text style={[styles.text, styles.body]}>improve you and</Text>
                     <Text style={[styles.text, styles.body]}>those around you.</Text>
-                    <ClearButton title="Next" nav={navigation} destination="Intro3" top={20} />
+                    <ClearButton title="Next" nav={navigation} destination="Intro3" top={20} challenge={challenge}/>
                 </View>
             </View>
         </SafeAreaView>

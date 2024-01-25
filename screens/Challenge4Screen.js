@@ -5,9 +5,7 @@ import StreakContainer from "../components/streakContainer";
 
 const earth = require('../assets/mother_nature.png');
 
-export default function Challenge4Screen( {route} ) {
-  const { navigation } = route.params;
-  const { challenge } = route.params;
+export default function Challenge4Screen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>

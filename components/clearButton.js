@@ -1,8 +1,8 @@
 import { Pressable, Text, StyleSheet } from "react-native";
 
-export default function ClearButton( {title, nav, destination, top} ) {
+export default function ClearButton( {title, nav, destination, top, challenge} ) {
     return (
-        <Pressable style={[styles.buttonContainer, {marginTop: top}]} onPress={() => nav.navigate(destination)}>
+        <Pressable style={[styles.buttonContainer, {marginTop: top}]} onPress={() => nav.navigate(destination, {challenge: challenge})}>
             <Text style={styles.text}>{title}</Text>
         </Pressable>
     );

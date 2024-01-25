@@ -1,16 +1,15 @@
-import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-export default function Journal( {month, day, challenge, color } ){
-    return (
-    <View style={[styles.container, {backgroundColor: color}]}>
-      <View style={styles.dateContainer}>
-        <Text style={styles.month}>{month}</Text>
-        <Text style={styles.day}>{day}</Text>
-      </View>
-      <Text style={styles.text}>{challenge}</Text>
+export default function Journal({ month, day, challenge, color, size }) {
+  return (
+  <View style={[styles.container, {backgroundColor: color}]}>
+    <View style={styles.dateContainer}>
+      <Text style={styles.month}>{month}</Text>
+      <Text style={styles.day}>{day}</Text>
     </View>
-    )
+    <Text style={[styles.text, {fontSize: size}]}>{challenge}</Text>
+  </View>
+  )
 }
 
 const styles = StyleSheet.create({

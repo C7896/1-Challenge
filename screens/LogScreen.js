@@ -1,22 +1,70 @@
-import { View, SafeAreaView, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
+import { View, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
 import TabBar from "../components/tabBar";
 import Journal from "../components/Journal";
-import pastChallengesList from "../past-challenges.json";
+
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../firebase-config";
+import { getAuth } from "firebase/auth";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+
 const purpleBlob = require("../assets/purpleBlob.png");
 
 export default function LogScreen( {navigation} ) {
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const [challengeLog, setChallengeLog] = useState([]);
+
+    useEffect(() => {
+        const getChallengeLog = async () => {
+            const user = auth.currentUser;
+            if (user != null) {
+                const journalDocs = collection(db, "users", user.uid, "journals");
+                const journalQuery = await getDocs(journalDocs);
+                const journals = journalQuery.docs.map(doc => doc.data());
+                setChallengeLog(journals);
+            } else {
+                console.log("User is not signed in");
+            }
+        }
+
+        getChallengeLog();
+    }, [challengeLog]);
+
+
+    const setFontSize = (challenge) => {
+        const challengeLength = challenge.length;
+        if (challengeLength < 40) {
+            return 20;
+        } else if (challengeLength < 70) {
+            return 18;
+        } else if (challengeLength < 100) {
+            return 16;
+        }
+    }
+
+
+    const colors = ["#FF815E", "#FFCF5B", "#DCE18B", "#A1D5AE", "#92C1D2", "#4969A9"];
+
+
     return (
         <View style={styles.purpleContainer}>
             <View style={{ flex: 7 }} />
             <View style={styles.listContainer}>
                 <FlatList
-                    data={pastChallengesList.reverse()}
-                    renderItem={({ item }) => {
+                    data={challengeLog}
+                    renderItem={({ item, index }) => {
+
+                        const size = setFontSize(item.challenge);
+
                         return (
-                            <Journal month={item.month} day={item.day} challenge={item.challenge} color={item.color} />
+                            <Journal month={item.month} day={item.day} challenge={item.challenge} color={colors[index % 6]} size={size} />
                         );
                     }}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.timestamp}
                     ItemSeparatorComponent={<View style={{ height: 8 }} />}
                     ListEmptyComponent={<Text style={styles.text}>No past challenges</Text>}
                 />

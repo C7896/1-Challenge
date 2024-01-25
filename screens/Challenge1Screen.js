@@ -4,8 +4,7 @@ import StreakContainer from "../components/streakContainer";
 
 const backgroundChallengeOne = require('../assets/backgroundChallengeOne.png');
 
-export default function Challenge1Screen( {route} ) {
-  const { navigation } = route.params;
+export default function Challenge1Screen({ navigation, route }) {
   const { challenge } = route.params;
 
     return (

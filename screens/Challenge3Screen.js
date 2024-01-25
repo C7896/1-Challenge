@@ -4,13 +4,12 @@ import React, { useState } from "react";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
-import { getFirestore, doc, setDoc, updateDoc, increment } from "firebase/firestore"
+import { getFirestore, doc, setDoc, updateDoc, increment, serverTimestamp } from "firebase/firestore"
 
 const topBlob = require("../assets/topBlob.png");
 
 
-export default function Challenge3Screen( {route} ) {
-    const { navigation } = route.params;
+export default function Challenge3Screen({ navigation, route }) {
     const { challenge } = route.params;
 
     const [action, setAction] = useState('');
@@ -23,15 +22,16 @@ export default function Challenge3Screen( {route} ) {
     const createJournalDoc = () => {
         const user = auth.currentUser;
         if (user != null) {
-
+            
             // add journal to user
-            setDoc(doc(db, "users", user.uid, "Journals", String(challenge.ID)), {
+            setDoc(doc(db, "users", user.uid, "journals", String(challenge.ID)), {
                 day: challenge.day,
                 month: challenge.month,
                 year: challenge.year,
                 challenge: challenge.challenge,
                 action: action,
                 reflection: reflection,
+                timestamp: serverTimestamp(),
             })
             .then(() => {
                 console.log("Journal doc created, id = ", challenge.ID);
@@ -40,7 +40,6 @@ export default function Challenge3Screen( {route} ) {
                 console.error("Error adding document: ", error);
             });
 
-            /*
             updateDoc(doc(db, "users", user.uid), {
                 total_completed_challenges: increment(1), 
             })
@@ -50,7 +49,6 @@ export default function Challenge3Screen( {route} ) {
             .catch(error => {
                 console.error("Error incrementing user's total_completed_challenges: ", error);
             });
-            */
 
             navigation.navigate("Challenge4", {navigation: navigation, challenge: challenge});
         } else {

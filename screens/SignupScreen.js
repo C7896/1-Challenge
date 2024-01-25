@@ -59,18 +59,26 @@ export default function SignupScreen( {navigation} ) {
             console.log(user);
             
             try {
-                const docRef = setDoc(doc(db, "users", user.uid), {
+                setDoc(doc(db, "users", user.uid), {
                     username: username,
                     current_streak: 0,
                     longest_streak: 0,
                     total_completed_challenges: 0,
                 });
-                console.log("Document written with ID: ", docRef.id);
+                console.log("Blank user document created");
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
+
+            const dummyChallenge = {
+                ID: 0,
+                day: 14,
+                month: "Jan",
+                year: 2024,
+                challenge: "This is a dummy challenge.",
+            }
             
-            navigation.navigate(newChallenge ? "Challenge1" : "Intro1", {navigation: navigation, challenge: nextChallenge,});
+            navigation.navigate("Intro1", {navigation: navigation, challenge: newChallenge ? nextChallenge : dummyChallenge,});
         })
         .catch(error => {
             console.log(error);
