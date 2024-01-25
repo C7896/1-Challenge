@@ -1,4 +1,6 @@
 import { ImageBackground, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from "react";
+
 import ChallengeButton from "../components/challengeButton";
 import StreakContainer from "../components/streakContainer";
 
@@ -7,21 +9,37 @@ const backgroundChallengeOne = require('../assets/backgroundChallengeOne.png');
 export default function Challenge1Screen({ navigation, route }) {
   const { challenge } = route.params;
 
-    return (
-    <SafeAreaView style={styles.container}>
-      <View style={{flex: 1}}/>
-      <ImageBackground source={backgroundChallengeOne} style={styles.image}>
-        <Text style={[styles.text, styles.timerText]}>10:29 left</Text>
-        <Text style={[styles.text, styles.title]}>New Challenge</Text>
-      </ImageBackground>
-      <View style={{ flex: 2 }} />
-      <View style={styles.bottomContainer}>
-        <StreakContainer />
-        <ChallengeButton title="Next" nav={navigation} destination="Challenge2" challenge={challenge} />
-      </View>
-      <View style={{flex: 0.5}} />
-    </SafeAreaView>
-    );
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+
+  const getTimeRemaining = () => {
+    const now = new Date();
+
+    setHours(23 - now.getHours());
+    setMinutes(now.getMinutes != 0 ? 60 - now.getMinutes() : 0);
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => getTimeRemaining(), 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+  <SafeAreaView style={styles.container}>
+    <View style={{flex: 1}}/>
+    <ImageBackground source={backgroundChallengeOne} style={styles.image}>
+      <Text style={[styles.text, styles.timerText]}>{hours}:{minutes} left</Text>
+      <Text style={[styles.text, styles.title]}>New Challenge</Text>
+    </ImageBackground>
+    <View style={{ flex: 2 }} />
+    <View style={styles.bottomContainer}>
+      <StreakContainer />
+      <ChallengeButton title="Next" nav={navigation} destination="Challenge2" challenge={challenge} />
+    </View>
+    <View style={{flex: 0.5}} />
+  </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({

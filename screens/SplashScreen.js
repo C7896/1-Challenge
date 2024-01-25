@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, SafeAreaView, Pressable, useWindowDimensions } from "react-native";
-import { withSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function SplashScreen({ navigation }) {
 

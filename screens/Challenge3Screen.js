@@ -69,16 +69,20 @@ export default function Challenge3Screen({ navigation, route }) {
                     <Text style={styles.body}>What did you do?</Text>
                     <TextInput
                         style={styles.questionInput}
+                        onChangeText={(text) => setAction(text)}
                         placeholder="I..."
                         multiline
-                        onChangeText={(text) => setAction(text)}
+                        autoCorrect="false"
+                        autoComplete="off"
                     />
                     <Text style={styles.body}>How did it make you feel?</Text>
                     <TextInput
                         style={[styles.questionInput, {height: 300}]}
+                        onChangeText={(text) => setReflection(text)}
                         placeholder="I felt..."
                         multiline
-                        onChangeText={(text) => setReflection(text)}
+                        autoCorrect="false"
+                        autoComplete="off"
                     />
                 </KeyboardAvoidingView>
                 <View style={{flex: 0.5}} />

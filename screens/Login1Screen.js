@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, StyleSheet, Pressable, Alert } from "react-native";
+import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, StyleSheet } from "react-native";
 import React, { useState } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
@@ -7,7 +7,6 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
 import { getFirestore, collection, query, where, doc, getDocs, getDoc } from "firebase/firestore"
-import { beginAsyncEvent } from "react-native/Libraries/Performance/Systrace";
 
 const location = require("../assets/Location.png");
 const mail = require("../assets/mail.png");
@@ -89,19 +88,34 @@ export default function Login0Screen( {navigation} ) {
                 <LargeImage src={location}/>
                 <Text style={styles.title}>1% Challenge</Text>
             </View>
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <View style={styles.inputContainer}>
                     <Image source={mail} style={styles.icon} />
-                    <TextInput style={styles.input} onChangeText={(text) => setEmail(text)} placeholder="Email" autoCapitalize="none"/>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={(text) => setEmail(text)}
+                        placeholder="Email"
+                        autoCapitalize="none"
+                        autoCorrect="false"
+                        autoComplete="email"
+                    />
                 </View>
                 <View style={[styles.inputContainer, {marginBottom: 15}]}>
                     <Image source={lock} style={styles.icon} />
-                    <TextInput style={styles.input} onChangeText={(text) => setPassword(text)} autoCapitalize="none" placeholder="Password" secureTextEntry/>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={(text) => setPassword(text)}
+                        placeholder="Password"
+                        secureTextEntry
+                        autoCapitalize="none"
+                        autoCorrect="false"
+                        autoComplete="off"
+                    />
                 </View>
                 <Pressable style={[styles.buttoncontainer, {backgroundColor:"#FFC0A2"}]} onPress={handleSignIn}>
                     <Text style={styles.buttontext}>Login</Text>
                 </Pressable>
-            </View>
+            </KeyboardAvoidingView>
             <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
                 <LoginScreenButton title="Sign up" nav={navigation} dest="Sign up" background={false} />
             </View>
@@ -134,6 +148,8 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     input: {
+        width: 256,
+        height: 45,
         paddingLeft: 5,
     },
     icon: {

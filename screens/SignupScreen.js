@@ -101,6 +101,8 @@ export default function SignupScreen( {navigation} ) {
                         placeholder="Username"
                         onChangeText={(text) => setUsername(text)}
                         autoCapitalize="none"
+                        autoCorrect="false"
+                        autoComplete="off"
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -110,6 +112,8 @@ export default function SignupScreen( {navigation} ) {
                         onChangeText={(text) => setEmail(text)}
                         style={styles.input}
                         autoCapitalize="none"
+                        autoCorrect="false"
+                        autoComplete="email"
                     />
                 </View>
                 <View style={[styles.inputContainer, {marginBottom: 15}]}>
@@ -118,8 +122,10 @@ export default function SignupScreen( {navigation} ) {
                         placeholder="Password"
                         onChangeText={(text) => setPassword(text)}
                         style={styles.input}
-                        autoCapitalize="none"
                         secureTextEntry
+                        autoCapitalize="none"
+                        autoCorrect="false"
+                        autoComplete="off"
                     />
                 </View>
                 <Pressable style={styles.buttoncontainer} onPress={handleCreateAccount}>
@@ -163,6 +169,8 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     input: {
+        width: 256,
+        height: 45,
         paddingLeft: 5,
     },
     icon: {
