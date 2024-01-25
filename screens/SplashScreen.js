@@ -26,20 +26,14 @@ export default function SplashScreen({ navigation }) {
         if (user) {
           // User is signed in.
           setIsAuthenticated(true);
-          console.log(user)
         } else {
           // No user is signed in.
           setIsAuthenticated(false);
-          console.log('not signed in')
         }
       });
       // Cleanup subscription on unmount
       return () => unsubscribe();
     }, []);
-    
-    console.log(isAuthenticated)
-  
-  
 
     useEffect(() => {
         const delayNavigation = setTimeout(() => {
