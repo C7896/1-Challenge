@@ -1,9 +1,45 @@
 import { View, Text, StyleSheet, SafeAreaView, Pressable, useWindowDimensions } from "react-native";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from "../firebase-config";
+
+const app = initializeApp(firebaseConfig);
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+});
 
 export default function SplashScreen({ navigation }) {
 
     const windowWidth = useWindowDimensions().width
+
+    const app = initializeApp(firebaseConfig);
+  
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        print(user)
+        if (user) {
+          // User is signed in.
+          setIsAuthenticated(true);
+          console.log(user)
+        } else {
+          // No user is signed in.
+          setIsAuthenticated(false);
+          console.log('not signed in')
+        }
+      });
+      // Cleanup subscription on unmount
+      return () => unsubscribe();
+    }, []);
+    
+    console.log(isAuthenticated)
+  
+  
 
     useEffect(() => {
         const delayNavigation = setTimeout(() => {
