@@ -2,7 +2,7 @@ import { Pressable, Text, StyleSheet } from "react-native";
 
 export default function ChallengeButton( {title, nav, destination, challenge} ) {
     return (
-        <Pressable style={styles.buttonContainer} onPress={() => nav.navigate(destination, {navigation: nav, challenge: challenge})}>
+        <Pressable style={styles.buttonContainer} onPress={() => nav.navigate(destination, {challenge: challenge})}>
             <Text style={styles.text}>{title}</Text>
         </Pressable>
     );

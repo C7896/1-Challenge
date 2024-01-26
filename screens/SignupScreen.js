@@ -78,7 +78,7 @@ export default function SignupScreen( {navigation} ) {
                 challenge: "This is a dummy challenge.",
             }
             
-            navigation.navigate("Intro1", {navigation: navigation, challenge: newChallenge ? nextChallenge : dummyChallenge,});
+            navigation.navigate("Intro1", {challenge: newChallenge ? nextChallenge : dummyChallenge, streak: 0,});
         })
         .catch(error => {
             console.log(error);

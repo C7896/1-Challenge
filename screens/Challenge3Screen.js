@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
-import { getFirestore, doc, setDoc, updateDoc, increment, serverTimestamp } from "firebase/firestore"
+import { getFirestore, doc, setDoc, updateDoc, increment, serverTimestamp, getDoc } from "firebase/firestore"
 
 const topBlob = require("../assets/topBlob.png");
 
@@ -19,12 +19,12 @@ export default function Challenge3Screen({ navigation, route }) {
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const createJournalDoc = () => {
+    const createJournalDoc = async () => {
         const user = auth.currentUser;
         if (user != null) {
             
             // add journal to user
-            setDoc(doc(db, "users", user.uid, "journals", String(challenge.ID)), {
+            await setDoc(doc(db, "users", user.uid, "journals", String(challenge.ID)), {
                 day: challenge.day,
                 month: challenge.month,
                 year: challenge.year,
@@ -40,7 +40,7 @@ export default function Challenge3Screen({ navigation, route }) {
                 console.error("Error adding document: ", error);
             });
 
-            updateDoc(doc(db, "users", user.uid), {
+            await updateDoc(doc(db, "users", user.uid), {
                 total_completed_challenges: increment(1), 
             })
             .then(() => {
@@ -50,7 +50,22 @@ export default function Challenge3Screen({ navigation, route }) {
                 console.error("Error incrementing user's total_completed_challenges: ", error);
             });
 
-            navigation.navigate("Challenge4", {navigation: navigation, challenge: challenge});
+            let streak = 0;
+            const userRef = doc(db, "users", user.uid);
+            await getDoc(userRef)
+                .then(docSnapshot => {
+                    if (docSnapshot.exists()) {
+                        streak = docSnapshot.current_streak;
+                        console.log("User's current streak: ", streak);
+                    } else {
+                        console.log("User document not found.");
+                    }
+                })
+                .catch (error => {
+                    console.log("User document not found: ", error);
+                })
+
+            navigation.navigate("Challenge4", {streak: streak,});
         } else {
             console.log("User is not signed in");
         }

@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
 
-export default function StreakContainer() {
+export default function StreakContainer({ streak }) {
     return(
         <View style={styles.streakContainer}>
-          <Text style={[styles.text, styles.streakText]}>10 🔥</Text>
+          <Text style={[styles.text, styles.streakText]}>{streak} 🔥</Text>
         </View>
     );
 }

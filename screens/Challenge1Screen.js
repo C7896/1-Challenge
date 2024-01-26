@@ -8,6 +8,7 @@ const backgroundChallengeOne = require('../assets/backgroundChallengeOne.png');
 
 export default function Challenge1Screen({ navigation, route }) {
   const { challenge } = route.params;
+  const { streak } = route.params;
 
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -34,7 +35,7 @@ export default function Challenge1Screen({ navigation, route }) {
     </ImageBackground>
     <View style={{ flex: 2 }} />
     <View style={styles.bottomContainer}>
-      <StreakContainer />
+      <StreakContainer streak={streak} />
       <ChallengeButton title="Next" nav={navigation} destination="Challenge2" challenge={challenge} />
     </View>
     <View style={{flex: 0.5}} />

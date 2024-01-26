@@ -1,15 +1,34 @@
 import { SafeAreaView, View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+
 import LargeImage from "../components/largeImage";
 import ChallengeButton from "../components/challengeButton";
+
 const message = require("../assets/message.png");
 
 export default function Challenge2Screen({ navigation, route }) {
     const { challenge } = route.params;
 
+    const [hours, setHours] = useState(0);
+    const [minutes, setMinutes] = useState(0);
+
+    const getTimeRemaining = () => {
+        const now = new Date();
+
+        setHours(23 - now.getHours());
+        setMinutes(now.getMinutes != 0 ? 60 - now.getMinutes() : 0);
+    }
+
+    useEffect(() => {
+        const interval = setInterval(() => getTimeRemaining(), 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return(
         <SafeAreaView style={styles.container}>
             <View style={[styles.container, {flex: 1}]}>
-                <Text style={styles.subtitle}>10:29 left</Text>
+                <Text style={styles.subtitle}>{hours}:{minutes} left</Text>
             </View>
             <LargeImage src={message} />
             <View style={styles.textContainer}>
