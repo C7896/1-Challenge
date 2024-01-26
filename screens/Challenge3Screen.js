@@ -72,7 +72,7 @@ export default function Challenge3Screen({ navigation, route }) {
                         onChangeText={(text) => setAction(text)}
                         placeholder="I..."
                         multiline
-                        autoCorrect="false"
+                        autoCorrect={false}
                         autoComplete="off"
                     />
                     <Text style={styles.body}>How did it make you feel?</Text>
@@ -81,7 +81,7 @@ export default function Challenge3Screen({ navigation, route }) {
                         onChangeText={(text) => setReflection(text)}
                         placeholder="I felt..."
                         multiline
-                        autoCorrect="false"
+                        autoCorrect={false}
                         autoComplete="off"
                     />
                 </KeyboardAvoidingView>

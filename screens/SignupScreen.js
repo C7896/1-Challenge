@@ -101,7 +101,7 @@ export default function SignupScreen( {navigation} ) {
                         placeholder="Username"
                         onChangeText={(text) => setUsername(text)}
                         autoCapitalize="none"
-                        autoCorrect="false"
+                        autoCorrect={false}
                         autoComplete="off"
                     />
                 </View>
@@ -112,7 +112,7 @@ export default function SignupScreen( {navigation} ) {
                         onChangeText={(text) => setEmail(text)}
                         style={styles.input}
                         autoCapitalize="none"
-                        autoCorrect="false"
+                        autoCorrect={false}
                         autoComplete="email"
                     />
                 </View>
@@ -124,7 +124,7 @@ export default function SignupScreen( {navigation} ) {
                         style={styles.input}
                         secureTextEntry
                         autoCapitalize="none"
-                        autoCorrect="false"
+                        autoCorrect={false}
                         autoComplete="off"
                     />
                 </View>

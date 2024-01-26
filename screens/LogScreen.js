@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
+import { View, Text, ImageBackground, FlatList, Button, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import TabBar from "../components/tabBar";
 import Journal from "../components/Journal";
@@ -55,7 +55,7 @@ export default function LogScreen( {navigation} ) {
             <View style={{ flex: 7 }} />
             <View style={styles.listContainer}>
                 <FlatList
-                    data={challengeLog}
+                    data={challengeLog.reverse()}
                     renderItem={({ item, index }) => {
 
                         const size = setFontSize(item.challenge);

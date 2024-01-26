@@ -1,5 +1,7 @@
 import { SafeAreaView, View, Text, ImageBackground, Image, Pressable, StyleSheet } from "react-native";
 import TabBar from "../components/tabBar";
+import SignOutButton from "../components/signOutButton";
+
 const blob = require("../assets/blob.png");
 const blueCloud = require("../assets/blue_cloud.png");
 const redCloud = require("../assets/red_cloud.png");
@@ -43,6 +45,7 @@ export default function HomeScreen( {navigation} ) {
                     </ImageBackground>
                     <Image source={travels} style={styles.travels} />
             </ImageBackground>
+            <SignOutButton navigation={navigation} />
             <TabBar nav={navigation} />
         </View>
     );

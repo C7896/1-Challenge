@@ -1,27 +1,37 @@
 import { View, Text, StyleSheet, SafeAreaView, Pressable, useWindowDimensions } from "react-native";
 import React, { useState, useEffect } from "react";
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { onAuthStateChanged, initializeAuth, getAuth, getReactNativePersistence } from 'firebase/auth';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
-
-const app = initializeApp(firebaseConfig);
-const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
-});
 
 export default function SplashScreen({ navigation }) {
 
     const windowWidth = useWindowDimensions().width
 
-    const app = initializeApp(firebaseConfig);
-  
+    let app;
+    let auth;
+
+    if (!getApps().length) {
+      try {
+        app = initializeApp(firebaseConfig);
+        auth = initializeAuth(app, {
+          persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+        });
+      } catch (error) {
+        console.log("Error initializing app: ", error);
+      }
+    } else {
+      app = getApp();
+      auth = getAuth(app);
+    }
+
+    const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
   
     useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
         print(user)
         if (user) {
           // User is signed in.
@@ -30,20 +40,17 @@ export default function SplashScreen({ navigation }) {
           // No user is signed in.
           setIsAuthenticated(false);
         }
+        setLoading(false);
       });
       // Cleanup subscription on unmount
       return () => unsubscribe();
     }, []);
 
-    useEffect(() => {
-        const delayNavigation = setTimeout(() => {
-          // Navigate to the desired screen after 1 second
-          navigation.navigate("Home Tabs"); // Replace 'YourScreen' with the actual screen name
-        }, 1000);
-    
-        // Cleanup the timeout when the component unmounts
-        return () => clearTimeout(delayNavigation);
-      }, [navigation]);
+    if (!loading) {
+      setTimeout(() => {
+        navigation.navigate(isAuthenticated ? "Home Tabs" : "Login0");
+      }, 1000);
+    }
 
     return (
         <SafeAreaView style={styles.container}>

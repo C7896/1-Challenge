@@ -96,7 +96,7 @@ export default function Login0Screen( {navigation} ) {
                         onChangeText={(text) => setEmail(text)}
                         placeholder="Email"
                         autoCapitalize="none"
-                        autoCorrect="false"
+                        autoCorrect={false}
                         autoComplete="email"
                     />
                 </View>
@@ -108,7 +108,7 @@ export default function Login0Screen( {navigation} ) {
                         placeholder="Password"
                         secureTextEntry
                         autoCapitalize="none"
-                        autoCorrect="false"
+                        autoCorrect={false}
                         autoComplete="off"
                     />
                 </View>
