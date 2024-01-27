@@ -18,7 +18,7 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.onepercentchallenge.onepercentchallenge",
-      "buildNumber": "4"
+      "buildNumber": "6"
     },
     "android": {
       "googleServicesFile": "google-services.json",
@@ -32,6 +32,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "@react-native-firebase/app",
       [
         "expo-build-properties",
         {
