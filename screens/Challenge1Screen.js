@@ -13,14 +13,19 @@ export default function Challenge1Screen({ navigation, route }) {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
 
+  let first = true;
+
   const getTimeRemaining = () => {
     const now = new Date();
 
-    setHours(23 - now.getHours());
-    setMinutes(now.getMinutes != 0 ? 60 - now.getMinutes() : 0);
+    setHours(now.getMinutes() != 0 ? 23 - now.getHours() : 24 - now.getHours());
+    setMinutes(now.getMinutes() != 0 ? 60 - now.getMinutes() : 0);
   }
 
   useEffect(() => {
+    if (first) {
+      getTimeRemaining();
+    }
     const interval = setInterval(() => getTimeRemaining(), 1000);
 
     return () => clearInterval(interval);

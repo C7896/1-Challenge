@@ -2,6 +2,7 @@ import { View, Text, ImageBackground, FlatList, Button, StyleSheet } from "react
 import React, { useEffect, useState } from "react";
 import TabBar from "../components/tabBar";
 import Journal from "../components/Journal";
+import ExploreButton from "../components/exploreButton";
 
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase-config";

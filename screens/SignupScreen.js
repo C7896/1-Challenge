@@ -6,7 +6,7 @@ import LoginScreenButton from "../components/loginScreenButton";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
-import { getFirestore, collection, query, where, doc, setDoc, getDocs } from "firebase/firestore"
+import { getFirestore, doc, setDoc } from "firebase/firestore"
 
 const mountain = require("../assets/Victory.png");
 const user = require("../assets/user.png");
@@ -23,67 +23,36 @@ export default function SignupScreen( {navigation} ) {
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // get challenge object from new-challenges.json if today's date is not in past-challenges.json
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    let day = new Date().getDate();
-    let monthIndex = new Date().getMonth();
-    let month = months[monthIndex];
-    let year = new Date().getFullYear();
-
-
-    let newChallenge = true;
-    let nextChallenge;
-    // get today's challenge document reference
-    const challengesRef = collection(db, 'challenges');
-    const q = query(challengesRef, where('day', '==', day), where('month', '==', month), where('year', '==', year));
-
-    // get today's challenge document data and store it in nextChallenge
-    getDocs(q)
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-            // Access the document data here
-            nextChallenge = doc.data();
-        });
-    })
-    .catch(error => {
-        newChallenge = false;
-        console.error('Error getting documents: ', error);
-    });
-
-
+    let pressed = false;
+    
     const handleCreateAccount = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then ((userCredential) => {
-            console.log('Account Created!')
-            const user = userCredential.user;
-            console.log(user);
-            
-            try {
-                setDoc(doc(db, "users", user.uid), {
-                    username: username,
-                    current_streak: 0,
-                    longest_streak: 0,
-                    total_completed_challenges: 0,
-                });
-                console.log("Blank user document created");
-            } catch (e) {
-                console.error("Error adding document: ", e);
-            }
-
-            const dummyChallenge = {
-                ID: 0,
-                day: 14,
-                month: "Jan",
-                year: 2024,
-                challenge: "This is a dummy challenge.",
-            }
-            
-            navigation.navigate("Intro1", {challenge: newChallenge ? nextChallenge : dummyChallenge, streak: 0,});
-        })
-        .catch(error => {
-            console.log(error);
-            Alert.alert(error.message);
-        });
+        if (!pressed) {
+            pressed = true;
+            createUserWithEmailAndPassword(auth, email, password)
+            .then ((userCredential) => {
+                console.log('Account Created!')
+                const user = userCredential.user;
+                console.log(user);
+                
+                try {
+                    setDoc(doc(db, "users", user.uid), {
+                        username: username,
+                        current_streak: 0,
+                        longest_streak: 0,
+                        total_completed_challenges: 0,
+                    });
+                    console.log("Blank user document created");
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+                
+                navigation.navigate("Intro1");
+            })
+            .catch(error => {
+                console.log(error);
+                Alert.alert(error.message);
+            });
+        }
     }
 
 

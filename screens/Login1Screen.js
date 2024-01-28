@@ -21,79 +21,80 @@ export default function Login0Screen( {navigation} ) {
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    let pressed = false;
+
     const handleSignIn = () => {
-        signInWithEmailAndPassword(auth, email, password)
-        .then (async (userCredential) => {
-            console.log('User Signed In!');
+        if (!pressed) {
+            pressed = true;
+            signInWithEmailAndPassword(auth, email, password)
+            .then (async (userCredential) => {
+                console.log('User Signed In!');
 
-            // get challenge object from new-challenges.json if today's date is not in past-challenges.json
-            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            let day = new Date().getDate();
-            let monthIndex = new Date().getMonth();
-            let month = months[monthIndex];
-            let year = new Date().getFullYear();
+                // get challenge object from new-challenges.json if today's date is not in past-challenges.json
+                const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                let day = new Date().getDate();
+                let monthIndex = new Date().getMonth();
+                let month = months[monthIndex];
+                let year = new Date().getFullYear();
 
-            let newChallenge = true;
-            let nextChallenge;
-            let index;
-            // get today's challenge document reference
-            const challengesRef = collection(db, 'challenges');
-            const q = query(challengesRef, where('day', '==', day), where('month', '==', month), where('year', '==', year));
+                let newChallenge = true;
+                let nextChallenge;
+                let index;
+                // get today's challenge document reference
+                const challengesRef = collection(db, 'challenges');
+                const q = query(challengesRef, where('day', '==', day), where('month', '==', month), where('year', '==', year));
 
-            // get today's challenge document data and store it in nextChallenge
-            getDocs(q)
-            .then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-                // Access the document data here
-                index = doc.id;
-                nextChallenge = doc.data();
-                });
-            })
-            .catch(error => {
-                newChallenge = false;
-                console.error('Error getting documents: ', error);
-            });
-
-            // check if user has already completed today's challenge (if it exists)
-            if (index != undefined) {
-                const journalRef = doc(db, "users", userCredential.user.uid, "journals", index);
-
-                await getDoc(journalRef)
-                    .then(docSnapshot => {
-                        if (docSnapshot.exists()) {
-                            newChallenge = false;
-                            console.log("Today's challenge has been completed");
-                        } else {
-                            console.log("Today's challenge has not been completed");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error getting document: ", error);
-                    })
-            }
-
-            let streak = 0;
-            const userRef = doc(db, "users", userCredential.user.uid);
-            await getDoc(userRef)
-                .then(docSnapshot => {
-                    if (docSnapshot.exists()) {
-                        streak = docSnapshot.current_streak;
-                        console.log("User's current streak: ", streak);
-                    } else {
-                        console.log("User document not found.");
-                    }
+                // get today's challenge document data and store it in nextChallenge
+                await getDocs(q)
+                .then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                    // Access the document data here
+                    index = doc.id;
+                    nextChallenge = doc.data();
+                    });
                 })
                 .catch(error => {
-                    console.error("Error getting user document: ", error);
-                })
+                    newChallenge = false;
+                    console.error('Error getting documents: ', error);
+                });
 
-            navigation.navigate(newChallenge ? "Challenge1" : "Home Tabs", {challenge: nextChallenge, streak: streak,});
-        })
-        .catch(error => {
-            console.log(error);
-            Alert.alert(error.message);
+                // check if user has already completed today's challenge (if it exists)
+                if (index != undefined) {
+                    const journalRef = doc(db, "users", userCredential.user.uid, "journals", index);
 
-        })
+                    await getDoc(journalRef)
+                        .then(docSnapshot => {
+                            if (docSnapshot.exists()) {
+                                newChallenge = false;
+                                console.log("Today's challenge has been completed");
+                            } else {
+                                console.log("Today's challenge has not been completed");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error getting document: ", error);
+                        })
+                }
+
+                let streak = 0;
+                const userRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userRef)
+                if (userDoc.exists()) {
+                    userData = userDoc.data();
+                    streak = userData.current_streak;
+                    console.log("User's current streak: ", streak);
+                } else {
+                    console.log("User document not found.");
+                }
+
+                navigation.navigate(newChallenge ? "Challenge1" : "Home Tabs", {challenge: nextChallenge, streak: streak,});
+            })
+            .catch(error => {
+                console.log(error);
+                Alert.alert(error.message);
+
+            })
+        }
     }
 
     return(

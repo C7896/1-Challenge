@@ -1,10 +1,12 @@
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TextInput, Pressable, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TextInput, Pressable, Keyboard, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
 import { getFirestore, doc, setDoc, updateDoc, increment, serverTimestamp, getDoc } from "firebase/firestore"
+
+import CloseKeyboard from "../components/closeKeyboard";
 
 const topBlob = require("../assets/topBlob.png");
 
@@ -19,57 +21,95 @@ export default function Challenge3Screen({ navigation, route }) {
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    let pressed = false;
+
     const createJournalDoc = async () => {
-        const user = auth.currentUser;
-        if (user != null) {
+
+        if (!pressed) {
+            pressed = true;
+            const user = auth.currentUser;
+            if (user != null) {
+
+                // check for yesterday's challenge in user's journals collection
+                let streaking = false;
+                const journalRef = doc(db, "users", user.uid, "journals", String(challenge.ID - 1));
+                const journalDoc = await getDoc(journalRef);
+                if (journalDoc.exists()) {
+                    streaking = true;
+                    console.log("Streaking");
+                } else {
+                    console.log("Not streaking");
+                }
+                
+                // add journal to user
+                await setDoc(doc(db, "users", user.uid, "journals", String(challenge.ID)), {
+                    day: challenge.day,
+                    month: challenge.month,
+                    year: challenge.year,
+                    challenge: challenge.challenge,
+                    action: action,
+                    reflection: reflection,
+                    timestamp: serverTimestamp(),
+                })
+                .then(() => {
+                    console.log("Journal doc created, id = ", challenge.ID);
+                })
+                .catch(error => {
+                    console.error("Error adding document: ", error);
+                });
             
-            // add journal to user
-            await setDoc(doc(db, "users", user.uid, "journals", String(challenge.ID)), {
-                day: challenge.day,
-                month: challenge.month,
-                year: challenge.year,
-                challenge: challenge.challenge,
-                action: action,
-                reflection: reflection,
-                timestamp: serverTimestamp(),
-            })
-            .then(() => {
-                console.log("Journal doc created, id = ", challenge.ID);
-            })
-            .catch(error => {
-                console.error("Error adding document: ", error);
-            });
-
-            await updateDoc(doc(db, "users", user.uid), {
-                total_completed_challenges: increment(1), 
-            })
-            .then(() => {
-                console.log("User's total_completed_challenges incremented by 1");
-            })
-            .catch(error => {
-                console.error("Error incrementing user's total_completed_challenges: ", error);
-            });
-
-            let streak = 0;
-            const userRef = doc(db, "users", user.uid);
-            await getDoc(userRef)
-                .then(docSnapshot => {
-                    if (docSnapshot.exists()) {
-                        streak = docSnapshot.current_streak;
-                        console.log("User's current streak: ", streak);
-                    } else {
-                        console.log("User document not found.");
-                    }
+                // update user document
+                await updateDoc(doc(db, "users", user.uid), {
+                    current_streak: streaking ? increment(1) : 1,
+                    total_completed_challenges: increment(1), 
                 })
-                .catch (error => {
-                    console.log("User document not found: ", error);
+                .then(() => {
+                    console.log(streaking ? "User is currently streaking" : "User's current streak is 1");
+                    console.log("User's total_completed_challenges incremented by 1");
                 })
+                .catch(error => {
+                    console.error("Error incrementing user document fields: ", error);
+                });
 
-            navigation.navigate("Challenge4", {streak: streak,});
-        } else {
-            console.log("User is not signed in");
+                // get user's current challenge streak
+                let streak = 0;
+                const userRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userRef)
+                if (userDoc.exists()) {
+                    userData = userDoc.data();
+                    streak = userData.current_streak;
+                    console.log("User's current streak: ", streak);
+                } else {
+                    console.log("User document not found.");
+                }
+
+                navigation.navigate("Challenge4", {streak: streak,});
+            } else {
+                console.log("User is not signed in");
+            }
         }
     }
+
+
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+        'keyboardDidShow',
+        () => setKeyboardVisible(true)
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+        'keyboardDidHide',
+        () => setKeyboardVisible(false)
+        );
+
+        // Cleanup listeners when component unmounts
+        return () => {
+        keyboardDidShowListener.remove();
+        keyboardDidHideListener.remove();
+        };
+    }, []);
+
 
     return(
         <View style={styles.container}>
@@ -105,6 +145,7 @@ export default function Challenge3Screen({ navigation, route }) {
                     <Text style={styles.buttonText}>Complete</Text>
                 </Pressable>
             </SafeAreaView>
+            <CloseKeyboard visible={isKeyboardVisible} />
         </View>
     );
 }

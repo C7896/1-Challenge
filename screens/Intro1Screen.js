@@ -3,9 +3,7 @@ import ClearButton from "../components/clearButton";
 import LargeImage from "../components/largeImage";
 const joy = require("../assets/Joy.png");
 
-export default function Intro1Screen({ navigation, route }) {
-    const { challenge } = route.params;
-    console.log(challenge.challenge);
+export default function Intro1Screen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
@@ -15,7 +13,7 @@ export default function Intro1Screen({ navigation, route }) {
                     <Text style={[styles.text, styles.title]}>Our Mission</Text>
                     <Text style={[styles.text, styles.body]}>Improve the world</Text>
                     <Text style={[styles.text, styles.body]}>by 1% everyday.</Text>
-                    <ClearButton title="Next" nav={navigation} destination="Intro2" top={20} challenge={challenge}/>
+                    <ClearButton title="Next" nav={navigation} destination="Intro2" top={20}/>
                 </View>
             </View>
         </SafeAreaView>
