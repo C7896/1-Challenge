@@ -77,7 +77,7 @@ export default function Login0Screen( {navigation} ) {
                 }
 
                 let streak = 0;
-                const userRef = doc(db, "users", user.uid);
+                const userRef = doc(db, "users", userCredential.user.uid);
                 const userDoc = await getDoc(userRef)
                 if (userDoc.exists()) {
                     userData = userDoc.data();
