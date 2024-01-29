@@ -28,24 +28,29 @@ export default function HomeScreen( {navigation} ) {
     const [challengesCompleted, setChallengesCompleted] = useState(0);
 
     useEffect(() => {
-        const getStats = async ()  => {
+        const getStats = async () => {
             const user = auth.currentUser;
-            const userRef = doc(db, "users", userCredential.user.uid);
-            const userDoc = await getDoc(userRef);
-
-            if (userDoc.exists()) {
-                const userData = userDoc.data();
-                setStreak(userData.current_streak);
-                setPersonalImprovement( new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** userData.total_completed_challenges)) );
-                setChallengesCompleted(userData.total_completed_challenges);
-                console.log("Successfully read user document");
-            } else {
-                console.log("Error reading user document");
+    
+            if (user) {
+                const userRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userRef);
+    
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    setStreak(userData.current_streak);
+                    setPersonalImprovement(new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** userData.total_completed_challenges)));
+                    setChallengesCompleted(userData.total_completed_challenges);
+                    console.log("Successfully read user document");
+                } else {
+                    console.log("Error reading user document");
+                }
             }
+        };
+    
+        if (auth.currentUser) {
+            getStats();
         }
-
-        return () => getStats();
-    }, [auth]);
+    }, [auth.currentUser]);
 
     return (
         <View style={styles.orangeContainer} >
