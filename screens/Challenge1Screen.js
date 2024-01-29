@@ -17,10 +17,19 @@ export default function Challenge1Screen({ navigation, route }) {
 
   const getTimeRemaining = () => {
     const now = new Date();
-
-    setHours(now.getMinutes() != 0 ? 23 - now.getHours() : 24 - now.getHours());
-    setMinutes(now.getMinutes() != 0 ? 60 - now.getMinutes() : 0);
-  }
+  
+    // Calculate hours and minutes
+    const hours = now.getMinutes() !== 0 ? 23 - now.getHours() : 24 - now.getHours();
+    let minutes = now.getMinutes() !== 0 ? 60 - now.getMinutes() : 0;
+    
+    // Format minutes to always be two digits
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+  
+    // Update state
+    setHours(hours);
+    setMinutes(minutes);
+  };
+  
 
   useEffect(() => {
     if (first) {
