@@ -30,7 +30,7 @@ export default function HomeScreen( {navigation} ) {
     useEffect(() => {
         const getStats = async ()  => {
             const user = auth.currentUser;
-            const userRef = doc(db, "users", user.uid);
+            const userRef = doc(db, "users", userCredential.user.uid);
             const userDoc = await getDoc(userRef);
 
             if (userDoc.exists()) {
