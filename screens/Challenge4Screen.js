@@ -18,7 +18,7 @@ export default function Challenge4Screen({ navigation, route }) {
           <View style={{flex: 3}} />
           <View style={styles.bottomContainer}>
               <StreakContainer streak={streak} />
-              <ClearButton title="Go Home" nav={navigation} destination="Home Tabs" top={10} />
+              <ClearButton title="Go Home" nav={navigation} destination="Home" top={10} />
           </View>
           <View style={{flex: 0.5}} />
       </SafeAreaView>

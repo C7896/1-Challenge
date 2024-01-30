@@ -7,7 +7,9 @@ import SignupScreen from "./screens/SignupScreen";
 import Intro1Screen from "./screens/Intro1Screen";
 import Intro2Screen from "./screens/Intro2Screen";
 import Intro3Screen from "./screens/Intro3Screen";
-import {HomeTabs} from "./AppTab";
+import HomeScreen from "./screens/HomeScreen";
+import LogScreen from "./screens/LogScreen";
+import LogDetailsScreen from "./screens/LogDetailsScreen";
 import Challenge1Screen from "./screens/Challenge1Screen";
 import Challenge2Screen from "./screens/Challenge2Screen";
 import Challenge3Screen from "./screens/Challenge3Screen";
@@ -26,7 +28,17 @@ export default function App() {
         <Stack.Screen name="Intro1" component={Intro1Screen} />
         <Stack.Screen name="Intro2" component={Intro2Screen} />
         <Stack.Screen name="Intro3" component={Intro3Screen} />
-        <Stack.Screen name="Home Tabs" component={HomeTabs} />
+        <Stack.Screen name="Home" component={ HomeScreen } />
+        <Stack.Screen name="Log" component={ LogScreen } />
+        <Stack.Screen name="Log Details" component={ LogDetailsScreen } options={{
+          headerShown: true,
+          title: "",
+          headerStyle: {
+            backgroundColor: "#FFC0A2",
+          },
+          headerTintColor: "#FFF",
+          headerShadowVisible: false,
+        }}/>
         <Stack.Screen name="Challenge1" component={Challenge1Screen} options={{
           headerShown: false,
         }} />

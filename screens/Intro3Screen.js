@@ -60,7 +60,7 @@ export default function Intro3Screen({ navigation }) {
                 console.log("User document not found.");
             }
 
-            navigation.navigate(newChallenge ? "Challenge1" : "Home Tabs", {challenge: nextChallenge, streak: streak,});
+            navigation.navigate(newChallenge ? "Challenge1" : "Home", {challenge: nextChallenge, streak: streak,});
         }
     }
 

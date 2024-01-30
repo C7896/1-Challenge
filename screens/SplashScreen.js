@@ -96,7 +96,7 @@ export default function SplashScreen({ navigation }) {
               }
 
             setTimeout(() => {
-              navigation.navigate(newChallenge ? "Challenge1" : "Home Tabs", {challenge: nextChallenge, streak: streak,});
+              navigation.navigate(newChallenge ? "Challenge1" : "Home", {challenge: nextChallenge, streak: streak,});
             }, 1000);
           } else {
             // No user is signed in.

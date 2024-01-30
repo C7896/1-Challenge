@@ -1,8 +1,7 @@
-import { View, Text, ImageBackground, FlatList, Button, StyleSheet } from "react-native";
+import { View, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import TabBar from "../components/tabBar";
 import Journal from "../components/Journal";
-import ExploreButton from "../components/exploreButton";
 
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase-config";
@@ -18,6 +17,7 @@ export default function LogScreen( {navigation} ) {
     const db = getFirestore(app);
 
     const [challengeLog, setChallengeLog] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const getChallengeLog = async () => {
@@ -26,15 +26,15 @@ export default function LogScreen( {navigation} ) {
                 const journalDocs = collection(db, "users", user.uid, "journals");
                 const journalQuery = await getDocs(journalDocs);
                 const journals = journalQuery.docs.map(doc => doc.data());
-                setChallengeLog(journals);
+                setChallengeLog(journals.reverse());
             } else {
                 console.log("User is not signed in");
             }
+            setLoading(false);
         }
 
         getChallengeLog();
-    }, [challengeLog]);
-
+    }, [challengeLog, loading]);
 
     const setFontSize = (challenge) => {
         const challengeLength = challenge.length;
@@ -47,8 +47,9 @@ export default function LogScreen( {navigation} ) {
         }
     }
 
-
     const colors = ["#FF815E", "#FFCF5B", "#DCE18B", "#A1D5AE", "#92C1D2", "#4969A9"];
+
+    const renderItem = ({ item, index }) => ( <Journal journal={item} color={colors[index % 6]} size={setFontSize(item.challenge)} navigation={navigation} /> )
 
 
     return (
@@ -56,18 +57,12 @@ export default function LogScreen( {navigation} ) {
             <View style={{ flex: 7 }} />
             <View style={styles.listContainer}>
                 <FlatList
-                    data={challengeLog.reverse()}
-                    renderItem={({ item, index }) => {
-
-                        const size = setFontSize(item.challenge);
-
-                        return (
-                            <Journal month={item.month} day={item.day} challenge={item.challenge} color={colors[index % 6]} size={size} />
-                        );
-                    }}
+                    data={challengeLog}
+                    style={{flex: 1}}
+                    renderItem={renderItem}
                     keyExtractor={(item) => item.timestamp}
                     ItemSeparatorComponent={<View style={{ height: 8 }} />}
-                    ListEmptyComponent={<Text style={styles.text}>No past challenges</Text>}
+                    ListEmptyComponent={loading ? <Text style={styles.text}>Loading...</Text> : <Text style={styles.text}>No past challenges</Text>}
                 />
             </View>
             <View style={{ flex: 5 }} />

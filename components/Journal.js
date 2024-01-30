@@ -1,20 +1,23 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, Pressable, StyleSheet} from "react-native";
 
-export default function Journal({ month, day, challenge, color, size }) {
+export default function Journal({ journal, color, size, navigation }) {
+
   return (
-  <View style={[styles.container, {backgroundColor: color}]}>
-    <View style={styles.dateContainer}>
-      <Text style={styles.month}>{month}</Text>
-      <Text style={styles.day}>{day}</Text>
-    </View>
-    <Text style={[styles.text, {fontSize: size}]}>{challenge}</Text>
-  </View>
+    <Pressable onPress={() => {navigation.navigate("Log Details", {journal: journal})}} style={[styles.container, {backgroundColor: color}]}>
+      <View style={styles.dateContainer}>
+        <Text style={styles.month}>{journal.month}</Text>
+        <Text style={styles.day}>{journal.day}</Text>
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={[styles.text, {fontSize: size}]}>{journal.challenge}</Text>
+      </View>
+    </Pressable>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingLeft: 12,
     paddingVertical: 8,
     justifyContent: 'left',
@@ -23,32 +26,37 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: 'rgba(255, 129, 94, 1)',
   },
+  image: {
+    width: 48,
+    height: 48,
+  },
   month: {
     color: 'rgba(173, 173, 173, 1)',
     fontSize: 20,
-    fontStyle: 'normal',
-    fontWeight: '600',
+    fontWeight: "bold",
   },
   day: {
-    color: 'rgba(0, 0, 0, 1)',
+    color: "black",
     fontSize: 30,
-    fontStyle: 'normal',
-    fontWeight: '600',
+    fontWeight: "bold",
   },
   dateContainer: {
+    width: 69,
+    height: 69,
     paddingHorizontal: 16,
     paddingVertical: 4,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 15,
     backgroundColor: 'rgba(255, 255, 255, 1)',
   },
+  textContainer: {
+    width: 280,
+    paddingRight: 10,
+  },
   text: {
-    maxWidth: "65%",
-    color: 'rgba(255, 255, 255, 1)',
+    color: "white",
     fontSize: 20,
-    fontStyle: 'normal',
-    fontWeight: '600',
+    fontWeight: "bold",
   },
 });
