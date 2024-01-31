@@ -2,7 +2,7 @@
   "expo": {
     "name": "OnePercentChallengeApp",
     "slug": "OnePercentChallengeApp",
-    "version": "1.0.7",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,7 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.onepercentchallenge.onepercentchallenge",
-      "buildNumber": "15"
+      "buildNumber": "18"
     },
     "android": {
       "googleServicesFile": "google-services.json",

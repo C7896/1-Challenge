@@ -14,10 +14,38 @@ import Challenge1Screen from "./screens/Challenge1Screen";
 import Challenge2Screen from "./screens/Challenge2Screen";
 import Challenge3Screen from "./screens/Challenge3Screen";
 import Challenge4Screen from "./screens/Challenge4Screen";
+import React, { useEffect } from 'react';
+import { registerForPushNotificationsAsync } from './NotificationInitializer';
+import { scheduleDailyNotification } from './ScheduleNotification';
 
+
+
+ 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  
+  
+  useEffect(() => {
+    scheduleDailyNotification()
+      .then(() => console.log("Daily notification scheduled"))
+      .catch(error => console.error("Failed to schedule daily notification", error));
+  }, []);
+
+  useEffect(() => {
+    async function setupNotifications() {
+      try {
+        const token = await registerForPushNotificationsAsync();
+        console.log('Notification Token:', token);
+        // You can send this token to your server if needed
+      } catch (error) {
+        console.error('Error setting up notifications:', error);
+      }
+    }
+
+    setupNotifications();
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash" screenOptions={{headerShown: false, animation: "fade"}} >
