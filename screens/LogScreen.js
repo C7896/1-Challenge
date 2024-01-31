@@ -1,5 +1,6 @@
-import { View, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, ImageBackground, FlatList, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+
 import TabBar from "../components/tabBar";
 import Journal from "../components/Journal";
 
@@ -49,26 +50,35 @@ export default function LogScreen( {navigation} ) {
 
     const colors = ["#FF815E", "#FFCF5B", "#DCE18B", "#A1D5AE", "#92C1D2", "#4969A9"];
 
-    const renderItem = ({ item, index }) => ( <Journal journal={item} color={colors[index % 6]} size={setFontSize(item.challenge)} navigation={navigation} /> )
+    const navigateToLogDetails = (selectedJournal) => {
+        console.log("Journal ", selectedJournal.uid, " pressed");
+        navigation.navigate("Log Details", { journal: selectedJournal });
+    };
 
 
     return (
         <View style={styles.purpleContainer}>
+            <ImageBackground source={purpleBlob} style={styles.image}>
+                <Text style={[styles.title, {paddingBottom: "50%"}]}>Past Challenges</Text>
+            </ImageBackground>
             <View style={{ flex: 7 }} />
             <View style={styles.listContainer}>
                 <FlatList
                     data={challengeLog}
-                    style={{flex: 1}}
-                    renderItem={renderItem}
+                    renderItem={({ item, index }) => (
+                        <Journal
+                        journal={item}
+                        color={colors[index % 6]}
+                        size={setFontSize(item.challenge)}
+                        onPress={navigateToLogDetails}
+                        />
+                    )}
                     keyExtractor={(item) => item.timestamp}
-                    ItemSeparatorComponent={<View style={{ height: 8 }} />}
+                    ItemSeparatorComponent={<View style={{height: 5}} />}
                     ListEmptyComponent={loading ? <Text style={styles.text}>Loading...</Text> : <Text style={styles.text}>No past challenges</Text>}
                 />
             </View>
             <View style={{ flex: 5 }} />
-            <ImageBackground source={purpleBlob} style={styles.image}>
-                    <Text style={[styles.title, {paddingBottom: "50%"}]}>Past Challenges</Text>
-            </ImageBackground>
             <TabBar nav={navigation} />
         </View>
     );
@@ -89,7 +99,6 @@ const styles = StyleSheet.create({
     },
     image: {
         position: "absolute",
-        bottom: "55%",
         width: "100%",
         height: "45%",
         justifyContent: "center",

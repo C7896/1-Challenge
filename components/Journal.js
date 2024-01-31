@@ -1,22 +1,30 @@
-import {View, Text, Pressable, StyleSheet} from "react-native";
+import {View, Text, TouchableOpacity, StyleSheet} from "react-native";
 
-export default function Journal({ journal, color, size, navigation }) {
+export default function Journal({ journal, color, size, onPress }) {
+
+  const handlePress = () => {
+    onPress(journal);
+  }
 
   return (
-    <Pressable onPress={() => {navigation.navigate("Log Details", {journal: journal})}} style={[styles.container, {backgroundColor: color}]}>
-      <View style={styles.dateContainer}>
-        <Text style={styles.month}>{journal.month}</Text>
-        <Text style={styles.day}>{journal.day}</Text>
+    <TouchableOpacity onPress={handlePress}>
+      <View style={[styles.container, {backgroundColor: color}]}>
+        <View style={styles.dateContainer}>
+          <Text style={styles.month}>{journal.month}</Text>
+          <Text style={styles.day}>{journal.day}</Text>
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={[styles.text, {fontSize: size}]}>{journal.challenge}</Text>
+        </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text style={[styles.text, {fontSize: size}]}>{journal.challenge}</Text>
-      </View>
-    </Pressable>
-  )
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
+    height: 84,
+    width: 381,
     flexDirection: "row",
     paddingLeft: 12,
     paddingVertical: 8,
@@ -25,10 +33,6 @@ const styles = StyleSheet.create({
     columnGap: 15,
     borderRadius: 15,
     backgroundColor: 'rgba(255, 129, 94, 1)',
-  },
-  image: {
-    width: 48,
-    height: 48,
   },
   month: {
     color: 'rgba(173, 173, 173, 1)',
