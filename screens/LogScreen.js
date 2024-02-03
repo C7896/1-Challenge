@@ -1,5 +1,5 @@
-import { View, Text, ImageBackground, FlatList, TouchableOpacity, StyleSheet } from "react-native";
-import React, { useEffect, useState, useCallback } from "react";
+import { View, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
 
 import TabBar from "../components/tabBar";
 import Journal from "../components/Journal";
@@ -27,7 +27,8 @@ export default function LogScreen( {navigation} ) {
                 const journalDocs = collection(db, "users", user.uid, "journals");
                 const journalQuery = await getDocs(journalDocs);
                 const journals = journalQuery.docs.map(doc => doc.data());
-                setChallengeLog(journals.reverse());
+                journals.sort((a, b) => {return b.timestamp - a.timestamp});
+                setChallengeLog(journals);
             } else {
                 console.log("User is not signed in");
             }
@@ -73,7 +74,7 @@ export default function LogScreen( {navigation} ) {
                         onPress={navigateToLogDetails}
                         />
                     )}
-                    keyExtractor={(item) => item.timestamp}
+                    keyExtractor={(item) => item.index}
                     ItemSeparatorComponent={<View style={{height: 5}} />}
                     ListEmptyComponent={loading ? <Text style={styles.text}>Loading...</Text> : <Text style={styles.text}>No past challenges</Text>}
                 />
