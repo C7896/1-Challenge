@@ -26,8 +26,8 @@ export default function LogScreen( {navigation} ) {
             if (user != null) {
                 const journalDocs = collection(db, "users", user.uid, "journals");
                 const journalQuery = await getDocs(journalDocs);
-                const journals = journalQuery.docs.map(doc => doc.data());
-                journals.sort((a, b) => {return b.timestamp - a.timestamp});
+                const journals = journalQuery.docs.map(doc => ({ docId: doc.id, ...doc.data() }));
+                journals.sort((a, b) => {return (b.timestamp?.toMillis?.() ?? 0) - (a.timestamp?.toMillis?.() ?? 0)});
                 setChallengeLog(journals);
             } else {
                 console.log("User is not signed in");
@@ -36,7 +36,7 @@ export default function LogScreen( {navigation} ) {
         }
 
         getChallengeLog();
-    }, [challengeLog, loading]);
+    }, []);
 
     const setFontSize = (challenge) => {
         const challengeLength = challenge.length;
@@ -47,6 +47,7 @@ export default function LogScreen( {navigation} ) {
         } else if (challengeLength < 100) {
             return 16;
         }
+        return 14;
     }
 
     const colors = ["#FF815E", "#FFCF5B", "#DCE18B", "#A1D5AE", "#92C1D2", "#4969A9"];
@@ -74,7 +75,7 @@ export default function LogScreen( {navigation} ) {
                         onPress={navigateToLogDetails}
                         />
                     )}
-                    keyExtractor={(item) => item.index}
+                    keyExtractor={(item) => item.docId}
                     ItemSeparatorComponent={<View style={{height: 5}} />}
                     ListEmptyComponent={loading ? <Text style={styles.text}>Loading...</Text> : <Text style={styles.text}>No past challenges</Text>}
                 />

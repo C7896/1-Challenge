@@ -35,7 +35,6 @@ export default function SplashScreen({ navigation }) {
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (isFocused) {
-          print(user)
           if (user) {
             // User is signed in.
             // get challenge object from new-challenges.json if today's date is not in past-challenges.json
@@ -66,9 +65,14 @@ export default function SplashScreen({ navigation }) {
                 console.error('Error getting documents: ', error);
             });
 
+            // no challenge doc for today means nothing to serve
+            if (nextChallenge === undefined) {
+                newChallenge = false;
+            }
+
             // check if user has already completed today's challenge (if it exists)
-            if (index != undefined) {
-                const journalRef = doc(db, "users", user.uid, "journals", index);
+            if (nextChallenge !== undefined) {
+                const journalRef = doc(db, "users", user.uid, "journals", `${year}-${month}-${day}`);
 
                 await getDoc(journalRef)
                     .then(docSnapshot => {
@@ -88,7 +92,7 @@ export default function SplashScreen({ navigation }) {
               const userRef = doc(db, "users", user.uid);
               const userDoc = await getDoc(userRef)
               if (userDoc.exists()) {
-                  userData = userDoc.data();
+                  const userData = userDoc.data();
                   streak = userData.current_streak;
                   console.log("User's current streak: ", streak);
               } else {

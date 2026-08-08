@@ -58,9 +58,14 @@ export default function Login0Screen( {navigation} ) {
                     console.error('Error getting documents: ', error);
                 });
 
+                // no challenge doc for today means nothing to serve
+                if (nextChallenge === undefined) {
+                    newChallenge = false;
+                }
+
                 // check if user has already completed today's challenge (if it exists)
-                if (index != undefined) {
-                    const journalRef = doc(db, "users", userCredential.user.uid, "journals", index);
+                if (nextChallenge !== undefined) {
+                    const journalRef = doc(db, "users", userCredential.user.uid, "journals", `${year}-${month}-${day}`);
 
                     await getDoc(journalRef)
                         .then(docSnapshot => {
@@ -80,7 +85,7 @@ export default function Login0Screen( {navigation} ) {
                 const userRef = doc(db, "users", userCredential.user.uid);
                 const userDoc = await getDoc(userRef)
                 if (userDoc.exists()) {
-                    userData = userDoc.data();
+                    const userData = userDoc.data();
                     streak = userData.current_streak;
                     console.log("User's current streak: ", streak);
                 } else {
@@ -90,9 +95,9 @@ export default function Login0Screen( {navigation} ) {
                 navigation.navigate(newChallenge ? "Challenge1" : "Home", {challenge: nextChallenge, streak: streak,});
             })
             .catch(error => {
+                pressed = false;
                 console.log(error);
                 Alert.alert(error.message);
-
             })
         }
     }

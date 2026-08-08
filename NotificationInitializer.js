@@ -1,24 +1,15 @@
 // NotificationInitializer.js
 import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
 
+// Requests notification permission (iOS prompt / Android 13+ runtime permission).
+// Returns true if granted. Fails silently when denied so the user isn't nagged
+// on every launch.
 export async function registerForPushNotificationsAsync() {
-  let token;
-  if (Platform.OS === 'ios') {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-  } else {
-    console.log('Push notifications are only configured for iOS devices');
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+  if (existingStatus !== 'granted') {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
   }
-
-  return token;
+  return finalStatus === 'granted';
 }

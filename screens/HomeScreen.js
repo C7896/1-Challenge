@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import TabBar from "../components/tabBar";
 import SignOutButton from "../components/signOutButton";
+import DeleteAccountButton from "../components/deleteAccountButton";
 import ExploreButton from "../components/exploreButton";
 
 import { initializeApp } from "firebase/app";
@@ -86,6 +87,7 @@ export default function HomeScreen( {navigation} ) {
             </ImageBackground>
             <ExploreButton link={"https://compassionate-service-496680.framer.app/"}/>
             <SignOutButton navigation={navigation} />
+            <DeleteAccountButton navigation={navigation} />
             <TabBar nav={navigation} />
         </View>
     );

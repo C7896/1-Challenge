@@ -15,29 +15,31 @@ import Challenge2Screen from "./screens/Challenge2Screen";
 import Challenge3Screen from "./screens/Challenge3Screen";
 import Challenge4Screen from "./screens/Challenge4Screen";
 import React, { useEffect } from 'react';
+import * as Notifications from 'expo-notifications';
 import { registerForPushNotificationsAsync } from './NotificationInitializer';
 import { scheduleDailyNotification } from './ScheduleNotification';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowBanner: true,
+    shouldShowList: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
-
- 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  
-  
-  useEffect(() => {
-    scheduleDailyNotification()
-      .then(() => console.log("Daily notification scheduled"))
-      .catch(error => console.error("Failed to schedule daily notification", error));
-  }, []);
 
   useEffect(() => {
     async function setupNotifications() {
       try {
-        const token = await registerForPushNotificationsAsync();
-        console.log('Notification Token:', token);
-        // You can send this token to your server if needed
+        const granted = await registerForPushNotificationsAsync();
+        if (granted) {
+          await scheduleDailyNotification();
+          console.log("Daily notification scheduled");
+        }
       } catch (error) {
         console.error('Error setting up notifications:', error);
       }
@@ -48,7 +50,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash" screenOptions={{headerShown: false, animation: "fade"}} >
+      <Stack.Navigator initialRouteName="Splash" screenOptions={{headerShown: false, animation: "fade", gestureEnabled: false}} >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login0" component={Login0Screen} />
         <Stack.Screen name="Login1" component={Login1Screen} />

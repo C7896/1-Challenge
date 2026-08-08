@@ -48,12 +48,17 @@ export default function Intro3Screen({ navigation }) {
                 console.error('Error getting documents: ', error);
             });
 
+            // no challenge doc for today means nothing to serve
+            if (nextChallenge === undefined) {
+                newChallenge = false;
+            }
+
             // get user's current challenge streak
             let streak = 0;
             const userRef = doc(db, "users", user.uid);
             const userDoc = await getDoc(userRef)
             if (userDoc.exists()) {
-                userData = userDoc.data();
+                const userData = userDoc.data();
                 streak = userData.current_streak;
                 console.log("User's current streak: ", streak);
             } else {

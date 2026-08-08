@@ -29,13 +29,12 @@ export default function SignupScreen( {navigation} ) {
         if (!pressed) {
             pressed = true;
             createUserWithEmailAndPassword(auth, email, password)
-            .then ((userCredential) => {
+            .then (async (userCredential) => {
                 console.log('Account Created!')
                 const user = userCredential.user;
-                console.log(user);
-                
+
                 try {
-                    setDoc(doc(db, "users", user.uid), {
+                    await setDoc(doc(db, "users", user.uid), {
                         username: username,
                         current_streak: 0,
                         longest_streak: 0,
@@ -45,10 +44,11 @@ export default function SignupScreen( {navigation} ) {
                 } catch (e) {
                     console.error("Error adding document: ", e);
                 }
-                
+
                 navigation.navigate("Intro1");
             })
             .catch(error => {
+                pressed = false;
                 console.log(error);
                 Alert.alert(error.message);
             });

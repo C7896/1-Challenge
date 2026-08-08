@@ -2,9 +2,8 @@
 import * as Notifications from 'expo-notifications';
 
 export async function scheduleDailyNotification() {
-  const trigger = new Date();
-  trigger.setHours(9, 0, 0); // Set the time to 9:00 AM
-  trigger.setDate(trigger.getDate() + 1); // Schedule for the next day
+  // clear any previously scheduled copies so relaunches don't stack duplicates
+  await Notifications.cancelAllScheduledNotificationsAsync();
 
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -12,9 +11,9 @@ export async function scheduleDailyNotification() {
       body: "New Challenge Out! Let's make a change!",
     },
     trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.DAILY,
       hour: 9,
       minute: 0,
-      repeats: true
     },
   });
 }

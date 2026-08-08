@@ -30,9 +30,16 @@ export default function Challenge3Screen({ navigation, route }) {
             const user = auth.currentUser;
             if (user != null) {
 
+                // journals are keyed by date: "year-month-day" (month is the short name)
+                const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const todayKey = `${challenge.year}-${challenge.month}-${challenge.day}`;
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayKey = `${yesterday.getFullYear()}-${months[yesterday.getMonth()]}-${yesterday.getDate()}`;
+
                 // check for yesterday's challenge in user's journals collection
                 let streaking = false;
-                const journalRef = doc(db, "users", user.uid, "journals", String(challenge.ID - 1));
+                const journalRef = doc(db, "users", user.uid, "journals", yesterdayKey);
                 const journalDoc = await getDoc(journalRef);
                 if (journalDoc.exists()) {
                     streaking = true;
@@ -40,9 +47,9 @@ export default function Challenge3Screen({ navigation, route }) {
                 } else {
                     console.log("Not streaking");
                 }
-                
+
                 // add journal to user
-                await setDoc(doc(db, "users", user.uid, "journals", String(challenge.ID)), {
+                await setDoc(doc(db, "users", user.uid, "journals", todayKey), {
                     day: challenge.day,
                     month: challenge.month,
                     year: challenge.year,
@@ -52,7 +59,7 @@ export default function Challenge3Screen({ navigation, route }) {
                     timestamp: serverTimestamp(),
                 })
                 .then(() => {
-                    console.log("Journal doc created, id = ", challenge.ID);
+                    console.log("Journal doc created, id = ", todayKey);
                 })
                 .catch(error => {
                     console.error("Error adding document: ", error);
@@ -76,7 +83,7 @@ export default function Challenge3Screen({ navigation, route }) {
                 const userRef = doc(db, "users", user.uid);
                 const userDoc = await getDoc(userRef)
                 if (userDoc.exists()) {
-                    userData = userDoc.data();
+                    const userData = userDoc.data();
                     streak = userData.current_streak;
                     console.log("User's current streak: ", streak);
                 } else {
