@@ -1,5 +1,6 @@
 import { View, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 import TabBar from "../components/tabBar";
 import Journal from "../components/Journal";
@@ -19,8 +20,12 @@ export default function LogScreen( {navigation} ) {
 
     const [challengeLog, setChallengeLog] = useState([]);
     const [loading, setLoading] = useState(true);
+    const isFocused = useIsFocused();
 
     useEffect(() => {
+        if (!isFocused) {
+            return;
+        }
         const getChallengeLog = async () => {
             const user = auth.currentUser;
             if (user != null) {
@@ -36,7 +41,7 @@ export default function LogScreen( {navigation} ) {
         }
 
         getChallengeLog();
-    }, []);
+    }, [isFocused]);
 
     const setFontSize = (challenge) => {
         const challengeLength = challenge.length;

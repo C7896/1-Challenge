@@ -17,12 +17,12 @@ export default function DeleteAccountButton({ navigation }) {
         if (user == null) {
             return;
         }
+        const uid = user.uid;
+
+        // delete the auth account FIRST: it is the step that can fail on a stale
+        // session, and data must not be wiped if it does
         try {
-            const journals = await getDocs(collection(db, "users", user.uid, "journals"));
-            await Promise.all(journals.docs.map((journal) => deleteDoc(journal.ref)));
-            await deleteDoc(doc(db, "users", user.uid));
             await deleteUser(user);
-            navigation.navigate("Splash");
         } catch (error) {
             if (error.code === "auth/requires-recent-login") {
                 Alert.alert(
@@ -32,7 +32,19 @@ export default function DeleteAccountButton({ navigation }) {
             } else {
                 Alert.alert("Could not delete account", error.message);
             }
+            return;
         }
+
+        // best-effort data cleanup; the ID token remains briefly valid after deletion
+        try {
+            const journals = await getDocs(collection(db, "users", uid, "journals"));
+            await Promise.all(journals.docs.map((journal) => deleteDoc(journal.ref)));
+            await deleteDoc(doc(db, "users", uid));
+        } catch (error) {
+            console.log("Account deleted; data cleanup incomplete: ", error);
+        }
+
+        navigation.reset({ index: 0, routes: [{ name: "Splash" }] });
     };
 
     const confirmDelete = () => {

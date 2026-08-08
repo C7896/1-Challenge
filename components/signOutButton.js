@@ -14,7 +14,7 @@ export default function SignOutButton({ navigation }) {
 
     const handleSignOut = () => {
         signOut(auth).then(() => {
-            navigation.navigate("Splash");
+            navigation.reset({ index: 0, routes: [{ name: "Splash" }] });
           }).catch((error) => {
               Alert.alert("Could not sign out: ", error);
               console.log("Error signing out: ", error);

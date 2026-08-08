@@ -13,7 +13,10 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
       "bundleIdentifier": "com.onepercentchallenge.onepercentchallenge",
-      "buildNumber": "18"
+      "buildNumber": "18",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "googleServicesFile": "google-services.json",

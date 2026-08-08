@@ -1,8 +1,16 @@
 import { Pressable, Text, StyleSheet } from "react-native";
 
-export default function ClearButton( {title, nav, destination, top} ) {
+export default function ClearButton( {title, nav, destination, top, reset} ) {
+    const handlePress = () => {
+        if (reset) {
+            // clear the stack so completed flows can't be swiped/navigated back into
+            nav.reset({ index: 0, routes: [{ name: destination }] });
+        } else {
+            nav.navigate(destination);
+        }
+    };
     return (
-        <Pressable style={[styles.buttonContainer, {marginTop: top}]} onPress={() => nav.navigate(destination)}>
+        <Pressable style={[styles.buttonContainer, {marginTop: top}]} onPress={handlePress}>
             <Text style={styles.text}>{title}</Text>
         </Pressable>
     );

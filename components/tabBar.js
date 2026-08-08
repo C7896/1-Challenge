@@ -5,10 +5,10 @@ const logIcon = require("../assets/book.png");
 export default function TabBar( {nav} ) {
     return (
         <View style={styles.container}>
-            <Pressable onPress={() => {nav.navigate("Home")}}>
+            <Pressable onPress={() => {nav.popTo("Home")}}>
                 <Image source={homeIcon} style={styles.image}/>
             </Pressable>
-            <Pressable onPress={() => {nav.navigate("Log")}}>
+            <Pressable onPress={() => {nav.popTo("Log")}}>
                 <Image source={logIcon} style={styles.image}/>
             </Pressable>
         </View>
