@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     button: {
         padding: 10,
         position: "absolute",
-        top: 60,
+        top: 105,
         left: 15,
     },
     text: {
