@@ -1,0 +1,2924 @@
+{
+  "challenges": {
+    "2026-Aug-2": {
+      "id": "1",
+      "day": 2,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Compliment three strangers today."
+    },
+    "2026-Aug-3": {
+      "id": "2",
+      "day": 3,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Send a text to someone you have not seen in a very long time."
+    },
+    "2026-Aug-4": {
+      "id": "3",
+      "day": 4,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Drink only water today."
+    },
+    "2026-Aug-5": {
+      "id": "4",
+      "day": 5,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Say thank you to someone who helped you years ago."
+    },
+    "2026-Aug-6": {
+      "id": "5",
+      "day": 6,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Read ten pages of a book."
+    },
+    "2026-Aug-7": {
+      "id": "6",
+      "day": 7,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Pick up three pieces of litter you did not drop."
+    },
+    "2026-Aug-8": {
+      "id": "7",
+      "day": 8,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Do the hardest task on your list first."
+    },
+    "2026-Aug-9": {
+      "id": "8",
+      "day": 9,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Put your phone away during every meal today."
+    },
+    "2026-Aug-10": {
+      "id": "9",
+      "day": 10,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Do a chore that is not yours without mentioning it."
+    },
+    "2026-Aug-11": {
+      "id": "10",
+      "day": 11,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Write down one goal and the first small step toward it."
+    },
+    "2026-Aug-12": {
+      "id": "11",
+      "day": 12,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Hold the door for everyone behind you."
+    },
+    "2026-Aug-13": {
+      "id": "12",
+      "day": 13,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Call a family member just to ask how they are."
+    },
+    "2026-Aug-14": {
+      "id": "13",
+      "day": 14,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Move your body for twenty minutes."
+    },
+    "2026-Aug-15": {
+      "id": "14",
+      "day": 15,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Write down three things you are grateful for."
+    },
+    "2026-Aug-16": {
+      "id": "15",
+      "day": 16,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Spend fifteen minutes learning something new."
+    },
+    "2026-Aug-17": {
+      "id": "16",
+      "day": 17,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Donate one item you have not used in a year."
+    },
+    "2026-Aug-18": {
+      "id": "17",
+      "day": 18,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Say no to something that drains you."
+    },
+    "2026-Aug-19": {
+      "id": "18",
+      "day": 19,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Spend an hour with no screens at all."
+    },
+    "2026-Aug-20": {
+      "id": "19",
+      "day": 20,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Offer help before being asked."
+    },
+    "2026-Aug-21": {
+      "id": "20",
+      "day": 21,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Write down what is worrying you, then one thing you control."
+    },
+    "2026-Aug-22": {
+      "id": "21",
+      "day": 22,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Let someone go ahead of you in line."
+    },
+    "2026-Aug-23": {
+      "id": "22",
+      "day": 23,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Text a friend you have not spoken to in over a month."
+    },
+    "2026-Aug-24": {
+      "id": "23",
+      "day": 24,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Stretch for five minutes before bed."
+    },
+    "2026-Aug-25": {
+      "id": "24",
+      "day": 25,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Send a thank-you message to a teacher or mentor."
+    },
+    "2026-Aug-26": {
+      "id": "25",
+      "day": 26,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Listen to a full album without multitasking."
+    },
+    "2026-Aug-27": {
+      "id": "26",
+      "day": 27,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Support a small local business today."
+    },
+    "2026-Aug-28": {
+      "id": "27",
+      "day": 28,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Ask for feedback from someone you trust."
+    },
+    "2026-Aug-29": {
+      "id": "28",
+      "day": 29,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Delete an app that wastes your time."
+    },
+    "2026-Aug-30": {
+      "id": "29",
+      "day": 30,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Do something kind without telling anyone."
+    },
+    "2026-Aug-31": {
+      "id": "30",
+      "day": 31,
+      "month": "Aug",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Write a short letter to your future self."
+    },
+    "2026-Sep-1": {
+      "id": "31",
+      "day": 1,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Learn the name of someone you see often but never asked."
+    },
+    "2026-Sep-2": {
+      "id": "32",
+      "day": 2,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Reach out to someone who seemed down lately."
+    },
+    "2026-Sep-3": {
+      "id": "33",
+      "day": 3,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Go to bed thirty minutes earlier tonight."
+    },
+    "2026-Sep-4": {
+      "id": "34",
+      "day": 4,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Tell someone specifically why you appreciate them."
+    },
+    "2026-Sep-5": {
+      "id": "35",
+      "day": 5,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Watch something that teaches you instead of numbs you."
+    },
+    "2026-Sep-6": {
+      "id": "36",
+      "day": 6,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Leave your workspace cleaner than you found it."
+    },
+    "2026-Sep-7": {
+      "id": "37",
+      "day": 7,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Have the conversation you have been avoiding."
+    },
+    "2026-Sep-8": {
+      "id": "38",
+      "day": 8,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Turn off every notification you did not choose."
+    },
+    "2026-Sep-9": {
+      "id": "39",
+      "day": 9,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Give away something you were saving for no reason."
+    },
+    "2026-Sep-10": {
+      "id": "40",
+      "day": 10,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Write down one thing you did well this week."
+    },
+    "2026-Sep-11": {
+      "id": "41",
+      "day": 11,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Thank someone in a service job by name."
+    },
+    "2026-Sep-12": {
+      "id": "42",
+      "day": 12,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Introduce two people who should know each other."
+    },
+    "2026-Sep-13": {
+      "id": "43",
+      "day": 13,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Wake up without hitting snooze."
+    },
+    "2026-Sep-14": {
+      "id": "44",
+      "day": 14,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Give credit publicly to someone who earned it."
+    },
+    "2026-Sep-15": {
+      "id": "45",
+      "day": 15,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Learn five words in another language."
+    },
+    "2026-Sep-16": {
+      "id": "46",
+      "day": 16,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Bring your own bag, cup, or bottle everywhere today."
+    },
+    "2026-Sep-17": {
+      "id": "47",
+      "day": 17,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Ask for what you actually want."
+    },
+    "2026-Sep-18": {
+      "id": "48",
+      "day": 18,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Unfollow accounts that make you feel worse."
+    },
+    "2026-Sep-19": {
+      "id": "49",
+      "day": 19,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Cover a small cost for someone quietly."
+    },
+    "2026-Sep-20": {
+      "id": "50",
+      "day": 20,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Name the thing you are actually avoiding."
+    },
+    "2026-Sep-21": {
+      "id": "51",
+      "day": 21,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Leave a kind note where a stranger will find it."
+    },
+    "2026-Sep-22": {
+      "id": "52",
+      "day": 22,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Reply to the message you have been avoiding."
+    },
+    "2026-Sep-23": {
+      "id": "53",
+      "day": 23,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Eat one more serving of vegetables than usual."
+    },
+    "2026-Sep-24": {
+      "id": "54",
+      "day": 24,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Thank someone who never gets thanked."
+    },
+    "2026-Sep-25": {
+      "id": "55",
+      "day": 25,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Look up the answer to something you have wondered about."
+    },
+    "2026-Sep-26": {
+      "id": "56",
+      "day": 26,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Recycle something you would normally throw away."
+    },
+    "2026-Sep-27": {
+      "id": "57",
+      "day": 27,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Admit you were wrong about something."
+    },
+    "2026-Sep-28": {
+      "id": "58",
+      "day": 28,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Do one task without switching tabs."
+    },
+    "2026-Sep-29": {
+      "id": "59",
+      "day": 29,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Give your time to someone who needs it more than you do."
+    },
+    "2026-Sep-30": {
+      "id": "60",
+      "day": 30,
+      "month": "Sep",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Ask yourself what you would do if you were not afraid."
+    },
+    "2026-Oct-1": {
+      "id": "61",
+      "day": 1,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Give up your seat to someone who needs it more."
+    },
+    "2026-Oct-2": {
+      "id": "62",
+      "day": 2,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Ask someone about their day and do not interrupt once."
+    },
+    "2026-Oct-3": {
+      "id": "63",
+      "day": 3,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Take a ten minute walk with no phone."
+    },
+    "2026-Oct-4": {
+      "id": "64",
+      "day": 4,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Write down one thing today that went right."
+    },
+    "2026-Oct-5": {
+      "id": "65",
+      "day": 5,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Spend twenty minutes on something creative."
+    },
+    "2026-Oct-6": {
+      "id": "66",
+      "day": 6,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Give away something you no longer need."
+    },
+    "2026-Oct-7": {
+      "id": "67",
+      "day": 7,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Do one thing that scares you slightly."
+    },
+    "2026-Oct-8": {
+      "id": "68",
+      "day": 8,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Leave your phone in another room for an hour."
+    },
+    "2026-Oct-9": {
+      "id": "69",
+      "day": 9,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Lend something without asking when you get it back."
+    },
+    "2026-Oct-10": {
+      "id": "70",
+      "day": 10,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Write down what a good day looks like for you."
+    },
+    "2026-Oct-11": {
+      "id": "71",
+      "day": 11,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Pay for the person behind you if you can afford it."
+    },
+    "2026-Oct-12": {
+      "id": "72",
+      "day": 12,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Tell a family member a specific memory you cherish."
+    },
+    "2026-Oct-13": {
+      "id": "73",
+      "day": 13,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Do a five minute breathing exercise."
+    },
+    "2026-Oct-14": {
+      "id": "74",
+      "day": 14,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Name one thing your body did well for you today."
+    },
+    "2026-Oct-15": {
+      "id": "75",
+      "day": 15,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Reconnect with an old hobby for twenty minutes."
+    },
+    "2026-Oct-16": {
+      "id": "76",
+      "day": 16,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Eat one meal today with no meat."
+    },
+    "2026-Oct-17": {
+      "id": "77",
+      "day": 17,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Send the message you drafted but never sent."
+    },
+    "2026-Oct-18": {
+      "id": "78",
+      "day": 18,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Check your phone only after you get out of bed."
+    },
+    "2026-Oct-19": {
+      "id": "79",
+      "day": 19,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Make something for someone."
+    },
+    "2026-Oct-20": {
+      "id": "80",
+      "day": 20,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Notice one story you tell yourself that is not true."
+    },
+    "2026-Oct-21": {
+      "id": "81",
+      "day": 21,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Smile at every person you pass for one whole block."
+    },
+    "2026-Oct-22": {
+      "id": "82",
+      "day": 22,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Send a photo that will make someone smile."
+    },
+    "2026-Oct-23": {
+      "id": "83",
+      "day": 23,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Cook something you have never made before."
+    },
+    "2026-Oct-24": {
+      "id": "84",
+      "day": 24,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Thank someone for a small thing they do every day."
+    },
+    "2026-Oct-25": {
+      "id": "85",
+      "day": 25,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Write one page about anything."
+    },
+    "2026-Oct-26": {
+      "id": "86",
+      "day": 26,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Walk, bike, or take transit instead of driving once."
+    },
+    "2026-Oct-27": {
+      "id": "87",
+      "day": 27,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Apply for the thing you feel underqualified for."
+    },
+    "2026-Oct-28": {
+      "id": "88",
+      "day": 28,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Reply properly instead of reacting with an emoji."
+    },
+    "2026-Oct-29": {
+      "id": "89",
+      "day": 29,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Share credit for something you did."
+    },
+    "2026-Oct-30": {
+      "id": "90",
+      "day": 30,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Sit quietly for ten minutes with no input."
+    },
+    "2026-Oct-31": {
+      "id": "91",
+      "day": 31,
+      "month": "Oct",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Help someone carry something heavy."
+    },
+    "2026-Nov-1": {
+      "id": "92",
+      "day": 1,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Check in on a neighbor."
+    },
+    "2026-Nov-2": {
+      "id": "93",
+      "day": 2,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Eat one meal without a screen."
+    },
+    "2026-Nov-3": {
+      "id": "94",
+      "day": 3,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Tell a coworker their work made your job easier."
+    },
+    "2026-Nov-4": {
+      "id": "95",
+      "day": 4,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Read something you expect to disagree with."
+    },
+    "2026-Nov-5": {
+      "id": "96",
+      "day": 5,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Take shorter showers today and notice the difference."
+    },
+    "2026-Nov-6": {
+      "id": "97",
+      "day": 6,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Speak up in the meeting you usually stay quiet in."
+    },
+    "2026-Nov-7": {
+      "id": "98",
+      "day": 7,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Read the article before sharing it."
+    },
+    "2026-Nov-8": {
+      "id": "99",
+      "day": 8,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Give the better half away."
+    },
+    "2026-Nov-9": {
+      "id": "100",
+      "day": 9,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "List what you want more of, and what you want less of."
+    },
+    "2026-Nov-10": {
+      "id": "101",
+      "day": 10,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Give a real answer when someone asks how you are."
+    },
+    "2026-Nov-11": {
+      "id": "102",
+      "day": 11,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Ask a friend what they are excited about right now."
+    },
+    "2026-Nov-12": {
+      "id": "103",
+      "day": 12,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Get outside before noon."
+    },
+    "2026-Nov-13": {
+      "id": "104",
+      "day": 13,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Write down a person who shaped you, and why."
+    },
+    "2026-Nov-14": {
+      "id": "105",
+      "day": 14,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Ask a question instead of giving advice today."
+    },
+    "2026-Nov-15": {
+      "id": "106",
+      "day": 15,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Fix something instead of replacing it."
+    },
+    "2026-Nov-16": {
+      "id": "107",
+      "day": 16,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Ask a question you think is too basic to ask."
+    },
+    "2026-Nov-17": {
+      "id": "108",
+      "day": 17,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Have a conversation with no phone on the table."
+    },
+    "2026-Nov-18": {
+      "id": "109",
+      "day": 18,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Leave something useful for the next person."
+    },
+    "2026-Nov-19": {
+      "id": "110",
+      "day": 19,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Ask yourself who you are trying to impress, and why."
+    },
+    "2026-Nov-20": {
+      "id": "111",
+      "day": 20,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Leave a bigger tip than usual and say thank you out loud."
+    },
+    "2026-Nov-21": {
+      "id": "112",
+      "day": 21,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Apologize for something you have been putting off."
+    },
+    "2026-Nov-22": {
+      "id": "113",
+      "day": 22,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Do ten pushups, or ten of anything."
+    },
+    "2026-Nov-23": {
+      "id": "114",
+      "day": 23,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Thank someone who told you a hard truth."
+    },
+    "2026-Nov-24": {
+      "id": "115",
+      "day": 24,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Learn how something you use every day actually works."
+    },
+    "2026-Nov-25": {
+      "id": "116",
+      "day": 25,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Buy something secondhand instead of new."
+    },
+    "2026-Nov-26": {
+      "id": "117",
+      "day": 26,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Set a boundary and hold it today."
+    },
+    "2026-Nov-27": {
+      "id": "118",
+      "day": 27,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Do one thing today at half your usual speed."
+    },
+    "2026-Nov-28": {
+      "id": "119",
+      "day": 28,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Pay a compliment behind someone's back."
+    },
+    "2026-Nov-29": {
+      "id": "120",
+      "day": 29,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "List three things you are carrying that are not yours."
+    },
+    "2026-Nov-30": {
+      "id": "121",
+      "day": 30,
+      "month": "Nov",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Let a car merge in front of you without getting annoyed."
+    },
+    "2026-Dec-1": {
+      "id": "122",
+      "day": 1,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Call the person you always mean to call."
+    },
+    "2026-Dec-2": {
+      "id": "123",
+      "day": 2,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Sit up straight every time you notice you are slouching."
+    },
+    "2026-Dec-3": {
+      "id": "124",
+      "day": 3,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Look around your room and name five things you are glad to have."
+    },
+    "2026-Dec-4": {
+      "id": "125",
+      "day": 4,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Teach yourself one keyboard shortcut and use it."
+    },
+    "2026-Dec-5": {
+      "id": "126",
+      "day": 5,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Turn off every light you are not using."
+    },
+    "2026-Dec-6": {
+      "id": "127",
+      "day": 6,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Say the kind thing you were thinking but did not say."
+    },
+    "2026-Dec-7": {
+      "id": "128",
+      "day": 7,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Notice the first thing you reach for when you are bored."
+    },
+    "2026-Dec-8": {
+      "id": "129",
+      "day": 8,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Help someone move, carry, or fix something."
+    },
+    "2026-Dec-9": {
+      "id": "130",
+      "day": 9,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Plan one thing you are looking forward to."
+    },
+    "2026-Dec-10": {
+      "id": "131",
+      "day": 10,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Put back a shopping cart that is not yours."
+    },
+    "2026-Dec-11": {
+      "id": "132",
+      "day": 11,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Ask someone how you can make their week easier."
+    },
+    "2026-Dec-12": {
+      "id": "133",
+      "day": 12,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Put your phone away one hour before sleep."
+    },
+    "2026-Dec-13": {
+      "id": "134",
+      "day": 13,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Say thank you before you say anything else today."
+    },
+    "2026-Dec-14": {
+      "id": "135",
+      "day": 14,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Finish the thing you left at ninety percent."
+    },
+    "2026-Dec-15": {
+      "id": "136",
+      "day": 15,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Share a resource that helped you with someone who needs it."
+    },
+    "2026-Dec-16": {
+      "id": "137",
+      "day": 16,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Try something you might be bad at."
+    },
+    "2026-Dec-17": {
+      "id": "138",
+      "day": 17,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Take a photo of something beautiful you would normally pass."
+    },
+    "2026-Dec-18": {
+      "id": "139",
+      "day": 18,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Give a real recommendation for someone who deserves it."
+    },
+    "2026-Dec-19": {
+      "id": "140",
+      "day": 19,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Give yourself the advice you would give a friend."
+    },
+    "2026-Dec-20": {
+      "id": "141",
+      "day": 20,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Offer directions to someone who looks lost."
+    },
+    "2026-Dec-21": {
+      "id": "142",
+      "day": 21,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Tell a friend the thing you admire about them."
+    },
+    "2026-Dec-22": {
+      "id": "143",
+      "day": 22,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Take a walk somewhere you have never walked."
+    },
+    "2026-Dec-23": {
+      "id": "144",
+      "day": 23,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Tell someone what you learned from them."
+    },
+    "2026-Dec-24": {
+      "id": "145",
+      "day": 24,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Take notes on something you want to remember."
+    },
+    "2026-Dec-25": {
+      "id": "146",
+      "day": 25,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Put ten dollars toward a cause you believe in."
+    },
+    "2026-Dec-26": {
+      "id": "147",
+      "day": 26,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#DCE18B",
+      "challenge": "Cancel one thing that does not serve you."
+    },
+    "2026-Dec-27": {
+      "id": "148",
+      "day": 27,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#A1D5AE",
+      "challenge": "Look out a window for two minutes."
+    },
+    "2026-Dec-28": {
+      "id": "149",
+      "day": 28,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#92C1D2",
+      "challenge": "Buy the thing your friend keeps saying they want."
+    },
+    "2026-Dec-29": {
+      "id": "150",
+      "day": 29,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#4969A9",
+      "challenge": "Forgive yourself for one specific thing."
+    },
+    "2026-Dec-30": {
+      "id": "151",
+      "day": 30,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FF815E",
+      "challenge": "Ask a cashier how their shift is going, and listen."
+    },
+    "2026-Dec-31": {
+      "id": "152",
+      "day": 31,
+      "month": "Dec",
+      "year": 2026,
+      "color": "#FFCF5B",
+      "challenge": "Invite someone to something, even if they might say no."
+    },
+    "2027-Jan-1": {
+      "id": "153",
+      "day": 1,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Skip the thing you eat out of boredom."
+    },
+    "2027-Jan-2": {
+      "id": "154",
+      "day": 2,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Appreciate something you normally complain about."
+    },
+    "2027-Jan-3": {
+      "id": "155",
+      "day": 3,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Explain something you know to someone who does not."
+    },
+    "2027-Jan-4": {
+      "id": "156",
+      "day": 4,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Sign up for one thing you keep meaning to volunteer for."
+    },
+    "2027-Jan-5": {
+      "id": "157",
+      "day": 5,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Tell the truth in a place you would normally soften it."
+    },
+    "2027-Jan-6": {
+      "id": "158",
+      "day": 6,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Finish one thing before starting another."
+    },
+    "2027-Jan-7": {
+      "id": "159",
+      "day": 7,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Send someone a resource without expecting a reply."
+    },
+    "2027-Jan-8": {
+      "id": "160",
+      "day": 8,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Notice what you say yes to out of guilt."
+    },
+    "2027-Jan-9": {
+      "id": "161",
+      "day": 9,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Pick up something a stranger dropped before they notice."
+    },
+    "2027-Jan-10": {
+      "id": "162",
+      "day": 10,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Sit with someone instead of texting them."
+    },
+    "2027-Jan-11": {
+      "id": "163",
+      "day": 11,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Stand up every hour today."
+    },
+    "2027-Jan-12": {
+      "id": "164",
+      "day": 12,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Thank a friend for putting up with you."
+    },
+    "2027-Jan-13": {
+      "id": "165",
+      "day": 13,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Listen to a podcast about a field you know nothing about."
+    },
+    "2027-Jan-14": {
+      "id": "166",
+      "day": 14,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Leave a public space better than you found it."
+    },
+    "2027-Jan-15": {
+      "id": "167",
+      "day": 15,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Start the project you keep researching."
+    },
+    "2027-Jan-16": {
+      "id": "168",
+      "day": 16,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Silence your phone for the whole evening."
+    },
+    "2027-Jan-17": {
+      "id": "169",
+      "day": 17,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Take on the annoying task nobody wants."
+    },
+    "2027-Jan-18": {
+      "id": "170",
+      "day": 18,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Say out loud the advice you need to hear."
+    },
+    "2027-Jan-19": {
+      "id": "171",
+      "day": 19,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Say good morning to the first three people you see."
+    },
+    "2027-Jan-20": {
+      "id": "172",
+      "day": 20,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Ask a grandparent or elder about their twenties."
+    },
+    "2027-Jan-21": {
+      "id": "173",
+      "day": 21,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Eat something you actually enjoy, slowly."
+    },
+    "2027-Jan-22": {
+      "id": "174",
+      "day": 22,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Write down one thing you took for granted this week."
+    },
+    "2027-Jan-23": {
+      "id": "175",
+      "day": 23,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Draw something badly and keep it."
+    },
+    "2027-Jan-24": {
+      "id": "176",
+      "day": 24,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Learn the name of one plant or bird near your home."
+    },
+    "2027-Jan-25": {
+      "id": "177",
+      "day": 25,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Ask for a discount, a favor, or an extension."
+    },
+    "2027-Jan-26": {
+      "id": "178",
+      "day": 26,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Take a different route and notice something new."
+    },
+    "2027-Jan-27": {
+      "id": "179",
+      "day": 27,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Split the difference in someone else's favor."
+    },
+    "2027-Jan-28": {
+      "id": "180",
+      "day": 28,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "End the day by naming one win, however small."
+    },
+    "2027-Jan-29": {
+      "id": "181",
+      "day": 29,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Let someone else take the parking spot you were waiting for."
+    },
+    "2027-Jan-30": {
+      "id": "182",
+      "day": 30,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Forgive someone silently and let it go."
+    },
+    "2027-Jan-31": {
+      "id": "183",
+      "day": 31,
+      "month": "Jan",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Get fifteen minutes of sunlight."
+    },
+    "2027-Feb-1": {
+      "id": "184",
+      "day": 1,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Tell someone their advice actually worked."
+    },
+    "2027-Feb-2": {
+      "id": "185",
+      "day": 2,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Practice the thing you are worst at for ten minutes."
+    },
+    "2027-Feb-3": {
+      "id": "186",
+      "day": 3,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Give food you will not eat to someone who will."
+    },
+    "2027-Feb-4": {
+      "id": "187",
+      "day": 4,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Introduce yourself to someone new."
+    },
+    "2027-Feb-5": {
+      "id": "188",
+      "day": 5,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Do a task in silence, with no music or podcast."
+    },
+    "2027-Feb-6": {
+      "id": "189",
+      "day": 6,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Give someone a head start."
+    },
+    "2027-Feb-7": {
+      "id": "190",
+      "day": 7,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Ask what you would regret not doing this year."
+    },
+    "2027-Feb-8": {
+      "id": "191",
+      "day": 8,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Give an honest compliment to someone serving you."
+    },
+    "2027-Feb-9": {
+      "id": "192",
+      "day": 9,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Say yes to an invitation you would normally decline."
+    },
+    "2027-Feb-10": {
+      "id": "193",
+      "day": 10,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Do the workout you keep postponing."
+    },
+    "2027-Feb-11": {
+      "id": "194",
+      "day": 11,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Thank the person who introduced you to something you love."
+    },
+    "2027-Feb-12": {
+      "id": "195",
+      "day": 12,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Read an article all the way to the end."
+    },
+    "2027-Feb-13": {
+      "id": "196",
+      "day": 13,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Use up something before you buy a replacement."
+    },
+    "2027-Feb-14": {
+      "id": "197",
+      "day": 14,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Share something you made before it is perfect."
+    },
+    "2027-Feb-15": {
+      "id": "198",
+      "day": 15,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Put away one thing that has been sitting out for weeks."
+    },
+    "2027-Feb-16": {
+      "id": "199",
+      "day": 16,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Do the dishes you did not dirty."
+    },
+    "2027-Feb-17": {
+      "id": "200",
+      "day": 17,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Choose one thing to let go of today."
+    },
+    "2027-Feb-18": {
+      "id": "201",
+      "day": 18,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Hold the elevator instead of pretending you did not see them."
+    },
+    "2027-Feb-19": {
+      "id": "202",
+      "day": 19,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Give someone your full attention for one whole conversation."
+    },
+    "2027-Feb-20": {
+      "id": "203",
+      "day": 20,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Drink a glass of water before your first coffee."
+    },
+    "2027-Feb-21": {
+      "id": "204",
+      "day": 21,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Notice one beautiful thing and stop for it."
+    },
+    "2027-Feb-22": {
+      "id": "205",
+      "day": 22,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Write down a question you cannot answer yet."
+    },
+    "2027-Feb-23": {
+      "id": "206",
+      "day": 23,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Say something good about your neighborhood out loud."
+    },
+    "2027-Feb-24": {
+      "id": "207",
+      "day": 24,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Change your mind out loud."
+    },
+    "2027-Feb-25": {
+      "id": "208",
+      "day": 25,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Tidy one small space and leave it better than you found it."
+    },
+    "2027-Feb-26": {
+      "id": "209",
+      "day": 26,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Give away the thing someone admired at your place."
+    },
+    "2027-Feb-27": {
+      "id": "210",
+      "day": 27,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Picture your week and cut the one thing you dread most."
+    },
+    "2027-Feb-28": {
+      "id": "211",
+      "day": 28,
+      "month": "Feb",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Let the person with fewer items go first."
+    },
+    "2027-Mar-1": {
+      "id": "212",
+      "day": 1,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Let someone else pick the plan today."
+    },
+    "2027-Mar-2": {
+      "id": "213",
+      "day": 2,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Take the long way somewhere on purpose."
+    },
+    "2027-Mar-3": {
+      "id": "214",
+      "day": 3,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Say thank you to someone who cannot pay you back."
+    },
+    "2027-Mar-4": {
+      "id": "215",
+      "day": 4,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Learn one fact about the place you live."
+    },
+    "2027-Mar-5": {
+      "id": "216",
+      "day": 5,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Water a plant that is not yours."
+    },
+    "2027-Mar-6": {
+      "id": "217",
+      "day": 6,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Do the thing you said you would do last week."
+    },
+    "2027-Mar-7": {
+      "id": "218",
+      "day": 7,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Clean out one drawer, folder, or inbox."
+    },
+    "2027-Mar-8": {
+      "id": "219",
+      "day": 8,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Handle the thing your friend has been dreading."
+    },
+    "2027-Mar-9": {
+      "id": "220",
+      "day": 9,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Ask whether you are busy or actually productive."
+    },
+    "2027-Mar-10": {
+      "id": "221",
+      "day": 10,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Tell a manager about an employee who did a good job."
+    },
+    "2027-Mar-11": {
+      "id": "222",
+      "day": 11,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Ask a friend what they are struggling with."
+    },
+    "2027-Mar-12": {
+      "id": "223",
+      "day": 12,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Notice how you feel after eating today."
+    },
+    "2027-Mar-13": {
+      "id": "224",
+      "day": 13,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Write down what you would miss most if it disappeared tomorrow."
+    },
+    "2027-Mar-14": {
+      "id": "225",
+      "day": 14,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Follow your curiosity for thirty uninterrupted minutes."
+    },
+    "2027-Mar-15": {
+      "id": "226",
+      "day": 15,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Take the stairs every single time today."
+    },
+    "2027-Mar-16": {
+      "id": "227",
+      "day": 16,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Sit with a hard feeling for five minutes instead of distracting yourself."
+    },
+    "2027-Mar-17": {
+      "id": "228",
+      "day": 17,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Fix one small thing that has been annoying you."
+    },
+    "2027-Mar-18": {
+      "id": "229",
+      "day": 18,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Send money to someone who needs it more, quietly."
+    },
+    "2027-Mar-19": {
+      "id": "230",
+      "day": 19,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Name the person you are becoming this year."
+    },
+    "2027-Mar-20": {
+      "id": "231",
+      "day": 20,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Give someone the last one of something."
+    },
+    "2027-Mar-21": {
+      "id": "232",
+      "day": 21,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Reconnect with someone who once helped your career."
+    },
+    "2027-Mar-22": {
+      "id": "233",
+      "day": 22,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Rest on purpose instead of collapsing."
+    },
+    "2027-Mar-23": {
+      "id": "234",
+      "day": 23,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Thank someone for their patience with you."
+    },
+    "2027-Mar-24": {
+      "id": "235",
+      "day": 24,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Ask someone to explain their job to you."
+    },
+    "2027-Mar-25": {
+      "id": "236",
+      "day": 25,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Combine your errands into one trip."
+    },
+    "2027-Mar-26": {
+      "id": "237",
+      "day": 26,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Take the first step on something you have only planned."
+    },
+    "2027-Mar-27": {
+      "id": "238",
+      "day": 27,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Make your bed and notice how the room feels."
+    },
+    "2027-Mar-28": {
+      "id": "239",
+      "day": 28,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Let someone else have the win today."
+    },
+    "2027-Mar-29": {
+      "id": "240",
+      "day": 29,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Consider what you would do with a completely free day."
+    },
+    "2027-Mar-30": {
+      "id": "241",
+      "day": 30,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Offer your phone charger to a stranger who needs it."
+    },
+    "2027-Mar-31": {
+      "id": "242",
+      "day": 31,
+      "month": "Mar",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Tell someone you are proud of them."
+    },
+    "2027-Apr-1": {
+      "id": "243",
+      "day": 1,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Do one thing today that makes tomorrow easier."
+    },
+    "2027-Apr-2": {
+      "id": "244",
+      "day": 2,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Give yourself credit for something you usually dismiss."
+    },
+    "2027-Apr-3": {
+      "id": "245",
+      "day": 3,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Rewrite something you wrote to make it shorter."
+    },
+    "2027-Apr-4": {
+      "id": "246",
+      "day": 4,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Teach someone something you are good at, for free."
+    },
+    "2027-Apr-5": {
+      "id": "247",
+      "day": 5,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Let yourself be seen trying."
+    },
+    "2027-Apr-6": {
+      "id": "248",
+      "day": 6,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Clear one thing off your list by just doing it now."
+    },
+    "2027-Apr-7": {
+      "id": "249",
+      "day": 7,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Say yes to a favor without weighing it first."
+    },
+    "2027-Apr-8": {
+      "id": "250",
+      "day": 8,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Identify the habit that costs you the most."
+    },
+    "2027-Apr-9": {
+      "id": "251",
+      "day": 9,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Make room without being asked."
+    },
+    "2027-Apr-10": {
+      "id": "252",
+      "day": 10,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Write a short letter to someone who will not expect it."
+    },
+    "2027-Apr-11": {
+      "id": "253",
+      "day": 11,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Cook a meal from scratch instead of ordering."
+    },
+    "2027-Apr-12": {
+      "id": "254",
+      "day": 12,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Say thank you to people who helped you throughout your life."
+    },
+    "2027-Apr-13": {
+      "id": "255",
+      "day": 13,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Memorize something worth having in your head."
+    },
+    "2027-Apr-14": {
+      "id": "256",
+      "day": 14,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Share a skill with a person who cannot pay for it."
+    },
+    "2027-Apr-15": {
+      "id": "257",
+      "day": 15,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Say the thing everyone is thinking but nobody has said."
+    },
+    "2027-Apr-16": {
+      "id": "258",
+      "day": 16,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Keep your phone face down for the whole day."
+    },
+    "2027-Apr-17": {
+      "id": "259",
+      "day": 17,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Offer your seat, your time, or your turn."
+    },
+    "2027-Apr-18": {
+      "id": "260",
+      "day": 18,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Ask what you are pretending not to know."
+    },
+    "2027-Apr-19": {
+      "id": "261",
+      "day": 19,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Thank a bus driver, barista, or cleaner today."
+    },
+    "2027-Apr-20": {
+      "id": "262",
+      "day": 20,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Cook or share a meal with someone."
+    },
+    "2027-Apr-21": {
+      "id": "263",
+      "day": 21,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Walk somewhere you would normally drive."
+    },
+    "2027-Apr-22": {
+      "id": "264",
+      "day": 22,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Thank someone who believed you before you believed yourself."
+    },
+    "2027-Apr-23": {
+      "id": "265",
+      "day": 23,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Look up the origin of a word you use often."
+    },
+    "2027-Apr-24": {
+      "id": "266",
+      "day": 24,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Vote, register, or read one thing about a local issue."
+    },
+    "2027-Apr-25": {
+      "id": "267",
+      "day": 25,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Ask someone to hold you to something."
+    },
+    "2027-Apr-26": {
+      "id": "268",
+      "day": 26,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Mute a group chat that drains you."
+    },
+    "2027-Apr-27": {
+      "id": "269",
+      "day": 27,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Cover for someone without making it a story."
+    },
+    "2027-Apr-28": {
+      "id": "270",
+      "day": 28,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Decide what good enough looks like, then stop there."
+    },
+    "2027-Apr-29": {
+      "id": "271",
+      "day": 29,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Buy a coffee for the person working alone."
+    },
+    "2027-Apr-30": {
+      "id": "272",
+      "day": 30,
+      "month": "Apr",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Ask a coworker something that is not about work."
+    },
+    "2027-May-1": {
+      "id": "273",
+      "day": 1,
+      "month": "May",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Stop eating when you are full, not when the plate is empty."
+    },
+    "2027-May-2": {
+      "id": "274",
+      "day": 2,
+      "month": "May",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Name one thing about today that you would not trade."
+    },
+    "2027-May-3": {
+      "id": "275",
+      "day": 3,
+      "month": "May",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Study a map of somewhere you have never been."
+    },
+    "2027-May-4": {
+      "id": "276",
+      "day": 4,
+      "month": "May",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Compost or save one thing from the trash today."
+    },
+    "2027-May-5": {
+      "id": "277",
+      "day": 5,
+      "month": "May",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Volunteer for the thing you would normally avoid."
+    },
+    "2027-May-6": {
+      "id": "278",
+      "day": 6,
+      "month": "May",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Open one tab at a time for an hour."
+    },
+    "2027-May-7": {
+      "id": "279",
+      "day": 7,
+      "month": "May",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Give a stranger the thing you were about to throw away."
+    },
+    "2027-May-8": {
+      "id": "280",
+      "day": 8,
+      "month": "May",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Look back at last year and name one thing that changed."
+    },
+    "2027-May-9": {
+      "id": "281",
+      "day": 9,
+      "month": "May",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Leave a five star review for a small business you like."
+    },
+    "2027-May-10": {
+      "id": "282",
+      "day": 10,
+      "month": "May",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Send a voice note instead of a text."
+    },
+    "2027-May-11": {
+      "id": "283",
+      "day": 11,
+      "month": "May",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Take the stairs, then take them again."
+    },
+    "2027-May-12": {
+      "id": "284",
+      "day": 12,
+      "month": "May",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Tell a former boss or colleague what they taught you."
+    },
+    "2027-May-13": {
+      "id": "285",
+      "day": 13,
+      "month": "May",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Learn the basics of a skill you have always envied."
+    },
+    "2027-May-14": {
+      "id": "286",
+      "day": 14,
+      "month": "May",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Buy from someone who made the thing themselves."
+    },
+    "2027-May-15": {
+      "id": "287",
+      "day": 15,
+      "month": "May",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Tell someone what you actually think, kindly."
+    },
+    "2027-May-16": {
+      "id": "288",
+      "day": 16,
+      "month": "May",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Answer email twice today instead of all day."
+    },
+    "2027-May-17": {
+      "id": "289",
+      "day": 17,
+      "month": "May",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Be generous with your attention today."
+    },
+    "2027-May-18": {
+      "id": "290",
+      "day": 18,
+      "month": "May",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Pick a stranger and quietly wish them well."
+    },
+    "2027-May-19": {
+      "id": "291",
+      "day": 19,
+      "month": "May",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Thank a parent or guardian figure specifically."
+    },
+    "2027-May-20": {
+      "id": "292",
+      "day": 20,
+      "month": "May",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Put on music and move for one whole song."
+    },
+    "2027-May-21": {
+      "id": "293",
+      "day": 21,
+      "month": "May",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Thank the person who does the thing nobody notices."
+    },
+    "2027-May-22": {
+      "id": "294",
+      "day": 22,
+      "month": "May",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Read a poem twice."
+    },
+    "2027-May-23": {
+      "id": "295",
+      "day": 23,
+      "month": "May",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Give directions instead of pointing at a phone."
+    },
+    "2027-May-24": {
+      "id": "296",
+      "day": 24,
+      "month": "May",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Go somewhere alone that you would normally avoid alone."
+    },
+    "2027-May-25": {
+      "id": "297",
+      "day": 25,
+      "month": "May",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Leave the house without headphones once."
+    },
+    "2027-May-26": {
+      "id": "298",
+      "day": 26,
+      "month": "May",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Give without checking whether they noticed."
+    },
+    "2027-May-27": {
+      "id": "299",
+      "day": 27,
+      "month": "May",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Let someone finish their sentence before you speak."
+    },
+    "2027-May-28": {
+      "id": "300",
+      "day": 28,
+      "month": "May",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Remember something small someone told you, and ask about it."
+    },
+    "2027-May-29": {
+      "id": "301",
+      "day": 29,
+      "month": "May",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Go a whole day without complaining about your body."
+    },
+    "2027-May-30": {
+      "id": "302",
+      "day": 30,
+      "month": "May",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Recall a stranger who was kind to you once."
+    },
+    "2027-May-31": {
+      "id": "303",
+      "day": 31,
+      "month": "May",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Find out how something in your home is made."
+    },
+    "2027-Jun-1": {
+      "id": "304",
+      "day": 1,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Refill something instead of buying a new one."
+    },
+    "2027-Jun-2": {
+      "id": "305",
+      "day": 2,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Ask for the raise, the meeting, or the introduction."
+    },
+    "2027-Jun-3": {
+      "id": "306",
+      "day": 3,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Watch one thing on purpose instead of whatever autoplays."
+    },
+    "2027-Jun-4": {
+      "id": "307",
+      "day": 4,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Give up the armrest."
+    },
+    "2027-Jun-5": {
+      "id": "308",
+      "day": 5,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Make plans and actually put them on the calendar."
+    },
+    "2027-Jun-6": {
+      "id": "309",
+      "day": 6,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Pack tomorrow's lunch tonight."
+    },
+    "2027-Jun-7": {
+      "id": "310",
+      "day": 7,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Appreciate one thing about where you live."
+    },
+    "2027-Jun-8": {
+      "id": "311",
+      "day": 8,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Watch a documentary about something unfamiliar."
+    },
+    "2027-Jun-9": {
+      "id": "312",
+      "day": 9,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Donate blood, or find out where you could."
+    },
+    "2027-Jun-10": {
+      "id": "313",
+      "day": 10,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Quit something that is over."
+    },
+    "2027-Jun-11": {
+      "id": "314",
+      "day": 11,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Say sorry first, even if you were not entirely wrong."
+    },
+    "2027-Jun-12": {
+      "id": "315",
+      "day": 12,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Be the first to reach out this time."
+    },
+    "2027-Jun-13": {
+      "id": "316",
+      "day": 13,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Sleep with your phone outside the bedroom."
+    },
+    "2027-Jun-14": {
+      "id": "317",
+      "day": 14,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Tell someone their work mattered."
+    },
+    "2027-Jun-15": {
+      "id": "318",
+      "day": 15,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Ask a better question than you asked yesterday."
+    },
+    "2027-Jun-16": {
+      "id": "319",
+      "day": 16,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Pick up litter on your street, not just in the park."
+    },
+    "2027-Jun-17": {
+      "id": "320",
+      "day": 17,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Say I do not know instead of guessing."
+    },
+    "2027-Jun-18": {
+      "id": "321",
+      "day": 18,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Ask someone for a recommendation, then actually take it."
+    },
+    "2027-Jun-19": {
+      "id": "322",
+      "day": 19,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Tell someone how they changed your mind about something."
+    },
+    "2027-Jun-20": {
+      "id": "323",
+      "day": 20,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Try a vegetable you have never cooked."
+    },
+    "2027-Jun-21": {
+      "id": "324",
+      "day": 21,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Count what you have instead of what is missing."
+    },
+    "2027-Jun-22": {
+      "id": "325",
+      "day": 22,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Learn one thing about the history of your street."
+    },
+    "2027-Jun-23": {
+      "id": "326",
+      "day": 23,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Give a book away instead of shelving it again."
+    },
+    "2027-Jun-24": {
+      "id": "327",
+      "day": 24,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Do the version of it that is scarier by ten percent."
+    },
+    "2027-Jun-25": {
+      "id": "328",
+      "day": 25,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Notice someone doing invisible work, and thank them."
+    },
+    "2027-Jun-26": {
+      "id": "329",
+      "day": 26,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Ask for help with something instead of doing it alone."
+    },
+    "2027-Jun-27": {
+      "id": "330",
+      "day": 27,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Do a real warm up before you rush into the day."
+    },
+    "2027-Jun-28": {
+      "id": "331",
+      "day": 28,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Thank someone for saying no to you."
+    },
+    "2027-Jun-29": {
+      "id": "332",
+      "day": 29,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Try to explain a hard idea in one sentence."
+    },
+    "2027-Jun-30": {
+      "id": "333",
+      "day": 30,
+      "month": "Jun",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Choose the option with less packaging today."
+    },
+    "2027-Jul-1": {
+      "id": "334",
+      "day": 1,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Follow up on the thing that went quiet."
+    },
+    "2027-Jul-2": {
+      "id": "335",
+      "day": 2,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Give someone a genuine compliment about their work, not their looks."
+    },
+    "2027-Jul-3": {
+      "id": "336",
+      "day": 3,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Say thank you to someone important to you, out loud."
+    },
+    "2027-Jul-4": {
+      "id": "337",
+      "day": 4,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Notice your breathing three times today."
+    },
+    "2027-Jul-5": {
+      "id": "338",
+      "day": 5,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Spend an hour making something with your hands."
+    },
+    "2027-Jul-6": {
+      "id": "339",
+      "day": 6,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Leave a seat, a spot, or a space for someone else."
+    },
+    "2027-Jul-7": {
+      "id": "340",
+      "day": 7,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Put your name on something you made."
+    },
+    "2027-Jul-8": {
+      "id": "341",
+      "day": 8,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Let someone merge into your lane, your line, or your conversation."
+    },
+    "2027-Jul-9": {
+      "id": "342",
+      "day": 9,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Ask a sibling or cousin something you never asked."
+    },
+    "2027-Jul-10": {
+      "id": "343",
+      "day": 10,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Give yourself a full lunch break."
+    },
+    "2027-Jul-11": {
+      "id": "344",
+      "day": 11,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Look up a person you admire and read how they started."
+    },
+    "2027-Jul-12": {
+      "id": "345",
+      "day": 12,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Learn one thing about a community near you."
+    },
+    "2027-Jul-13": {
+      "id": "346",
+      "day": 13,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Decide the thing you have been deciding for weeks."
+    },
+    "2027-Jul-14": {
+      "id": "347",
+      "day": 14,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Ask the name of someone whose name you should already know."
+    },
+    "2027-Jul-15": {
+      "id": "348",
+      "day": 15,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Tell someone the impact they had without knowing it."
+    },
+    "2027-Jul-16": {
+      "id": "349",
+      "day": 16,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Repair a piece of clothing instead of tossing it."
+    },
+    "2027-Jul-17": {
+      "id": "350",
+      "day": 17,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Wave to a neighbor you usually avoid eye contact with."
+    },
+    "2027-Jul-18": {
+      "id": "351",
+      "day": 18,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Send a message to someone who is having a hard year."
+    },
+    "2027-Jul-19": {
+      "id": "352",
+      "day": 19,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Share a meal with someone who eats alone."
+    },
+    "2027-Jul-20": {
+      "id": "353",
+      "day": 20,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Tell a stranger their dog, kid, or jacket is great."
+    },
+    "2027-Jul-21": {
+      "id": "354",
+      "day": 21,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Ask an old friend what they are up to now, and mean it."
+    },
+    "2027-Jul-22": {
+      "id": "355",
+      "day": 22,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Do one thing that helps someone you will never meet."
+    },
+    "2027-Jul-23": {
+      "id": "356",
+      "day": 23,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Carry something up the stairs for someone."
+    },
+    "2027-Jul-24": {
+      "id": "357",
+      "day": 24,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Take a friend up on the thing they keep offering."
+    },
+    "2027-Jul-25": {
+      "id": "358",
+      "day": 25,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Give someone the benefit of the doubt today."
+    },
+    "2027-Jul-26": {
+      "id": "359",
+      "day": 26,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Be the one who remembers the birthday."
+    },
+    "2027-Jul-27": {
+      "id": "360",
+      "day": 27,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#4969A9",
+      "challenge": "Stop and actually help when someone looks confused."
+    },
+    "2027-Jul-28": {
+      "id": "361",
+      "day": 28,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FF815E",
+      "challenge": "Ask someone what they need instead of guessing."
+    },
+    "2027-Jul-29": {
+      "id": "362",
+      "day": 29,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#FFCF5B",
+      "challenge": "Offer your spot to someone in a hurry."
+    },
+    "2027-Jul-30": {
+      "id": "363",
+      "day": 30,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#DCE18B",
+      "challenge": "Tell a friend you miss them."
+    },
+    "2027-Jul-31": {
+      "id": "364",
+      "day": 31,
+      "month": "Jul",
+      "year": 2027,
+      "color": "#A1D5AE",
+      "challenge": "Be patient with the person who is slow today."
+    },
+    "2027-Aug-1": {
+      "id": "365",
+      "day": 1,
+      "month": "Aug",
+      "year": 2027,
+      "color": "#92C1D2",
+      "challenge": "Spend an hour with someone with nothing scheduled."
+    }
+  }
+}
