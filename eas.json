@@ -16,12 +16,6 @@
     }
   },
   "submit": {
-    "production": {
-      "ios": {
-        "appleId": "quoterteam@gmail.com",
-        "ascAppId": "6476586429",
-        "appleTeamId": "R2R3GL3DN2"
-      }
-    }
+    "production": {}
   }
 }

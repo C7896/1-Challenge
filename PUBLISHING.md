@@ -3,8 +3,34 @@
 Target: **TestFlight first**, built and configured as a real App Store submission so the
 same build can be promoted to review without rebuilding.
 
-App Store Connect record already exists: app ID `6476586429`, Apple team `R2R3GL3DN2`.
-Last shipped version was 1.0.9 (build 18). This release is **1.1.0**.
+## This is a fresh app, not an update
+
+The publishing account changed (new Expo account, new Apple Developer account), so every
+identifier tied to the old account was reset:
+
+| | Old | New |
+|---|---|---|
+| Bundle ID | `com.onepercentchallenge.onepercentchallenge` | `com.onepercentchallenge.app` |
+| Display name | `OnePercentChallengeApp` | `1% Challenge` |
+| Version | 1.0.9 (18) | **1.0.0 (1)** |
+| EAS project | `42eab36a-...` | created on first build |
+| App Store Connect | app `6476586429` | created on first submit |
+
+The old bundle ID could not be carried over. Apple permanently binds a bundle ID to the
+team and app record that shipped it, so a new team cannot claim it. Consequences:
+
+- This publishes as a **new app**. Anyone running the old 1.0.9 will not receive it as an
+  update, and their install stays on the old version.
+- Version restarts at 1.0.0 because the new App Store Connect record has no history.
+- **Firebase is unaffected.** The app talks to Firebase through the JS SDK using
+  `firebase-config.js`, which authenticates by project and API key rather than bundle ID.
+  The old `GoogleService-Info.plist` and `google-services.json` were leftovers from the
+  native Firebase package removed during the SDK upgrade; they are no longer referenced.
+  Existing user accounts and journal data are untouched and still work.
+
+If you would rather keep a different bundle ID, change `ios.bundleIdentifier` and
+`android.package` in `app.json` **before the first build**. After a build ships, it is
+permanent.
 
 ## 1. Seed challenge content first
 
@@ -23,15 +49,21 @@ existing account, or temporarily allow writes to `/challenges` in the Firebase c
 ## 2. Build and upload
 
 ```bash
-npx eas-cli login
+npx eas-cli login                                    # your NEW Expo account
+npx eas-cli init                                     # creates the EAS project
 npx eas-cli build --platform ios --profile production --auto-submit
 ```
 
-The `production` profile is a store-distribution build, which is what TestFlight requires.
-EAS prompts for Apple authentication and manages signing certificates. `ios/` and
-`android/` are generated at build time from `app.json`, so do not hand-edit them.
+`eas init` writes a fresh `extra.eas.projectId` into `app.json` under your new account.
+The old project ID was removed, so this step is required once.
 
-Requires an active Apple Developer membership ($99/yr) on team `R2R3GL3DN2`.
+The `production` profile is a store-distribution build, which is what TestFlight requires.
+During the build, EAS prompts for your **new** Apple ID and creates the signing
+certificate and provisioning profile for `com.onepercentchallenge.app`. At the submit
+step it will offer to **create the App Store Connect app record**, since `eas.json` no
+longer names one. Accept that, and it registers the new app for you.
+
+Requires an active Apple Developer membership ($99/yr) on the new team.
 
 After upload, the build processes in App Store Connect for roughly 5 to 30 minutes, then
 appears under TestFlight.
@@ -61,13 +93,11 @@ Suggested "What to Test" note for this build:
 
 The same build is submitted for App Store review from App Store Connect. You will need:
 
-- **What's New** text for 1.1.0. Draft:
+- **What's New** text for 1.0.0. Since this is a new listing, this is the launch
+  description rather than a changelog. Draft:
 
-  > This release rebuilds the app on a current foundation and fixes the problems that
-  > could interrupt a daily streak. Challenges now load reliably, your journal entries and
-  > streak count are recorded correctly, past challenges are sorted newest first, and daily
-  > reminders no longer arrive more than once. You can now delete your account and all of
-  > your entries from the home screen.
+  > A small daily challenge, once a day. Complete it, write a short reflection, and build
+  > a streak. One percent better each day compounds to thirty-seven times better in a year.
 
 - **Privacy questionnaire**: collects email, user ID, and user content (journal entries),
   all linked to identity, none used for tracking
@@ -80,20 +110,12 @@ Export compliance is already answered in the binary
 ## Verified in this pass
 
 - Builds and runs on iOS 26.5 with Xcode 26.6 (Expo SDK 56 / React Native 0.85)
-- Version 1.1.0 build 1, so it will not collide with the existing 1.0.9 (18)
+- Version 1.0.0 build 1 under the new bundle ID com.onepercentchallenge.app
 - App icon 1024x1024 with no alpha channel
 - `PrivacyInfo.xcprivacy` generated with required-reason API declarations
 - App Transport Security no longer allows arbitrary loads
 - In-app account deletion present, as Apple guideline 5.1.1(v) requires
 - Signup, onboarding, home, log, sign-out, and account deletion tested against live Firebase
-
-## Worth deciding before testers see it
-
-- The name under the app icon is **"OnePercentChallengeApp"**, while every screen in the
-  app says "1% Challenge". Version 1.0.9 shipped this way, so it is your established name
-  and I left it alone, but it reads as a placeholder. Changing it is a one-line edit to
-  `name` in `app.json`. The App Store listing name is set separately in App Store Connect
-  and is not affected.
 
 ## Known non-blockers
 
