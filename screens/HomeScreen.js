@@ -1,13 +1,16 @@
 import { SafeAreaView, View, Text, ImageBackground, Image, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 import TabBar from "../components/tabBar";
 import SignOutButton from "../components/signOutButton";
 import DeleteAccountButton from "../components/deleteAccountButton";
 import ExploreButton from "../components/exploreButton";
+import TodayCard from "../components/todayCard";
 
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import { loadToday } from "../lib/challenge";
 
 const blob = require("../assets/blob.png");
 const blueCloud = require("../assets/blue_cloud.png");
@@ -22,14 +25,20 @@ export default function HomeScreen( {navigation} ) {
     const [personalImprovement, setPersonalImprovement] = useState(0);
     const [challengesCompleted, setChallengesCompleted] = useState(0);
 
+    const [todayChallenge, setTodayChallenge] = useState(null);
+    const [todayCompleted, setTodayCompleted] = useState(false);
+    const [todayLoading, setTodayLoading] = useState(true);
+
+    const isFocused = useIsFocused();
+
     useEffect(() => {
         const getStats = async () => {
             const user = auth.currentUser;
-    
+
             if (user) {
                 const userRef = doc(db, "users", user.uid);
                 const userDoc = await getDoc(userRef);
-    
+
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
                     setStreak(userData.current_streak);
@@ -41,11 +50,23 @@ export default function HomeScreen( {navigation} ) {
                 }
             }
         };
-    
+
+        const getTodayChallenge = async () => {
+            const user = auth.currentUser;
+            if (user) {
+                setTodayLoading(true);
+                const { challenge, completed } = await loadToday(db, user.uid);
+                setTodayChallenge(challenge);
+                setTodayCompleted(completed);
+                setTodayLoading(false);
+            }
+        };
+
         if (auth.currentUser) {
             getStats();
+            getTodayChallenge();
         }
-    }, [auth.currentUser]);
+    }, [isFocused]);
 
     return (
         <View style={styles.orangeContainer} >
@@ -57,9 +78,18 @@ export default function HomeScreen( {navigation} ) {
             <SafeAreaView style={styles.greenContainer} >
                 <Image source={globe} style={styles.globe} />
                 <View style={{ marginRight: 25 }}>
-                    <Text style={styles.subtitle}>We love you!</Text>
-                    <Text style={styles.text}>Thank you for making</Text>
-                    <Text style={styles.text}>the world a better place!</Text>
+                    {challengesCompleted > 0 ? (
+                        <>
+                            <Text style={styles.subtitle}>We love you!</Text>
+                            <Text style={styles.text}>Thank you for making</Text>
+                            <Text style={styles.text}>the world a better place!</Text>
+                        </>
+                    ) : (
+                        <>
+                            <Text style={styles.subtitle}>Welcome.</Text>
+                            <Text style={styles.text}>One small challenge a day.</Text>
+                        </>
+                    )}
                 </View>
             </SafeAreaView>
             <ImageBackground source={blob} style={styles.image}>
@@ -79,6 +109,13 @@ export default function HomeScreen( {navigation} ) {
                     </ImageBackground>
                     <Image source={travels} style={styles.travels} />
             </ImageBackground>
+            <TodayCard
+                loading={todayLoading}
+                challenge={todayChallenge}
+                completed={todayCompleted}
+                streak={streak}
+                navigation={navigation}
+            />
             <ExploreButton link={"https://compassionate-service-496680.framer.app/"}/>
             <SignOutButton navigation={navigation} />
             <DeleteAccountButton navigation={navigation} />

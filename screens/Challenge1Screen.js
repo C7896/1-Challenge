@@ -7,8 +7,7 @@ import StreakContainer from "../components/streakContainer";
 const backgroundChallengeOne = require('../assets/backgroundChallengeOne.png');
 
 export default function Challenge1Screen({ navigation, route }) {
-  const { challenge } = route.params;
-  const { streak } = route.params;
+  const { challenge, streak = 0 } = route.params ?? {};
 
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -39,6 +38,10 @@ export default function Challenge1Screen({ navigation, route }) {
 
     return () => clearInterval(interval);
   }, []);
+
+  if (!challenge) {
+    return null;
+  }
 
   return (
   <SafeAreaView style={styles.container}>
