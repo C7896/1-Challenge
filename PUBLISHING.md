@@ -39,8 +39,8 @@ Content in the repo stopped at Jan 2024, so without this your TestFlight testers
 later an App Store reviewer, open an app with nothing to do.
 
 ```bash
-node scripts/seed-challenges.mjs --dry-run                    # preview the 90 days, no credentials needed
-node scripts/seed-challenges.mjs --key ./service-account.json # write them
+node scripts/seed-challenges.mjs --dry-run 2026-08-02 365                  # preview, no credentials needed
+node scripts/seed-challenges.mjs --key ./service-account.json 2026-08-02 365   # write a full year
 ```
 
 The script writes with the Firebase Admin SDK, using a service account key, not a signed-in
