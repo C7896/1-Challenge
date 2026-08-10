@@ -2,6 +2,7 @@ import { View, Text, Image, TextInput, StyleSheet, Pressable, Alert, KeyboardAvo
 import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
+import PolicyLinks from "../components/policyLinks";
 
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc } from "firebase/firestore"
@@ -113,6 +114,8 @@ export default function SignupScreen( {navigation} ) {
                 <Pressable style={styles.buttoncontainer} onPress={handleCreateAccount}>
                      <Text style={styles.buttontext}>Create Account</Text>
                 </Pressable>
+                <Text style={styles.agreementText}>By creating an account you agree to our Privacy Policy.</Text>
+                <PolicyLinks style={styles.policyLinks} />
             </KeyboardAvoidingView>
             <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
                 <LoginScreenButton title="Login" nav={navigation} dest="Login1" background={false} />
@@ -177,5 +180,13 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 22,
         fontWeight: "bold",
+    },
+    agreementText: {
+        color: "white",
+        fontSize: 12,
+        marginTop: 10,
+    },
+    policyLinks: {
+        marginTop: 4,
     },
 });

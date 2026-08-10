@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
 const location = require("../assets/Location.png");
@@ -13,6 +13,9 @@ export default function Login0Screen( {navigation} ) {
             <View style={styles.container}>
                 <LoginScreenButton title="Login" nav={navigation} dest="Login1" background={true} />
                 <LoginScreenButton title="Sign up" nav={navigation} dest="Sign up" background={false} />
+                <Pressable style={styles.previewLink} onPress={() => navigation.navigate("Preview")}>
+                    <Text style={styles.previewText}>See today's challenge</Text>
+                </Pressable>
             </View>
         </View>
     );
@@ -34,5 +37,13 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 50,
         fontWeight: "bold",
+    },
+    previewLink: {
+        marginTop: 16,
+    },
+    previewText: {
+        color: "white",
+        fontSize: 14,
+        textDecorationLine: "underline",
     },
 });

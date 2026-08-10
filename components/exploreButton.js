@@ -1,16 +1,24 @@
-import { Pressable, Text, Linking, StyleSheet } from "react-native";
+import { Pressable, Text, Linking, Alert, StyleSheet } from "react-native";
 
 
 export default function ExploreButton({ link }) {
-    const handleOpenURL = () => {
-        console.log("pressed");
-        const url = link; // Replace with your desired URL
-        Linking.openURL(url).catch((err) => console.error('Error opening URL:', err));
+    const handleOpenURL = async () => {
+        const url = link;
+        try {
+            const canOpen = await Linking.canOpenURL(url);
+            if (!canOpen) {
+                Alert.alert("Could not open link", "Please try again later.");
+                return;
+            }
+            await Linking.openURL(url);
+        } catch (error) {
+            Alert.alert("Could not open link", "Please try again later.");
+        }
     };
 
     return (
         <Pressable onPress={handleOpenURL} style={styles.button}>
-            <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>Explore more</Text>
+            <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>Explore causes</Text>
         </Pressable>
     );
 
@@ -24,7 +32,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
-        paddingHoriontal: 12,
+        paddingHorizontal: 12,
         paddingVertical: 10,
         position: "absolute",
         right: 36,

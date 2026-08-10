@@ -3,12 +3,15 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Daily challenge content. Any signed-in user may read. The app runs a
-    // day/month/year equality query, so `read` must cover get and list.
+    // Daily challenge content. Open to everyone, signed in or not: the
+    // no-login preview screen (screens/PreviewScreen.js) reads this
+    // collection while signed out, and it holds no personal data and is
+    // identical for every user. The app runs a day/month/year equality
+    // query, so `read` must cover get and list.
     // Writes happen only through scripts/seed-challenges.mjs, which uses the
     // Admin SDK and bypasses these rules. Never loosen this to make a script work.
     match /challenges/{challengeId} {
-      allow read: if request.auth != null;
+      allow read: if true;
       allow write: if false;
     }
 

@@ -63,7 +63,7 @@ export default function DeleteAccountButton({ navigation }) {
 
     return (
         <>
-            <TouchableOpacity style={styles.button} onPress={() => setVisible(true)}>
+            <TouchableOpacity style={styles.button} onPress={() => setVisible(true)} accessibilityRole="button" accessibilityLabel="Delete account">
                 <Text style={styles.text}>Delete account</Text>
             </TouchableOpacity>
             <Modal
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: "white",
-        fontSize: 13,
+        fontSize: 15,
         textDecorationLine: "underline",
     },
     backdrop: {

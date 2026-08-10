@@ -7,10 +7,12 @@ import SignOutButton from "../components/signOutButton";
 import DeleteAccountButton from "../components/deleteAccountButton";
 import ExploreButton from "../components/exploreButton";
 import TodayCard from "../components/todayCard";
+import PolicyLinks from "../components/policyLinks";
 
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { loadToday } from "../lib/challenge";
+import { CAUSES_URL } from "../constants/links";
 
 const blob = require("../assets/blob.png");
 const blueCloud = require("../assets/blue_cloud.png");
@@ -116,9 +118,10 @@ export default function HomeScreen( {navigation} ) {
                 streak={streak}
                 navigation={navigation}
             />
-            <ExploreButton link={"https://compassionate-service-496680.framer.app/"}/>
+            <ExploreButton link={CAUSES_URL}/>
             <SignOutButton navigation={navigation} />
             <DeleteAccountButton navigation={navigation} />
+            <PolicyLinks style={styles.policyLinks} />
             <TabBar nav={navigation} />
         </View>
     );
@@ -153,9 +156,16 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
-        paddingHoriontal: 12,
+        paddingHorizontal: 12,
         paddingVertical: 10,
         marginTop: 20,
+    },
+    policyLinks: {
+        position: "absolute",
+        bottom: 115,
+        left: 0,
+        right: 0,
+        justifyContent: "center",
     },
     cloud: {
         width: "65%",

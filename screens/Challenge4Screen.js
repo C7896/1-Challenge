@@ -1,12 +1,30 @@
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
 import LargeImage from '../components/largeImage';
 import ClearButton from "../components/clearButton";
 import StreakContainer from "../components/streakContainer";
+import { registerForPushNotificationsAsync } from "../NotificationInitializer";
+import { scheduleDailyNotification } from "../ScheduleNotification";
 
 const earth = require('../assets/mother_nature.png');
 
 export default function Challenge4Screen({ navigation, route }) {
   const { streak } = route.params;
+
+  useEffect(() => {
+    async function setupNotifications() {
+      try {
+        const granted = await registerForPushNotificationsAsync();
+        if (granted) {
+          await scheduleDailyNotification();
+        }
+      } catch (error) {
+        console.error('Error setting up notifications:', error);
+      }
+    }
+
+    setupNotifications();
+  }, []);
 
   return (
       <SafeAreaView style={styles.container}>

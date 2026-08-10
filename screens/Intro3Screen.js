@@ -31,6 +31,7 @@ export default function Intro3Screen({ navigation }) {
                     <Text style={[styles.text, styles.body]}>A 1% improvement</Text>
                     <Text style={[styles.text, styles.body]}>everyday is a 37x</Text>
                     <Text style={[styles.text, styles.body]}>improvement a year!</Text>
+                    <Text style={[styles.text, styles.reminder]}>We'll remind you at 9:00 AM.</Text>
                     <Pressable style={styles.buttonContainer} onPress={checkChallenges}>
                         <Text style={styles.buttonText}>Start Challenge!</Text>
                     </Pressable>
@@ -65,6 +66,11 @@ const styles = StyleSheet.create({
     body: {
         fontSize: 30,
         fontWeight: "normal",
+    },
+    reminder: {
+        fontSize: 14,
+        fontWeight: "normal",
+        marginTop: 10,
     },
     buttonContainer: {
         borderWidth: 2,

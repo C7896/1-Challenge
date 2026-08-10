@@ -18,7 +18,7 @@ export default function SignOutButton({ navigation }) {
     };
 
     return (
-        <TouchableOpacity style={styles.button} onPress={handleSignOut}>
+        <TouchableOpacity style={styles.button} onPress={handleSignOut} accessibilityRole="button" accessibilityLabel="Sign out">
             <Image source={signOutIcon} style={styles.icon} />
         </TouchableOpacity>
     );
