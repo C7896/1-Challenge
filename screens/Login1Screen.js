@@ -1,12 +1,12 @@
 import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, StyleSheet } from "react-native";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
 
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from "../firebase-config";
-import { getFirestore, collection, query, where, doc, getDocs, getDoc } from "firebase/firestore"
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { collection, query, where, doc, getDocs, getDoc } from "firebase/firestore"
+import { auth, db } from "../firebase";
+import { friendlyAuthError } from "../authErrors";
 
 const location = require("../assets/Location.png");
 const mail = require("../assets/mail.png");
@@ -17,15 +17,11 @@ export default function Login0Screen( {navigation} ) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let pressed = false;
+    const pressed = useRef(false);
 
     const handleSignIn = () => {
-        if (!pressed) {
-            pressed = true;
+        if (!pressed.current) {
+            pressed.current = true;
             signInWithEmailAndPassword(auth, email, password)
             .then (async (userCredential) => {
                 console.log('User Signed In!');
@@ -95,12 +91,37 @@ export default function Login0Screen( {navigation} ) {
                 navigation.navigate(newChallenge ? "Challenge1" : "Home", {challenge: nextChallenge, streak: streak,});
             })
             .catch(error => {
-                pressed = false;
-                console.log(error);
-                Alert.alert(error.message);
+                pressed.current = false;
+                const { title, body } = friendlyAuthError(error);
+                Alert.alert(title, body);
             })
         }
     }
+
+    const handleForgotPassword = async () => {
+        const address = email.trim();
+        if (address.length === 0) {
+            Alert.alert("Enter your email first", "Type the email address for your account, then tap Forgot password again.");
+            return;
+        }
+        try {
+            await sendPasswordResetEmail(auth, address);
+        } catch (error) {
+            if (error.code === 'auth/too-many-requests') {
+                Alert.alert("Too many attempts", "Please wait a few minutes and try again.");
+                return;
+            }
+            if (error.code === 'auth/invalid-email') {
+                Alert.alert("That email does not look right", "Check the address and try again.");
+                return;
+            }
+            // other errors deliberately fall through so this never reveals whether an account exists
+        }
+        Alert.alert(
+            "Check your email",
+            "If an account exists for that address, we just sent a link to reset your password. It can take a minute to arrive, and it may land in spam."
+        );
+    };
 
     return(
         <View style={styles.container}>
@@ -120,7 +141,7 @@ export default function Login0Screen( {navigation} ) {
                         autoComplete="email"
                     />
                 </View>
-                <View style={[styles.inputContainer, {marginBottom: 15}]}>
+                <View style={[styles.inputContainer, {marginBottom: 5}]}>
                     <Image source={lock} style={styles.icon} />
                     <TextInput
                         style={styles.input}
@@ -132,6 +153,9 @@ export default function Login0Screen( {navigation} ) {
                         autoComplete="off"
                     />
                 </View>
+                <Pressable onPress={handleForgotPassword} style={styles.forgotRow}>
+                    <Text style={styles.forgotText}>Forgot password?</Text>
+                </Pressable>
                 <Pressable style={[styles.buttoncontainer, {backgroundColor:"#FFC0A2"}]} onPress={handleSignIn}>
                     <Text style={styles.buttontext}>Login</Text>
                 </Pressable>
@@ -176,6 +200,16 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         paddingLeft: 5,
+    },
+    forgotRow: {
+        width: 300,
+        alignItems: "flex-end",
+        marginBottom: 15,
+    },
+    forgotText: {
+        color: "white",
+        fontSize: 14,
+        textDecorationLine: "underline",
     },
     title: {
         color: "white",

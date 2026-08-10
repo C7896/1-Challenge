@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Daily challenge content. Any signed-in user may read. The app runs a
+    // day/month/year equality query, so `read` must cover get and list.
+    // Writes happen only through scripts/seed-challenges.mjs, which uses the
+    // Admin SDK and bypasses these rules. Never loosen this to make a script work.
+    match /challenges/{challengeId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // A user's own profile document. Owner only. Because the condition binds
+    // request.auth.uid to the document id, a collection query on /users can
+    // never be satisfied, so listing users is denied.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // A user's own private journal entries.
+      match /journals/{journalId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Everything else is unreachable from a client. Firestore already denies by
+    // default; this block is documentation.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

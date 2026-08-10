@@ -1,25 +1,20 @@
 import { View, Pressable, Text, StyleSheet, SafeAreaView } from "react-native";
+import React, { useRef } from "react";
 
 import LargeImage from "../components/largeImage";
 
-import { getAuth } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from "../firebase-config";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "firebase/firestore"
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore"
+import { auth, db } from "../firebase";
 
 const growth = require("../assets/Growth.png");
 
 export default function Intro3Screen({ navigation }) {
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let pressed = false;
+    const pressed = useRef(false);
 
     const checkChallenges = async () => {
-        if (!pressed) {
-            pressed = true;
+        if (!pressed.current) {
+            pressed.current = true;
             const user = auth.currentUser;
             // get challenge object from new-challenges.json if today's date is not in past-challenges.json
             const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

@@ -2,33 +2,13 @@ import { View, Text, StyleSheet, SafeAreaView, Pressable, useWindowDimensions } 
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect } from "react";
 
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { onAuthStateChanged, initializeAuth, getAuth, getReactNativePersistence } from 'firebase/auth';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-import { firebaseConfig } from "../firebase-config";
-import { getFirestore, collection, query, where, doc, getDocs, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from 'firebase/auth';
+import { collection, query, where, doc, getDocs, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 export default function SplashScreen({ navigation }) {
 
     const windowWidth = useWindowDimensions().width
-
-    let app;
-    let auth;
-
-    if (!getApps().length) {
-      try {
-        app = initializeApp(firebaseConfig);
-        auth = initializeAuth(app, {
-          persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-        });
-      } catch (error) {
-        console.log("Error initializing app: ", error);
-      }
-    } else {
-      app = getApp();
-      auth = getAuth(app);
-    }
-    const db = getFirestore(app);
 
     const isFocused = useIsFocused();
   

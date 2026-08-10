@@ -39,12 +39,28 @@ Content in the repo stopped at Jan 2024, so without this your TestFlight testers
 later an App Store reviewer, open an app with nothing to do.
 
 ```bash
-node scripts/seed-challenges.mjs --dry-run   # preview the 90 days
-node scripts/seed-challenges.mjs             # write them
+node scripts/seed-challenges.mjs --dry-run                    # preview the 90 days, no credentials needed
+node scripts/seed-challenges.mjs --key ./service-account.json # write them
 ```
 
-If Firestore rules reject the write, either pass `SEED_EMAIL` / `SEED_PASSWORD` for an
-existing account, or temporarily allow writes to `/challenges` in the Firebase console.
+The script writes with the Firebase Admin SDK, using a service account key, not a signed-in
+user. This is intentional: Firestore rules correctly deny client writes to `/challenges`, and
+the script bypasses rules the same way the console does rather than going through them.
+
+To get a key: Firebase Console, then Project Settings, then Service Accounts, then "Generate
+new private key." Save the downloaded JSON somewhere outside this repo, or use one of the
+patterns `.gitignore` already excludes (`service-account*.json`). Never commit it.
+
+You can also point at a key with an env var instead of `--key`:
+
+```bash
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json node scripts/seed-challenges.mjs
+```
+
+Never loosen the Firestore rules to make this script work. Opening `/challenges` to
+authenticated writes would let any signed-in user rewrite the daily challenge text shown to
+every user, which is a mass content injection risk, and it is unnecessary since the Admin SDK
+already bypasses rules with a proper credential.
 
 ## 2. Build and upload
 
@@ -116,6 +132,9 @@ Export compliance is already answered in the binary
 - App Transport Security no longer allows arbitrary loads
 - In-app account deletion present, as Apple guideline 5.1.1(v) requires
 - Signup, onboarding, home, log, sign-out, and account deletion tested against live Firebase
+- Firestore rules are now versioned at `firestore.rules`. Diff them against the live console
+  rules before any deploy; the file was derived from observed behavior, not the console
+  source, and has never itself been deployed.
 
 ## Known non-blockers
 

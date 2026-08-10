@@ -1,12 +1,11 @@
 import { View, Text, Image, TextInput, StyleSheet, Pressable, Alert, KeyboardAvoidingView } from "react-native";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
 
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from "../firebase-config";
-import { getFirestore, doc, setDoc } from "firebase/firestore"
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { doc, setDoc } from "firebase/firestore"
+import { auth, db } from "../firebase";
 
 const mountain = require("../assets/Victory.png");
 const user = require("../assets/user.png");
@@ -19,40 +18,53 @@ export default function SignupScreen( {navigation} ) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    const pressed = useRef(false);
 
-    let pressed = false;
-    
     const handleCreateAccount = () => {
-        if (!pressed) {
-            pressed = true;
-            createUserWithEmailAndPassword(auth, email, password)
-            .then (async (userCredential) => {
-                console.log('Account Created!')
-                const user = userCredential.user;
-
-                try {
-                    await setDoc(doc(db, "users", user.uid), {
-                        username: username,
-                        current_streak: 0,
-                        longest_streak: 0,
-                        total_completed_challenges: 0,
-                    });
-                    console.log("Blank user document created");
-                } catch (e) {
-                    console.error("Error adding document: ", e);
-                }
-
-                navigation.navigate("Intro1");
-            })
-            .catch(error => {
-                pressed = false;
-                console.log(error);
-                Alert.alert(error.message);
-            });
+        if (pressed.current) {
+            return;
         }
+
+        const trimmedUsername = username.trim();
+        const trimmedEmail = email.trim();
+        if (trimmedUsername.length === 0) { Alert.alert("Add a username", "Enter a name so we know what to call you."); return; }
+        if (trimmedEmail.length === 0) { Alert.alert("Add your email", "Enter the email address you want to use."); return; }
+        if (password.length < 8) { Alert.alert("Pick a longer password", "Passwords need at least 8 characters."); return; }
+
+        pressed.current = true;
+        createUserWithEmailAndPassword(auth, trimmedEmail, password)
+        .then (async (userCredential) => {
+            console.log('Account Created!')
+            const user = userCredential.user;
+
+            try {
+                await setDoc(doc(db, "users", user.uid), {
+                    username: trimmedUsername,
+                    current_streak: 0,
+                    longest_streak: 0,
+                    total_completed_challenges: 0,
+                });
+                console.log("Blank user document created");
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+
+            sendEmailVerification(user).catch(() => {});
+
+            navigation.navigate("Intro1");
+        })
+        .catch(error => {
+            pressed.current = false;
+            if (error.code === 'auth/email-already-in-use') {
+                Alert.alert("That email is already registered", "Try signing in instead, or use Forgot password if you cannot remember it.");
+            } else if (error.code === 'auth/invalid-email') {
+                Alert.alert("That email does not look right", "Check the address and try again.");
+            } else if (error.code === 'auth/weak-password') {
+                Alert.alert("Pick a longer password", "Passwords need at least 8 characters.");
+            } else {
+                Alert.alert("Could not create your account", "Something went wrong. Please try again.");
+            }
+        });
     }
 
 
@@ -72,6 +84,7 @@ export default function SignupScreen( {navigation} ) {
                         autoCapitalize="none"
                         autoCorrect={false}
                         autoComplete="off"
+                        maxLength={40}
                     />
                 </View>
                 <View style={styles.inputContainer}>

@@ -5,18 +5,12 @@ import { useIsFocused } from "@react-navigation/native";
 import TabBar from "../components/tabBar";
 import Journal from "../components/Journal";
 
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../firebase-config";
-import { getAuth } from "firebase/auth";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 const purpleBlob = require("../assets/purpleBlob.png");
 
 export default function LogScreen( {navigation} ) {
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
 
     const [challengeLog, setChallengeLog] = useState([]);
     const [loading, setLoading] = useState(true);

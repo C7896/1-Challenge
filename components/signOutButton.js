@@ -1,22 +1,18 @@
 import React from 'react';
 import { TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
 
-import { initializeApp } from 'firebase/app';
-import { signOut, getAuth } from 'firebase/auth';
-import { firebaseConfig } from "../firebase-config";
+import { signOut } from 'firebase/auth';
+import { auth } from "../firebase";
 
 const signOutIcon = require("../assets/signOut.png");
 
 export default function SignOutButton({ navigation }) {
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
     const handleSignOut = () => {
         signOut(auth).then(() => {
             navigation.reset({ index: 0, routes: [{ name: "Splash" }] });
           }).catch((error) => {
-              Alert.alert("Could not sign out: ", error);
+              Alert.alert("Could not sign out", "Please try again.");
               console.log("Error signing out: ", error);
           });
     };

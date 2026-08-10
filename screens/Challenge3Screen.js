@@ -1,10 +1,8 @@
 import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TextInput, Pressable, Keyboard, StyleSheet } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-import { getAuth } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from "../firebase-config";
-import { getFirestore, doc, setDoc, updateDoc, increment, serverTimestamp, getDoc } from "firebase/firestore"
+import { doc, setDoc, updateDoc, increment, serverTimestamp, getDoc } from "firebase/firestore"
+import { auth, db } from "../firebase";
 
 import CloseKeyboard from "../components/closeKeyboard";
 
@@ -17,16 +15,12 @@ export default function Challenge3Screen({ navigation, route }) {
     const [action, setAction] = useState('');
     const [reflection, setReflection] = useState('');
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let pressed = false;
+    const pressed = useRef(false);
 
     const createJournalDoc = async () => {
 
-        if (!pressed) {
-            pressed = true;
+        if (!pressed.current) {
+            pressed.current = true;
             const user = auth.currentUser;
             if (user != null) {
 
@@ -54,8 +48,8 @@ export default function Challenge3Screen({ navigation, route }) {
                     month: challenge.month,
                     year: challenge.year,
                     challenge: challenge.challenge,
-                    action: action,
-                    reflection: reflection,
+                    action: action.trim(),
+                    reflection: reflection.trim(),
                     timestamp: serverTimestamp(),
                 })
                 .then(() => {
@@ -92,6 +86,7 @@ export default function Challenge3Screen({ navigation, route }) {
 
                 navigation.navigate("Challenge4", {streak: streak,});
             } else {
+                pressed.current = false;
                 console.log("User is not signed in");
             }
         }
@@ -136,6 +131,7 @@ export default function Challenge3Screen({ navigation, route }) {
                         multiline
                         autoCorrect={false}
                         autoComplete="off"
+                        maxLength={2000}
                     />
                     <Text style={styles.body}>How did it make you feel?</Text>
                     <TextInput
@@ -145,6 +141,7 @@ export default function Challenge3Screen({ navigation, route }) {
                         multiline
                         autoCorrect={false}
                         autoComplete="off"
+                        maxLength={2000}
                     />
                 </KeyboardAvoidingView>
                 <View style={{flex: 0.5}} />

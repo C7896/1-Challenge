@@ -6,10 +6,8 @@ import SignOutButton from "../components/signOutButton";
 import DeleteAccountButton from "../components/deleteAccountButton";
 import ExploreButton from "../components/exploreButton";
 
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../firebase-config";
-import { getAuth } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 const blob = require("../assets/blob.png");
 const blueCloud = require("../assets/blue_cloud.png");
@@ -19,10 +17,6 @@ const travels = require("../assets/Travels.png");
 const globe = require("../assets/Globe.png");
 
 export default function HomeScreen( {navigation} ) {
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
 
     const [streak, setStreak] = useState(0);
     const [personalImprovement, setPersonalImprovement] = useState(0);

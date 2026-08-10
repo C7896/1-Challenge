@@ -1,67 +1,103 @@
-import React from 'react';
-import { TouchableOpacity, Text, Alert, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableOpacity, Text, Alert, Modal, View, TextInput, Pressable, StyleSheet } from 'react-native';
 
-import { initializeApp } from 'firebase/app';
-import { getAuth, deleteUser } from 'firebase/auth';
-import { getFirestore, collection, doc, getDocs, deleteDoc } from 'firebase/firestore';
-import { firebaseConfig } from "../firebase-config";
+import { EmailAuthProvider, reauthenticateWithCredential, deleteUser } from 'firebase/auth';
+import { collection, doc, getDocs, deleteDoc, writeBatch } from 'firebase/firestore';
+import { auth, db } from '../firebase';
 
 export default function DeleteAccountButton({ navigation }) {
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    const [visible, setVisible] = useState(false);
+    const [password, setPassword] = useState('');
+    const [busy, setBusy] = useState(false);
 
-    const deleteAccount = async () => {
+    const close = () => { setVisible(false); setPassword(''); };
+
+    const runDelete = async () => {
         const user = auth.currentUser;
-        if (user == null) {
+        if (user == null || !user.email) { close(); return; }
+        if (password.length === 0) {
+            Alert.alert("Enter your password", "Type your password to confirm.");
             return;
         }
-        const uid = user.uid;
-
-        // delete the auth account FIRST: it is the step that can fail on a stale
-        // session, and data must not be wiped if it does
+        setBusy(true);
         try {
-            await deleteUser(user);
+            const credential = EmailAuthProvider.credential(user.email, password);
+            await reauthenticateWithCredential(user, credential);
         } catch (error) {
-            if (error.code === "auth/requires-recent-login") {
-                Alert.alert(
-                    "Please sign in again",
-                    "For security, sign out, sign back in, and then delete your account."
-                );
+            setBusy(false);
+            if (error.code === 'auth/too-many-requests') {
+                Alert.alert("Too many attempts", "Please wait a few minutes and try again.");
+            } else if (error.code === 'auth/network-request-failed') {
+                Alert.alert("No connection", "Check your internet connection and try again.");
             } else {
-                Alert.alert("Could not delete account", error.message);
+                Alert.alert("That password did not match", "Check it and try again.");
             }
             return;
         }
-
-        // best-effort data cleanup; the ID token remains briefly valid after deletion
         try {
-            const journals = await getDocs(collection(db, "users", uid, "journals"));
-            await Promise.all(journals.docs.map((journal) => deleteDoc(journal.ref)));
-            await deleteDoc(doc(db, "users", uid));
+            const journals = await getDocs(collection(db, "users", user.uid, "journals"));
+            const refs = journals.docs.map((d) => d.ref);
+            for (let i = 0; i < refs.length; i += 400) {
+                const batch = writeBatch(db);
+                refs.slice(i, i + 400).forEach((ref) => batch.delete(ref));
+                await batch.commit();
+            }
+            await deleteDoc(doc(db, "users", user.uid));
         } catch (error) {
-            console.log("Account deleted; data cleanup incomplete: ", error);
+            setBusy(false);
+            Alert.alert("Could not finish deleting", "Your account and entries are still here. Please check your connection and try again.");
+            return;
         }
-
+        try {
+            await deleteUser(user);
+        } catch (error) {
+            setBusy(false);
+            Alert.alert("Almost done", "Your journal entries are deleted but your login is still active. Please tap Delete account once more.");
+            return;
+        }
+        setBusy(false);
+        close();
         navigation.reset({ index: 0, routes: [{ name: "Splash" }] });
     };
 
-    const confirmDelete = () => {
-        Alert.alert(
-            "Delete account?",
-            "This permanently deletes your account and all of your journal entries. This cannot be undone.",
-            [
-                { text: "Cancel", style: "cancel" },
-                { text: "Delete", style: "destructive", onPress: deleteAccount },
-            ]
-        );
-    };
-
     return (
-        <TouchableOpacity style={styles.button} onPress={confirmDelete}>
-            <Text style={styles.text}>Delete account</Text>
-        </TouchableOpacity>
+        <>
+            <TouchableOpacity style={styles.button} onPress={() => setVisible(true)}>
+                <Text style={styles.text}>Delete account</Text>
+            </TouchableOpacity>
+            <Modal
+                visible={visible}
+                transparent
+                animationType="fade"
+                onRequestClose={close}
+            >
+                <View style={styles.backdrop}>
+                    <View style={styles.card}>
+                        <Text style={styles.title}>Delete your account</Text>
+                        <Text style={styles.body}>
+                            This permanently deletes your account and every journal entry you have written. It cannot be undone. Enter your password to confirm.
+                        </Text>
+                        <TextInput
+                            style={styles.input}
+                            value={password}
+                            onChangeText={setPassword}
+                            placeholder="Password"
+                            secureTextEntry
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            editable={!busy}
+                        />
+                        <TouchableOpacity style={styles.deleteButton} onPress={runDelete} disabled={busy}>
+                            <Text style={styles.deleteButtonText}>{busy ? "Deleting..." : "Delete everything"}</Text>
+                        </TouchableOpacity>
+                        <Pressable onPress={close} disabled={busy}>
+                            <Text style={styles.cancelText}>Cancel</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+        </>
     );
 };
 
@@ -76,5 +112,54 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 13,
         textDecorationLine: "underline",
+    },
+    backdrop: {
+        flex: 1,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    card: {
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 24,
+        width: "85%",
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "black",
+        marginBottom: 10,
+    },
+    body: {
+        fontSize: 14,
+        color: "black",
+        marginBottom: 16,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 10,
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+        marginBottom: 16,
+        color: "black",
+    },
+    deleteButton: {
+        backgroundColor: "#FF815E",
+        borderRadius: 20,
+        paddingVertical: 14,
+        alignItems: "center",
+        marginBottom: 12,
+    },
+    deleteButtonText: {
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 16,
+    },
+    cancelText: {
+        color: "#888",
+        textAlign: "center",
+        fontSize: 14,
     },
 });
