@@ -43,6 +43,12 @@
           "enableFullScreenImage_legacy": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "76e1b1a4-2d4b-4719-be60-064c3be3797d"
+      }
+    },
+    "owner": "rustinkatsura"
   }
 }
