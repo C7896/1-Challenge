@@ -1,6 +1,8 @@
 import { View, Pressable, Text, Linking, Alert, StyleSheet } from "react-native";
 import { PRIVACY_POLICY_URL, SUPPORT_EMAIL } from "../constants/links";
 
+const INK = "#2B2724";
+
 async function openLink(url) {
     try {
         const canOpen = await Linking.canOpenURL(url);
@@ -14,14 +16,14 @@ async function openLink(url) {
     }
 }
 
-export default function PolicyLinks({ style }) {
+export default function PolicyLinks({ style, onLight }) {
     return (
         <View style={[styles.row, style]}>
             <Pressable onPress={() => openLink(PRIVACY_POLICY_URL)}>
-                <Text style={styles.link}>Privacy Policy</Text>
+                <Text style={[styles.link, onLight && styles.linkLight]}>Privacy Policy</Text>
             </Pressable>
             <Pressable onPress={() => openLink(`mailto:${SUPPORT_EMAIL}`)}>
-                <Text style={styles.link}>Contact</Text>
+                <Text style={[styles.link, onLight && styles.linkLight]}>Contact</Text>
             </Pressable>
         </View>
     );
@@ -37,5 +39,8 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 13,
         textDecorationLine: "underline",
+    },
+    linkLight: {
+        color: INK,
     },
 });

@@ -5,7 +5,7 @@ const downArrow = require("../assets/down_arrow.png");
 export default function CloseKeyboard({ visible }) {
     if (!visible) return null;
     return(
-        <Pressable onPress={() => {Keyboard.dismiss()}} style={styles.container}>
+        <Pressable onPress={() => {Keyboard.dismiss()}} style={styles.container} accessibilityRole="button" accessibilityLabel="Dismiss keyboard">
             <Image source={downArrow} style={styles.image} />
         </Pressable>
     );

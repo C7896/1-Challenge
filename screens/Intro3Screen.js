@@ -18,7 +18,7 @@ export default function Intro3Screen({ navigation }) {
             const user = auth.currentUser;
 
             const { challenge, completed, streak } = await loadToday(db, user.uid);
-            navigation.navigate(completed ? "Home" : "Challenge1", { challenge, streak });
+            navigation.navigate("Home", { challenge, streak });
         }
     }
 
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#9884BA",
-        alignItems: "left",
+        alignItems: "flex-start",
         justifyContent: "center",
     },
     textContainer: {

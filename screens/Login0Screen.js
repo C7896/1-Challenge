@@ -1,11 +1,11 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, SafeAreaView, StyleSheet } from "react-native";
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
 const location = require("../assets/Location.png");
 
 export default function Login0Screen( {navigation} ) {
     return(
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.topContainer}>
                 <LargeImage src={location}/>
                 <Text style={styles.title}>1% Challenge</Text>
@@ -17,7 +17,7 @@ export default function Login0Screen( {navigation} ) {
                     <Text style={styles.previewText}>See today's challenge</Text>
                 </Pressable>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
     },
     previewLink: {
         marginTop: 16,
+        paddingVertical: 12,
+        paddingHorizontal: 8,
     },
     previewText: {
         color: "white",

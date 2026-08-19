@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, StyleSheet, Pressable, Alert, KeyboardAvoidingView } from "react-native";
+import { View, Text, Image, TextInput, StyleSheet, Pressable, Alert, KeyboardAvoidingView, ScrollView, SafeAreaView } from "react-native";
 import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
@@ -70,64 +70,82 @@ export default function SignupScreen( {navigation} ) {
 
 
     return(
-        <View style={styles.container}>
-            <View style={styles.topContainer}>
-                <LargeImage src={mountain}/>
-                <Text style={styles.title}>1% Challenge</Text>
-            </View>
-            <KeyboardAvoidingView style={styles.formContainer} behavior="padding">
-                <View style={styles.inputContainer}>
-                    <Image source={user} style={styles.icon} />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Username"
-                        onChangeText={(text) => setUsername(text)}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        autoComplete="off"
-                        maxLength={40}
-                    />
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+                <View style={styles.topContainer}>
+                    <LargeImage src={mountain}/>
+                    <Text style={styles.title}>1% Challenge</Text>
                 </View>
-                <View style={styles.inputContainer}>
-                    <Image source={mail} style={styles.icon} />
-                    <TextInput
-                        placeholder="Email"
-                        onChangeText={(text) => setEmail(text)}
-                        style={styles.input}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        autoComplete="email"
-                    />
+                <KeyboardAvoidingView style={styles.formContainer} behavior="padding">
+                    <View style={styles.inputContainer}>
+                        <Image source={user} style={styles.icon} />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Username"
+                            onChangeText={(text) => setUsername(text)}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            autoComplete="off"
+                            maxLength={40}
+                        />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Image source={mail} style={styles.icon} />
+                        <TextInput
+                            placeholder="Email"
+                            onChangeText={(text) => setEmail(text)}
+                            style={styles.input}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            autoComplete="email"
+                            keyboardType="email-address"
+                        />
+                    </View>
+                    <View style={[styles.inputContainer, {marginBottom: 15}]}>
+                        <Image source={lock} style={styles.icon} />
+                        <TextInput
+                            placeholder="Password"
+                            onChangeText={(text) => setPassword(text)}
+                            style={styles.input}
+                            secureTextEntry
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            autoComplete="off"
+                        />
+                    </View>
+                    <Pressable style={styles.buttoncontainer} onPress={handleCreateAccount}>
+                         <Text style={styles.buttontext}>Create Account</Text>
+                    </Pressable>
+                    <Text style={styles.agreementText}>By creating an account you agree to our Privacy Policy.</Text>
+                    <PolicyLinks style={styles.policyLinks} />
+                </KeyboardAvoidingView>
+                <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
+                    <LoginScreenButton title="Login" nav={navigation} dest="Login1" background={false} />
                 </View>
-                <View style={[styles.inputContainer, {marginBottom: 15}]}>
-                    <Image source={lock} style={styles.icon} />
-                    <TextInput
-                        placeholder="Password"
-                        onChangeText={(text) => setPassword(text)}
-                        style={styles.input}
-                        secureTextEntry
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        autoComplete="off"
-                    />
-                </View>
-                <Pressable style={styles.buttoncontainer} onPress={handleCreateAccount}>
-                     <Text style={styles.buttontext}>Create Account</Text>
-                </Pressable>
-                <Text style={styles.agreementText}>By creating an account you agree to our Privacy Policy.</Text>
-                <PolicyLinks style={styles.policyLinks} />
-            </KeyboardAvoidingView>
-            <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
-                <LoginScreenButton title="Login" nav={navigation} dest="Login1" background={false} />
-            </View>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
+const INK = "#2B2724";
+
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: "#FF815E",
+    },
+    scroll: {
+        flex: 1,
+        width: "100%",
+    },
     container: {
         flex: 1,
         backgroundColor: "#FF815E",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    scrollContent: {
+        flexGrow: 1,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -177,7 +195,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     buttontext: {
-        color: "white",
+        color: INK,
         fontSize: 22,
         fontWeight: "bold",
     },

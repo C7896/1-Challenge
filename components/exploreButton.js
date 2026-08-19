@@ -1,5 +1,6 @@
 import { Pressable, Text, Linking, Alert, StyleSheet } from "react-native";
 
+const INK = "#2B2724";
 
 export default function ExploreButton({ link }) {
     const handleOpenURL = async () => {
@@ -18,7 +19,7 @@ export default function ExploreButton({ link }) {
 
     return (
         <Pressable onPress={handleOpenURL} style={styles.button}>
-            <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>Explore causes</Text>
+            <Text style={{ color: INK, fontSize: 15, fontWeight: "bold" }}>Explore causes</Text>
         </Pressable>
     );
 
@@ -28,14 +29,11 @@ const styles = StyleSheet.create({
     button: {
         width: 200,
         borderWidth: 2,
-        borderColor: "white",
+        borderColor: INK,
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 12,
-        paddingVertical: 10,
-        position: "absolute",
-        right: 36,
-        bottom: 140,
+        paddingVertical: 12,
     },
 });

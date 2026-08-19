@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TextInput, Pressable, Keyboard, StyleSheet } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TextInput, Pressable, Keyboard, Alert, StyleSheet } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 
 import { doc, setDoc, updateDoc, increment, serverTimestamp, getDoc } from "firebase/firestore"
@@ -23,68 +23,63 @@ export default function Challenge3Screen({ navigation, route }) {
             pressed.current = true;
             const user = auth.currentUser;
             if (user != null) {
+                try {
+                    // journals are keyed by date: "year-month-day" (month is the short name)
+                    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    const todayKey = `${challenge.year}-${challenge.month}-${challenge.day}`;
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    const yesterdayKey = `${yesterday.getFullYear()}-${months[yesterday.getMonth()]}-${yesterday.getDate()}`;
 
-                // journals are keyed by date: "year-month-day" (month is the short name)
-                const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                const todayKey = `${challenge.year}-${challenge.month}-${challenge.day}`;
-                const yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
-                const yesterdayKey = `${yesterday.getFullYear()}-${months[yesterday.getMonth()]}-${yesterday.getDate()}`;
+                    // check for yesterday's challenge in user's journals collection
+                    let streaking = false;
+                    const journalRef = doc(db, "users", user.uid, "journals", yesterdayKey);
+                    const journalDoc = await getDoc(journalRef);
+                    if (journalDoc.exists()) {
+                        streaking = true;
+                        console.log("Streaking");
+                    } else {
+                        console.log("Not streaking");
+                    }
 
-                // check for yesterday's challenge in user's journals collection
-                let streaking = false;
-                const journalRef = doc(db, "users", user.uid, "journals", yesterdayKey);
-                const journalDoc = await getDoc(journalRef);
-                if (journalDoc.exists()) {
-                    streaking = true;
-                    console.log("Streaking");
-                } else {
-                    console.log("Not streaking");
-                }
-
-                // add journal to user
-                await setDoc(doc(db, "users", user.uid, "journals", todayKey), {
-                    day: challenge.day,
-                    month: challenge.month,
-                    year: challenge.year,
-                    challenge: challenge.challenge,
-                    action: action.trim(),
-                    reflection: reflection.trim(),
-                    timestamp: serverTimestamp(),
-                })
-                .then(() => {
+                    // add journal to user
+                    await setDoc(doc(db, "users", user.uid, "journals", todayKey), {
+                        day: challenge.day,
+                        month: challenge.month,
+                        year: challenge.year,
+                        challenge: challenge.challenge,
+                        action: action.trim(),
+                        reflection: reflection.trim(),
+                        timestamp: serverTimestamp(),
+                    });
                     console.log("Journal doc created, id = ", todayKey);
-                })
-                .catch(error => {
-                    console.error("Error adding document: ", error);
-                });
-            
-                // update user document
-                await updateDoc(doc(db, "users", user.uid), {
-                    current_streak: streaking ? increment(1) : 1,
-                    total_completed_challenges: increment(1), 
-                })
-                .then(() => {
+
+                    // update user document
+                    await updateDoc(doc(db, "users", user.uid), {
+                        current_streak: streaking ? increment(1) : 1,
+                        total_completed_challenges: increment(1),
+                    });
                     console.log(streaking ? "User is currently streaking" : "User's current streak is 1");
                     console.log("User's total_completed_challenges incremented by 1");
-                })
-                .catch(error => {
-                    console.error("Error incrementing user document fields: ", error);
-                });
 
-                // get user's current challenge streak
-                let streak = 0;
-                const userRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userRef)
-                if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    streak = userData.current_streak;
-                    console.log("User's current streak: ", streak);
-                } else {
-                    console.log("User document not found.");
+                    // get user's current challenge streak
+                    let streak = 0;
+                    const userRef = doc(db, "users", user.uid);
+                    const userDoc = await getDoc(userRef)
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        streak = userData.current_streak;
+                        console.log("User's current streak: ", streak);
+                    } else {
+                        console.log("User document not found.");
+                    }
+
+                    navigation.navigate("Challenge4", {streak: streak,});
+                } catch (error) {
+                    console.error("Error saving journal entry: ", error);
+                    pressed.current = false;
+                    Alert.alert("Could not save your entry", "Please try again later.");
                 }
-
-                navigation.navigate("Challenge4", {streak: streak,});
             } else {
                 pressed.current = false;
                 console.log("User is not signed in");
@@ -184,7 +179,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "flex-start",
         borderRadius: 15,
-        width: 350,
+        width: "100%",
         height: 50,
         paddingHorizontal: 10,
         marginBottom: 10,

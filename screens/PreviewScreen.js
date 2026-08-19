@@ -1,5 +1,5 @@
 import { SafeAreaView, View, Text, Pressable, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import LargeImage from "../components/largeImage";
 import { db } from "../firebase";
@@ -11,17 +11,35 @@ export default function PreviewScreen({ navigation }) {
 
     const [challenge, setChallenge] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState(false);
 
-    useEffect(() => {
+    const fetchToday = useCallback(() => {
         let cancelled = false;
-        loadToday(db, null).then(({ challenge }) => {
-            if (!cancelled) {
-                setChallenge(challenge);
-                setLoading(false);
-            }
-        });
+        setLoading(true);
+        setLoadError(false);
+        loadToday(db, null)
+            .then(({ challenge }) => {
+                if (!cancelled) {
+                    setChallenge(challenge);
+                }
+            })
+            .catch(error => {
+                console.error("Error loading today's challenge: ", error);
+                if (!cancelled) {
+                    setLoadError(true);
+                }
+            })
+            .finally(() => {
+                if (!cancelled) {
+                    setLoading(false);
+                }
+            });
         return () => { cancelled = true; };
     }, []);
+
+    useEffect(() => {
+        return fetchToday();
+    }, [fetchToday]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -33,6 +51,10 @@ export default function PreviewScreen({ navigation }) {
                 <Text style={styles.title}>Today's challenge</Text>
                 {loading ? (
                     <Text style={styles.body}>Loading...</Text>
+                ) : loadError ? (
+                    <Pressable onPress={fetchToday}>
+                        <Text style={styles.body}>Couldn't load. Tap to retry.</Text>
+                    </Pressable>
                 ) : (
                     <Text style={styles.body}>{challenge.challenge}</Text>
                 )}
@@ -53,6 +75,8 @@ export default function PreviewScreen({ navigation }) {
     );
 }
 
+const INK = "#2B2724";
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -62,8 +86,13 @@ const styles = StyleSheet.create({
     },
     backLink: {
         position: "absolute",
-        top: 60,
-        left: 20,
+        top: 12,
+        left: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 13,
+        minWidth: 44,
+        minHeight: 44,
+        justifyContent: "center",
     },
     backText: {
         color: "white",
@@ -114,7 +143,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     primaryButtonText: {
-        color: "white",
+        color: INK,
         fontSize: 18,
         fontWeight: "bold",
     },

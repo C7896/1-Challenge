@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, StyleSheet } from "react-native";
+import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
@@ -27,7 +27,7 @@ export default function Login0Screen( {navigation} ) {
                 console.log('User Signed In!');
 
                 const { challenge, completed, streak } = await loadToday(db, userCredential.user.uid);
-                navigation.navigate(completed ? "Home" : "Challenge1", { challenge, streak });
+                navigation.navigate("Home", { challenge, streak });
             })
             .catch(error => {
                 pressed.current = false;
@@ -63,7 +63,8 @@ export default function Login0Screen( {navigation} ) {
     };
 
     return(
-        <View style={styles.container}>
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
             <View style={styles.topContainer}>
                 <LargeImage src={location}/>
                 <Text style={styles.title}>1% Challenge</Text>
@@ -78,6 +79,7 @@ export default function Login0Screen( {navigation} ) {
                         autoCapitalize="none"
                         autoCorrect={false}
                         autoComplete="email"
+                        keyboardType="email-address"
                     />
                 </View>
                 <View style={[styles.inputContainer, {marginBottom: 5}]}>
@@ -92,7 +94,7 @@ export default function Login0Screen( {navigation} ) {
                         autoComplete="off"
                     />
                 </View>
-                <Pressable onPress={handleForgotPassword} style={styles.forgotRow}>
+                <Pressable onPress={handleForgotPassword} style={styles.forgotRow} hitSlop={{ top: 12, bottom: 12 }}>
                     <Text style={styles.forgotText}>Forgot password?</Text>
                 </Pressable>
                 <Pressable style={[styles.buttoncontainer, {backgroundColor:"#FFC0A2"}]} onPress={handleSignIn}>
@@ -102,9 +104,12 @@ export default function Login0Screen( {navigation} ) {
             <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
                 <LoginScreenButton title="Sign up" nav={navigation} dest="Sign up" background={false} />
             </View>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
+
+const INK = "#2B2724";
 
 const styles = StyleSheet.create({
     container: {
@@ -113,8 +118,21 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    safeArea: {
+        flex: 1,
+        backgroundColor: "#FF815E",
+    },
+    scroll: {
+        flex: 1,
+        width: "100%",
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingVertical: 16,
+    },
     topContainer: {
-        flex: 2.7,
         justifyContent: "flex-end",
         alignItems: "center",
         marginBottom: 20,
@@ -163,7 +181,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     buttontext: {
-        color: "white",
+        color: INK,
         fontSize: 22,
         fontWeight: "bold",
     },

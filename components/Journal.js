@@ -1,5 +1,13 @@
 import {View, Text, TouchableOpacity, StyleSheet} from "react-native";
 
+const INK = "#2B2724";
+
+// Rows rotate through screens/LogScreen.js's `colors` array. The light ones need
+// ink text; coral and deep blue are dark enough to keep white.
+const LIGHT_ROW_COLORS = new Set(["#FFCF5B", "#DCE18B", "#A1D5AE", "#92C1D2"]);
+
+const getChallengeTextColor = (color) => (LIGHT_ROW_COLORS.has(color) ? INK : "white");
+
 export default function Journal({ journal, color, size, onPress }) {
 
   const handlePress = () => {
@@ -10,11 +18,11 @@ export default function Journal({ journal, color, size, onPress }) {
     <TouchableOpacity onPress={handlePress}>
       <View style={[styles.container, {backgroundColor: color}]}>
         <View style={styles.dateContainer}>
-          <Text style={styles.month}>{journal.month}</Text>
+          <Text style={styles.month} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7}>{journal.month}</Text>
           <Text style={styles.day}>{journal.day}</Text>
         </View>
         <View style={styles.textContainer}>
-          <Text style={[styles.text, {fontSize: size}]}>{journal.challenge}</Text>
+          <Text style={[styles.text, {fontSize: size, color: getChallengeTextColor(color)}]}>{journal.challenge}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -23,20 +31,20 @@ export default function Journal({ journal, color, size, onPress }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 84,
-    width: 381,
+    minHeight: 84,
+    width: "100%",
     flexDirection: "row",
     paddingLeft: 12,
     paddingVertical: 8,
-    justifyContent: 'left',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     columnGap: 15,
     borderRadius: 15,
     backgroundColor: 'rgba(255, 129, 94, 1)',
   },
   month: {
-    color: 'rgba(173, 173, 173, 1)',
-    fontSize: 20,
+    color: 'rgba(107, 107, 107, 1)',
+    fontSize: 14,
     fontWeight: "bold",
   },
   day: {
@@ -47,7 +55,7 @@ const styles = StyleSheet.create({
   dateContainer: {
     width: 69,
     height: 69,
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
     paddingVertical: 4,
     justifyContent: "center",
     alignItems: "center",
@@ -55,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 1)',
   },
   textContainer: {
-    width: 280,
+    flex: 1,
     paddingRight: 10,
   },
   text: {

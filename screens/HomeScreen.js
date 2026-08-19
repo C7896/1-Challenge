@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, ImageBackground, Image, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, View, Text, ImageBackground, Image, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -71,149 +71,183 @@ export default function HomeScreen( {navigation} ) {
     }, [isFocused]);
 
     return (
-        <View style={styles.orangeContainer} >
-            <SafeAreaView style={styles.orangeContainer} >
-                <View style={{ flex: 1 }}>
-                    <Text style={styles.title}>1% Challenge</Text>
-                </View>
+        <View style={styles.root}>
+            <SafeAreaView style={styles.safe}>
+                <ScrollView
+                    style={styles.scroll}
+                    contentContainerStyle={styles.scrollContent}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View style={styles.header}>
+                        <Text style={styles.title}>1% Challenge</Text>
+                        <DeleteAccountButton navigation={navigation} />
+                    </View>
+
+                    <TodayCard
+                        loading={todayLoading}
+                        challenge={todayChallenge}
+                        completed={todayCompleted}
+                        streak={streak}
+                        navigation={navigation}
+                    />
+
+                    <ImageBackground source={blob} style={styles.statsSection} resizeMode="cover">
+                        <Image source={travels} style={styles.travels} resizeMode="contain" accessible={false} />
+
+                        <ImageBackground source={redCloud} style={[styles.cloud, styles.cloudLeft]}>
+                            <Text style={[styles.cloudNumber, styles.cloudTextRed]}>{streak}</Text>
+                            <Text style={[styles.cloudLabelLarge, styles.cloudTextRed]}>day streak</Text>
+                        </ImageBackground>
+
+                        <ImageBackground source={yellowCloud} style={[styles.cloud, styles.cloudRight]}>
+                            <Text style={[styles.cloudNumber, styles.cloudTextLight]}>{personalImprovement}x</Text>
+                            <Text style={[styles.cloudLabel, styles.cloudTextLight]}>personal</Text>
+                            <Text style={[styles.cloudLabel, styles.cloudTextLight]}>improvement</Text>
+                        </ImageBackground>
+
+                        <ImageBackground source={blueCloud} style={[styles.cloud, styles.cloudLeft]}>
+                            <Text style={[styles.cloudNumber, styles.cloudTextLight]}>{challengesCompleted}</Text>
+                            <Text style={[styles.cloudLabel, styles.cloudTextLight]}>challenges</Text>
+                            <Text style={[styles.cloudLabel, styles.cloudTextLight]}>completed</Text>
+                        </ImageBackground>
+                    </ImageBackground>
+
+                    <View style={styles.greenSection}>
+                        <View style={styles.greenRow}>
+                            <Image source={globe} style={styles.globe} resizeMode="contain" accessible={false} />
+                            <View style={styles.greenText}>
+                                {challengesCompleted > 0 ? (
+                                    <>
+                                        <Text style={styles.subtitle}>We love you!</Text>
+                                        <Text style={styles.text}>Thank you for making</Text>
+                                        <Text style={styles.text}>the world a better place!</Text>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Text style={styles.subtitle}>Welcome.</Text>
+                                        <Text style={styles.text}>One small challenge a day.</Text>
+                                    </>
+                                )}
+                            </View>
+                        </View>
+                        <ExploreButton link={CAUSES_URL}/>
+                        <PolicyLinks style={styles.policyLinks} onLight />
+                    </View>
+                </ScrollView>
             </SafeAreaView>
-            <SafeAreaView style={styles.greenContainer} >
-                <Image source={globe} style={styles.globe} />
-                <View style={{ marginRight: 25 }}>
-                    {challengesCompleted > 0 ? (
-                        <>
-                            <Text style={styles.subtitle}>We love you!</Text>
-                            <Text style={styles.text}>Thank you for making</Text>
-                            <Text style={styles.text}>the world a better place!</Text>
-                        </>
-                    ) : (
-                        <>
-                            <Text style={styles.subtitle}>Welcome.</Text>
-                            <Text style={styles.text}>One small challenge a day.</Text>
-                        </>
-                    )}
-                </View>
-            </SafeAreaView>
-            <ImageBackground source={blob} style={styles.image}>
-                    <ImageBackground source={redCloud} style={[styles.cloud, styles.red]}>
-                        <Text style={[styles.title, {right: "18%"}]}>{streak}</Text>
-                        <Text style={[styles.subsubtitle, {right: "18%"}]}>day streak</Text>
-                    </ImageBackground>
-                    <ImageBackground source={yellowCloud} style={[styles.cloud, styles.yellow]}>
-                        <Text style={[styles.title, {right: "18%"}]}>{personalImprovement}x</Text>
-                        <Text style={[styles.text, {right: "18%"}]}>personal</Text>
-                        <Text style={[styles.text, {right: "18%"}]}>improvement</Text>
-                    </ImageBackground>
-                    <ImageBackground source={blueCloud} style={[styles.cloud, styles.blue]}>
-                    <Text style={[styles.title, {right: "18%"}]}>{challengesCompleted}</Text>
-                        <Text style={[styles.text, {right: "18%"}]}>challenges</Text>
-                        <Text style={[styles.text, {right: "18%"}]}>completed</Text>
-                    </ImageBackground>
-                    <Image source={travels} style={styles.travels} />
-            </ImageBackground>
-            <TodayCard
-                loading={todayLoading}
-                challenge={todayChallenge}
-                completed={todayCompleted}
-                streak={streak}
-                navigation={navigation}
-            />
-            <ExploreButton link={CAUSES_URL}/>
+
             <SignOutButton navigation={navigation} />
-            <DeleteAccountButton navigation={navigation} />
-            <PolicyLinks style={styles.policyLinks} />
             <TabBar nav={navigation} />
         </View>
     );
 }
 
+const INK = "#2B2724";
+
 const styles = StyleSheet.create({
-    orangeContainer: {
+    root: {
         flex: 1,
         backgroundColor: "#FF815E",
-        alignItems: "center",
-        justifyContent: "center",
     },
-    image: {
-        position: "absolute",
-        bottom: "15%",
-        width: "100%",
-        height: "75%",
-        justifyContent: "space-around",
-        alignItems: "center",
-    },
-    greenContainer: {
+    safe: {
         flex: 1,
+    },
+    scroll: {
+        flex: 1,
+        // the scroll area stops above the floating tab bar, so content can never
+        // sit underneath it at any scroll position or on any screen height
+        marginBottom: 105,
+    },
+    scrollContent: {
+        paddingBottom: 16,
+    },
+    header: {
+        alignItems: "center",
+        paddingTop: 8,
+        paddingBottom: 4,
+    },
+    statsSection: {
         width: "100%",
-        backgroundColor: "#A1D5AE",
-        flexDirection: "row",
-        justifyContent: "center",
+        marginTop: 12,
         alignItems: "center",
-    },
-    button: {
-        borderWidth: 2,
-        borderColor: "white",
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: 12,
-        paddingVertical: 10,
-        marginTop: 20,
-    },
-    policyLinks: {
-        position: "absolute",
-        bottom: 115,
-        left: 0,
-        right: 0,
-        justifyContent: "center",
-    },
-    cloud: {
-        width: "65%",
-        height: 133,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    red: {
-        top: "15%",
-        right: "20%",
-    },
-    yellow: {
-        top: "15%",
-        right: "10%",
-    },
-    blue: {
-        top: "2%",
-        left: "41%",
+        paddingVertical: 16,
+        gap: 4,
     },
     travels: {
-        width: "50%",
-        height: 180,
-        bottom: "56%",
-        left: "22%",
+        width: "48%",
+        height: 96,
+        alignSelf: "flex-end",
+        marginRight: 8,
+    },
+    cloud: {
+        width: "66%",
+        height: 120,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    cloudLeft: {
+        alignSelf: "flex-start",
+    },
+    cloudRight: {
+        alignSelf: "flex-end",
+    },
+    cloudNumber: {
+        right: "18%",
+        fontSize: 35,
+        fontWeight: "bold",
+    },
+    cloudLabelLarge: {
+        right: "18%",
+        fontSize: 25,
+        fontWeight: "bold",
+    },
+    cloudLabel: {
+        right: "18%",
+        fontSize: 20,
+        fontWeight: "normal",
+    },
+    cloudTextRed: {
+        color: "white",
+    },
+    cloudTextLight: {
+        color: INK,
+    },
+    greenSection: {
+        width: "100%",
+        backgroundColor: "#A1D5AE",
+        alignItems: "center",
+        paddingVertical: 24,
+        paddingHorizontal: 16,
+        gap: 16,
+        marginTop: 16,
+    },
+    greenRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 12,
+    },
+    greenText: {
+        flexShrink: 1,
     },
     globe: {
-        width: "45%",
-        height: 150,
-        marginTop: 50,
+        width: 130,
+        height: 130,
+    },
+    policyLinks: {
+        justifyContent: "center",
     },
     title: {
         color: "white",
         fontSize: 35,
         fontWeight: "bold",
-        top: "1.5%",
     },
     subtitle: {
-        color: "white",
+        color: INK,
         fontSize: 30,
         fontWeight: "bold",
     },
-    subsubtitle: {
-        color: "white",
-        fontSize: 25,
-        fontWeight: "bold",
-    },
     text: {
-        color: "white",
+        color: INK,
         fontSize: 20,
         fontWeight: "normal",
     },

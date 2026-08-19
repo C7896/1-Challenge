@@ -13,12 +13,14 @@ export default function Intro1Screen({ navigation }) {
                     <Text style={[styles.text, styles.title]}>Our Mission</Text>
                     <Text style={[styles.text, styles.body]}>Improve the world</Text>
                     <Text style={[styles.text, styles.body]}>by 1% everyday.</Text>
-                    <ClearButton title="Next" nav={navigation} destination="Intro2" top={20}/>
+                    <ClearButton title="Next" nav={navigation} destination="Intro2" top={20} onLight/>
                 </View>
             </View>
         </SafeAreaView>
     );
 }
+
+const INK = "#2B2724";
 
 const styles = StyleSheet.create({
     container: {
@@ -29,14 +31,14 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         flexGrow: 6,
-        alignItems: "left",
+        alignItems: "flex-start",
         paddingLeft: "10%",
     },
     hContainer: {
         flexDirection: "row",
     },
     text: {
-        color: "white",
+        color: INK,
         paddingLeft: 3,
     },
     title: {

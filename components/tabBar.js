@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         borderRadius: 100,
         position: "absolute",
+        alignSelf: "center",
         bottom: 50,
     },
     image: {

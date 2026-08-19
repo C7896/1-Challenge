@@ -15,18 +15,20 @@ export default function Intro2Screen({ navigation }) {
                     <Text style={[styles.text, styles.body]}>Daily challenges that</Text>
                     <Text style={[styles.text, styles.body]}>improve you and</Text>
                     <Text style={[styles.text, styles.body]}>those around you.</Text>
-                    <ClearButton title="Next" nav={navigation} destination="Intro3" top={20}/>
+                    <ClearButton title="Next" nav={navigation} destination="Intro3" top={20} onLight/>
                 </View>
             </View>
         </SafeAreaView>
     );
 }
 
+const INK = "#2B2724";
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#E4A7C1",
-        alignItems: "left",
+        alignItems: "flex-start",
         justifyContent: "center",
     },
     textContainer: {
@@ -37,7 +39,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     text: {
-        color: "white",
+        color: INK,
         paddingLeft: 3,
     },
     title: {

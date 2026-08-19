@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, FlatList, StyleSheet } from "react-native";
+import { View, Text, ImageBackground, FlatList, Pressable, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -14,13 +14,13 @@ export default function LogScreen( {navigation} ) {
 
     const [challengeLog, setChallengeLog] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState(false);
     const isFocused = useIsFocused();
 
-    useEffect(() => {
-        if (!isFocused) {
-            return;
-        }
-        const getChallengeLog = async () => {
+    const getChallengeLog = async () => {
+        setLoading(true);
+        setLoadError(false);
+        try {
             const user = auth.currentUser;
             if (user != null) {
                 const journalDocs = collection(db, "users", user.uid, "journals");
@@ -31,9 +31,18 @@ export default function LogScreen( {navigation} ) {
             } else {
                 console.log("User is not signed in");
             }
+        } catch (error) {
+            console.error("Error loading challenge log: ", error);
+            setLoadError(true);
+        } finally {
             setLoading(false);
         }
+    }
 
+    useEffect(() => {
+        if (!isFocused) {
+            return;
+        }
         getChallengeLog();
     }, [isFocused]);
 
@@ -65,6 +74,8 @@ export default function LogScreen( {navigation} ) {
             <View style={{ flex: 7 }} />
             <View style={styles.listContainer}>
                 <FlatList
+                    style={styles.list}
+                    contentContainerStyle={styles.listContent}
                     data={challengeLog}
                     renderItem={({ item, index }) => (
                         <Journal
@@ -76,7 +87,17 @@ export default function LogScreen( {navigation} ) {
                     )}
                     keyExtractor={(item) => item.docId}
                     ItemSeparatorComponent={<View style={{height: 5}} />}
-                    ListEmptyComponent={loading ? <Text style={styles.text}>Loading...</Text> : <Text style={styles.text}>No past challenges</Text>}
+                    ListEmptyComponent={
+                        loading ? (
+                            <Text style={styles.text}>Loading...</Text>
+                        ) : loadError ? (
+                            <Pressable onPress={getChallengeLog}>
+                                <Text style={styles.text}>Couldn't load. Tap to retry.</Text>
+                            </Pressable>
+                        ) : (
+                            <Text style={styles.text}>No past challenges</Text>
+                        )
+                    }
                 />
             </View>
             <View style={{ flex: 5 }} />
@@ -95,8 +116,14 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flex: 22,
+        width: "100%",
         justifyContent: "center",
-        alignItems: "center",
+    },
+    list: {
+        width: "100%",
+    },
+    listContent: {
+        paddingHorizontal: 16,
     },
     image: {
         position: "absolute",

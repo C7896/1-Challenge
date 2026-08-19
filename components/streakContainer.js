@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 
+const INK = "#2B2724";
+
 export default function StreakContainer({ streak }) {
     return(
         <View style={styles.streakContainer}>
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: "bold",
-    color: "white",
+    color: INK,
     textAlign: "center",
     fontSize: 20,
   },

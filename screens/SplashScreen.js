@@ -1,10 +1,12 @@
-import { View, Text, StyleSheet, SafeAreaView, Pressable, useWindowDimensions } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, useWindowDimensions } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useRef } from "react";
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from "../firebase";
 import { loadToday } from "../lib/challenge";
+
+const INK = "#2B2724";
 
 export default function SplashScreen({ navigation }) {
 
@@ -32,7 +34,7 @@ export default function SplashScreen({ navigation }) {
               if (!hasNavigated.current) {
                 hasNavigated.current = true;
                 clearTimeout(watchdog);
-                navigation.navigate(completed ? "Home" : "Challenge1", { challenge, streak });
+                navigation.navigate("Home", { challenge, streak });
               }
             }, 1000);
           } else {
@@ -61,12 +63,10 @@ export default function SplashScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Pressable>
-                <View style={styles.container}>
-                    <Text style={[styles.title, {fontSize: windowWidth > 500 ? 70 : 35}]}>1%</Text>
-                    <Text style={[styles.title, {fontSize: windowWidth > 500 ? 70 : 35}]}>Challenge</Text>
-                </View>
-            </Pressable>
+            <View style={styles.container}>
+                <Text style={[styles.title, {fontSize: windowWidth > 500 ? 70 : 35}]}>1%</Text>
+                <Text style={[styles.title, {fontSize: windowWidth > 500 ? 70 : 35}]}>Challenge</Text>
+            </View>
         </SafeAreaView>
     );
 }
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     title: {
-        color: "white",
+        color: INK,
         fontWeight: "bold",
     },
 });

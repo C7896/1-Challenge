@@ -1,9 +1,11 @@
 import { Pressable, Text, StyleSheet } from "react-native";
 
+const INK = "#2B2724";
+
 export default function LoginScreenButton( { title, nav, dest, background } ) {
     return(
         <Pressable style={[styles.buttoncontainer, {backgroundColor: background ? "#FFC0A2" : "transparent"}]} onPress={() => nav.navigate(dest)}>
-            <Text style={styles.buttontext}>{title}</Text>
+            <Text style={[styles.buttontext, background && { color: INK }]}>{title}</Text>
         </Pressable>
     );
 }

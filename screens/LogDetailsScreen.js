@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "flex-start",
         borderRadius: 15,
-        width: 350,
+        width: "100%",
         height: 50,
         paddingHorizontal: 10,
         marginBottom: 10,

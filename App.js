@@ -29,6 +29,8 @@ Notifications.setNotificationHandler({
 
 const Stack = createNativeStackNavigator();
 
+const INK = "#2B2724";
+
 export default function App() {
 
   return (
@@ -47,10 +49,11 @@ export default function App() {
         <Stack.Screen name="Log Details" component={ LogDetailsScreen } options={{
           headerShown: true,
           title: "",
+          headerBackButtonDisplayMode: "minimal",
           headerStyle: {
             backgroundColor: "#FFC0A2",
           },
-          headerTintColor: "#FFF",
+          headerTintColor: INK,
           headerShadowVisible: false,
         }}/>
         <Stack.Screen name="Challenge1" component={Challenge1Screen} options={{
@@ -59,6 +62,7 @@ export default function App() {
         <Stack.Screen name="Challenge2" component={Challenge2Screen} options={{
           headerShown: true,
           title: "",
+          headerBackButtonDisplayMode: "minimal",
           headerStyle: {
             backgroundColor: "#FF815E",
           },
@@ -68,10 +72,11 @@ export default function App() {
         <Stack.Screen name="Challenge3" component={Challenge3Screen} options={{
           headerShown: true,
           title: "",
+          headerBackButtonDisplayMode: "minimal",
           headerStyle: {
             backgroundColor: "#FFC0A2",
           },
-          headerTintColor: "#FFF",
+          headerTintColor: INK,
           headerShadowVisible: false,
         }} />
         <Stack.Screen name="Challenge4" component={Challenge4Screen} options={{

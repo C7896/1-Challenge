@@ -91,7 +91,7 @@ export default function DeleteAccountButton({ navigation }) {
                         <TouchableOpacity style={styles.deleteButton} onPress={runDelete} disabled={busy}>
                             <Text style={styles.deleteButtonText}>{busy ? "Deleting..." : "Delete everything"}</Text>
                         </TouchableOpacity>
-                        <Pressable onPress={close} disabled={busy}>
+                        <Pressable onPress={close} disabled={busy} style={styles.cancelButton}>
                             <Text style={styles.cancelText}>Cancel</Text>
                         </Pressable>
                     </View>
@@ -103,10 +103,8 @@ export default function DeleteAccountButton({ navigation }) {
 
 const styles = StyleSheet.create({
     button: {
-        padding: 10,
-        position: "absolute",
-        top: 105,
-        left: 15,
+        padding: 13,
+        alignSelf: "center",
     },
     text: {
         color: "white",
@@ -156,6 +154,12 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: "bold",
         fontSize: 16,
+    },
+    cancelButton: {
+        paddingVertical: 14,
+        paddingHorizontal: 20,
+        alignItems: "center",
+        alignSelf: "center",
     },
     cancelText: {
         color: "#888",
