@@ -7,7 +7,7 @@ import ChallengeButton from "../components/challengeButton";
 const message = require("../assets/message.png");
 
 export default function Challenge2Screen({ navigation, route }) {
-    const { challenge } = route.params;
+    const { challenge } = route.params ?? {};
 
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
@@ -37,6 +37,16 @@ export default function Challenge2Screen({ navigation, route }) {
 
         return () => clearInterval(interval);
     }, []);
+
+    useEffect(() => {
+        if (!challenge) {
+            navigation.popTo("Home");
+        }
+    }, [challenge]);
+
+    if (!challenge) {
+        return null;
+    }
 
     return(
         <SafeAreaView style={styles.container}>

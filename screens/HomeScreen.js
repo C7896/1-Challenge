@@ -39,18 +39,23 @@ export default function HomeScreen( {navigation} ) {
             const user = auth.currentUser;
 
             if (user) {
-                const userRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userRef);
+                try {
+                    const userRef = doc(db, "users", user.uid);
+                    const userDoc = await getDoc(userRef);
 
-                if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    setStreak(userData.current_streak);
-                    setPersonalImprovement(new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** userData.total_completed_challenges)));
-                    setChallengesCompleted(userData.total_completed_challenges);
-                    setUsername(userData.username ?? "");
-                    console.log("Successfully read user document");
-                } else {
-                    console.log("Error reading user document");
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        setStreak(userData.current_streak);
+                        setPersonalImprovement(new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** userData.total_completed_challenges)));
+                        setChallengesCompleted(userData.total_completed_challenges);
+                        setUsername(userData.username ?? "");
+                        console.log("Successfully read user document");
+                    } else {
+                        console.log("Error reading user document");
+                    }
+                } catch (error) {
+                    // keep previously-loaded stats on screen rather than falling back to zeros
+                    console.error("Error reading user stats: ", error);
                 }
             }
         };

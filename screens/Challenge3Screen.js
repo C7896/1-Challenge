@@ -10,7 +10,7 @@ const topBlob = require("../assets/topBlob.png");
 
 
 export default function Challenge3Screen({ navigation, route }) {
-    const { challenge } = route.params;
+    const { challenge } = route.params ?? {};
 
     const [action, setAction] = useState('');
     const [reflection, setReflection] = useState('');
@@ -107,6 +107,15 @@ export default function Challenge3Screen({ navigation, route }) {
         };
     }, []);
 
+    useEffect(() => {
+        if (!challenge) {
+            navigation.popTo("Home");
+        }
+    }, [challenge]);
+
+    if (!challenge) {
+        return null;
+    }
 
     return(
         <View style={styles.container}>

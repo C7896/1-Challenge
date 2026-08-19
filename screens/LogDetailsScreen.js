@@ -1,10 +1,21 @@
 import { SafeAreaView, View, Text, Image, TextInput, StyleSheet } from "react-native";
+import React, { useEffect } from "react";
 
 const topBlob = require("../assets/topBlob.png");
 
 
-export default function LogDetailsScreen({ route }) {
-    const { journal } = route.params;
+export default function LogDetailsScreen({ navigation, route }) {
+    const { journal } = route.params ?? {};
+
+    useEffect(() => {
+        if (!journal) {
+            navigation.popTo("Home");
+        }
+    }, [journal]);
+
+    if (!journal) {
+        return null;
+    }
 
     return(
         <View style={styles.container}>

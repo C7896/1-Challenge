@@ -9,7 +9,7 @@ import { scheduleDailyNotification } from "../ScheduleNotification";
 const earth = require('../assets/mother_nature.png');
 
 export default function Challenge4Screen({ navigation, route }) {
-  const { streak } = route.params;
+  const { streak = 0 } = route.params ?? {};
 
   useEffect(() => {
     async function setupNotifications() {
