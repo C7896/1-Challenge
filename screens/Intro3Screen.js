@@ -29,7 +29,7 @@ export default function Intro3Screen({ navigation }) {
                 <View style={[styles.container, styles.textContainer]}>
                     <Text style={[styles.text, styles.title]}>Why</Text>
                     <Text style={[styles.text, styles.body]}>A 1% improvement</Text>
-                    <Text style={[styles.text, styles.body]}>everyday is a 37x</Text>
+                    <Text style={[styles.text, styles.body]}>every day is a 37x</Text>
                     <Text style={[styles.text, styles.body]}>improvement a year!</Text>
                     <Text style={[styles.text, styles.reminder]}>We'll remind you at 9:00 AM.</Text>
                     <Pressable style={styles.buttonContainer} onPress={checkChallenges}>

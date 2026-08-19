@@ -117,7 +117,7 @@ export default function Challenge3Screen({ navigation, route }) {
                     <Text style={styles.body}>{challenge.challenge}</Text>
                 </View>
                 <View style={{flex: 0.5}} />
-                <KeyboardAvoidingView behavior="padding" style={[styles.textContainer, {flex: 6, flexWrap: "no-wrap",}]}>
+                <KeyboardAvoidingView behavior="padding" style={[styles.textContainer, {flex: 6}]}>
                     <Text style={styles.body}>What did you do?</Text>
                     <TextInput
                         style={styles.questionInput}

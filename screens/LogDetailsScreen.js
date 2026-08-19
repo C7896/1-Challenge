@@ -15,7 +15,7 @@ export default function LogDetailsScreen({ route }) {
                     <Text style={styles.body}>{journal.challenge}</Text>
                 </View>
                 <View style={{flex: 0.5}} />
-                <View style={[styles.textContainer, {flex: 6, flexWrap: "no-wrap",}]}>
+                <View style={[styles.textContainer, {flex: 6}]}>
                     <Text style={styles.body}>What did you do?</Text>
                     <TextInput
                         style={styles.questionInput}

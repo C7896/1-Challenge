@@ -12,7 +12,7 @@ export default function Intro1Screen({ navigation }) {
                 <View style={[styles.container, styles.textContainer]}>
                     <Text style={[styles.text, styles.title]}>Our Mission</Text>
                     <Text style={[styles.text, styles.body]}>Improve the world</Text>
-                    <Text style={[styles.text, styles.body]}>by 1% everyday.</Text>
+                    <Text style={[styles.text, styles.body]}>by 1% every day.</Text>
                     <ClearButton title="Next" nav={navigation} destination="Intro2" top={20} onLight/>
                 </View>
             </View>

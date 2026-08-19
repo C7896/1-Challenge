@@ -26,6 +26,7 @@ export default function HomeScreen( {navigation} ) {
     const [streak, setStreak] = useState(0);
     const [personalImprovement, setPersonalImprovement] = useState(0);
     const [challengesCompleted, setChallengesCompleted] = useState(0);
+    const [username, setUsername] = useState("");
 
     const [todayChallenge, setTodayChallenge] = useState(null);
     const [todayCompleted, setTodayCompleted] = useState(false);
@@ -46,6 +47,7 @@ export default function HomeScreen( {navigation} ) {
                     setStreak(userData.current_streak);
                     setPersonalImprovement(new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** userData.total_completed_challenges)));
                     setChallengesCompleted(userData.total_completed_challenges);
+                    setUsername(userData.username ?? "");
                     console.log("Successfully read user document");
                 } else {
                     console.log("Error reading user document");
@@ -118,13 +120,13 @@ export default function HomeScreen( {navigation} ) {
                             <View style={styles.greenText}>
                                 {challengesCompleted > 0 ? (
                                     <>
-                                        <Text style={styles.subtitle}>We love you!</Text>
+                                        <Text style={styles.subtitle}>{username ? `We love you, ${username}!` : "We love you!"}</Text>
                                         <Text style={styles.text}>Thank you for making</Text>
                                         <Text style={styles.text}>the world a better place!</Text>
                                     </>
                                 ) : (
                                     <>
-                                        <Text style={styles.subtitle}>Welcome.</Text>
+                                        <Text style={styles.subtitle}>{username ? `Welcome, ${username}.` : "Welcome."}</Text>
                                         <Text style={styles.text}>One small challenge a day.</Text>
                                     </>
                                 )}
