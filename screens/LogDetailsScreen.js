@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
     },
     clearContainer: {
         flex: 2,
+        // an explicit width: the parent centres its children, which otherwise
+        // shrink-wraps this box and makes any child percentage width circular
+        width: "100%",
         justifyContent: "center",
         alignItems: "center",
     },
@@ -57,9 +60,11 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         flex: 2,
-        flexWrap: "wrap",
         justifyContent: "center",
-        alignItems: "flex-start",
+        alignItems: "stretch",
+        // the parent centres its children, which shrink-wraps this box and left
+        // the inputs' width: "100%" with no width to resolve against
+        alignSelf: "stretch",
         marginHorizontal: 20,
     },
     questionInput: {
