@@ -17,8 +17,22 @@ export default function Intro3Screen({ navigation }) {
             pressed.current = true;
             const user = auth.currentUser;
 
-            const { challenge, completed, streak } = await loadToday(db, user.uid);
-            navigation.navigate("Home", { challenge, streak });
+            // no session (token refresh failed, or iOS restored this screen after a
+            // kill): send them back to sign in rather than reading uid off null
+            if (user == null) {
+                pressed.current = false;
+                navigation.reset({ index: 0, routes: [{ name: "Login0" }] });
+                return;
+            }
+
+            try {
+                const { challenge, streak } = await loadToday(db, user.uid);
+                navigation.navigate("Home", { challenge, streak });
+            } catch (error) {
+                console.error("Error loading today's challenge: ", error);
+                pressed.current = false;
+                navigation.navigate("Home");
+            }
         }
     }
 
