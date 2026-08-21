@@ -12,6 +12,7 @@ import Intro2Screen from "./screens/Intro2Screen";
 import Intro3Screen from "./screens/Intro3Screen";
 import HomeScreen from "./screens/HomeScreen";
 import LogScreen from "./screens/LogScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 import LogDetailsScreen from "./screens/LogDetailsScreen";
 import Challenge1Screen from "./screens/Challenge1Screen";
 import Challenge2Screen from "./screens/Challenge2Screen";
@@ -72,6 +73,7 @@ export default function App() {
         <Stack.Screen name="Intro3" component={Intro3Screen} />
         <Stack.Screen name="Home" component={ HomeScreen } />
         <Stack.Screen name="Log" component={ LogScreen } />
+        <Stack.Screen name="Profile" component={ ProfileScreen } />
         <Stack.Screen name="Log Details" component={ LogDetailsScreen } options={{
           headerShown: true,
           title: "",

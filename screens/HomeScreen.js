@@ -1,32 +1,25 @@
-import { SafeAreaView, ScrollView, View, Text, ImageBackground, Image, StyleSheet } from "react-native";
+import { SafeAreaView, View, Text, ImageBackground, Image, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
 import TabBar from "../components/tabBar";
-import SignOutButton from "../components/signOutButton";
-import DeleteAccountButton from "../components/deleteAccountButton";
-import ExploreButton from "../components/exploreButton";
 import TodayCard from "../components/todayCard";
-import PolicyLinks from "../components/policyLinks";
 
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { loadToday } from "../lib/challenge";
-import { CAUSES_URL } from "../constants/links";
 
 const blob = require("../assets/blob.png");
 const blueCloud = require("../assets/blue_cloud.png");
 const redCloud = require("../assets/red_cloud.png");
 const yellowCloud = require("../assets/yellow_cloud.png");
 const travels = require("../assets/Travels.png");
-const globe = require("../assets/Globe.png");
 
 export default function HomeScreen( {navigation} ) {
 
     const [streak, setStreak] = useState(0);
     const [personalImprovement, setPersonalImprovement] = useState(0);
     const [challengesCompleted, setChallengesCompleted] = useState(0);
-    const [username, setUsername] = useState("");
 
     const [todayChallenge, setTodayChallenge] = useState(null);
     const [todayCompleted, setTodayCompleted] = useState(false);
@@ -54,7 +47,6 @@ export default function HomeScreen( {navigation} ) {
                         setStreak(userData.current_streak);
                         setPersonalImprovement(new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** userData.total_completed_challenges)));
                         setChallengesCompleted(userData.total_completed_challenges);
-                        setUsername(userData.username ?? "");
                         console.log("Successfully read user document");
                     } else {
                         console.log("Error reading user document");
@@ -92,18 +84,18 @@ export default function HomeScreen( {navigation} ) {
             </SafeAreaView>
 
                 <ImageBackground source={blob} style={[styles.statsSection, { paddingTop: cardHeight + 10 }]} resizeMode="cover">
-                    <ImageBackground source={redCloud} style={[styles.cloud, styles.cloudLeft]}>
+                    <ImageBackground source={redCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 191 / 200 }]}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextRed]}>{streak}</Text>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabelLarge, styles.cloudTextRed]}>day streak</Text>
                     </ImageBackground>
 
-                    <ImageBackground source={yellowCloud} style={[styles.cloud, styles.cloudRight]}>
+                    <ImageBackground source={yellowCloud} resizeMode="contain" style={[styles.cloud, styles.cloudRight, { aspectRatio: 184 / 185 }]}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{personalImprovement}x</Text>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>personal</Text>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>improvement</Text>
                     </ImageBackground>
 
-                    <ImageBackground source={blueCloud} style={[styles.cloud, styles.cloudLeft]}>
+                    <ImageBackground source={blueCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 172 / 179 }]}>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{challengesCompleted}</Text>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>challenges</Text>
                         <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>completed</Text>
@@ -111,29 +103,6 @@ export default function HomeScreen( {navigation} ) {
 
                     <Image source={travels} style={styles.travels} resizeMode="contain" accessible={false} />
                 </ImageBackground>
-
-                <View style={styles.greenSection}>
-                    <View style={styles.greenRow}>
-                        <Image source={globe} style={styles.globe} resizeMode="contain" accessible={false} />
-                        <View style={styles.greenText}>
-                            {challengesCompleted > 0 ? (
-                                <>
-                                    <Text style={styles.subtitle}>{username ? `We love you, ${username}!` : "We love you!"}</Text>
-                                    <Text style={styles.text}>Thank you for making</Text>
-                                    <Text style={styles.text}>the world a better place!</Text>
-                                </>
-                            ) : (
-                                <>
-                                    <Text style={styles.subtitle}>{username ? `Welcome, ${username}.` : "Welcome."}</Text>
-                                    <Text style={styles.text}>One small challenge a day.</Text>
-                                </>
-                            )}
-                        </View>
-                    </View>
-                    <ExploreButton link={CAUSES_URL}/>
-                    <PolicyLinks style={styles.policyLinks} onLight />
-                    <DeleteAccountButton navigation={navigation} />
-                </View>
 
             {/* floats over the top of the blob so it costs no layout height and
                 nothing below it is pushed off the screen */}
@@ -151,14 +120,12 @@ export default function HomeScreen( {navigation} ) {
                 />
             </View>
 
-            <SignOutButton navigation={navigation} />
             <TabBar nav={navigation} />
         </View>
     );
 }
 
 const INK = "#2B2724";
-
 
 const styles = StyleSheet.create({
     root: {
@@ -179,43 +146,43 @@ const styles = StyleSheet.create({
         width: "100%",
         // paddingTop is set inline; it leaves the top of the blob clear for the card
         justifyContent: "space-evenly",
-        paddingBottom: 4,
+        // clears the floating tab bar, which sits 50 up and is 55 tall
+        paddingBottom: 112,
     },
     travels: {
         position: "absolute",
         right: 10,
-        bottom: 18,
+        bottom: 122,
         width: "34%",
         height: 72,
     },
     cloud: {
-        // flex rather than a fixed height, so three clouds always divide whatever
-        // space is left instead of overflowing on a short screen
+        // height comes from flex, width follows the artwork's own aspect ratio.
+        // The clouds are near square, so forcing them into a wide box was cropping
+        // the top and bottom off every one of them.
         flex: 1,
-        maxHeight: 96,
-        minHeight: 58,
-        width: "62%",
+        maxHeight: 172,
+        minHeight: 96,
         justifyContent: "center",
         alignItems: "center",
     },
     cloudLeft: {
         alignSelf: "flex-start",
+        marginLeft: 12,
     },
     cloudRight: {
         alignSelf: "flex-end",
+        marginRight: 12,
     },
     cloudNumber: {
-        right: "18%",
         fontSize: 28,
         fontWeight: "bold",
     },
     cloudLabelLarge: {
-        right: "18%",
         fontSize: 20,
         fontWeight: "bold",
     },
     cloudLabel: {
-        right: "18%",
         fontSize: 16,
         fontWeight: "normal",
     },
@@ -225,44 +192,9 @@ const styles = StyleSheet.create({
     cloudTextLight: {
         color: INK,
     },
-    greenSection: {
-        width: "100%",
-        backgroundColor: "#A1D5AE",
-        alignItems: "center",
-        paddingTop: 10,
-        // clears the floating tab bar, which sits 50 up and is 55 tall
-        paddingBottom: 112,
-        paddingHorizontal: 16,
-        gap: 10,
-    },
-    greenRow: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 12,
-    },
-    greenText: {
-        flexShrink: 1,
-    },
-    globe: {
-        width: 84,
-        height: 84,
-    },
-    policyLinks: {
-        justifyContent: "center",
-    },
     title: {
         color: "white",
         fontSize: 30,
         fontWeight: "bold",
-    },
-    subtitle: {
-        color: INK,
-        fontSize: 22,
-        fontWeight: "bold",
-    },
-    text: {
-        color: INK,
-        fontSize: 16,
-        fontWeight: "normal",
     },
 });
