@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
         paddingBottom: 112,
     },
     travels: {
-        // back to the original artwork size, parked bottom right where the blue
-        // cloud does not reach
+        // the artwork carries the bottom third of the screen now that the clouds
+        // are smaller, so it gets real size
         position: "absolute",
-        right: 2,
-        bottom: 108,
-        width: "50%",
-        height: 170,
+        right: 0,
+        bottom: 100,
+        width: "62%",
+        height: 235,
     },
     cloud: {
         // height comes from flex, width follows the artwork's own aspect ratio.
@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
         flex: 1,
         // large enough that three of them nearly fill the blob, which is what
         // closes up the empty band that used to sit through the middle
-        maxHeight: 196,
-        minHeight: 96,
+        maxHeight: 148,
+        minHeight: 88,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -134,15 +134,15 @@ const styles = StyleSheet.create({
         marginRight: 6,
     },
     cloudNumber: {
-        fontSize: 34,
+        fontSize: 30,
         fontWeight: "bold",
     },
     cloudLabelLarge: {
-        fontSize: 24,
+        fontSize: 21,
         fontWeight: "bold",
     },
     cloudLabel: {
-        fontSize: 19,
+        fontSize: 17,
         fontWeight: "normal",
     },
     cloudTextRed: {
