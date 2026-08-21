@@ -1,5 +1,5 @@
-import { SafeAreaView, View, Text, ImageBackground, Image, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import { SafeAreaView, View, Text, ImageBackground, Image, StyleSheet, useWindowDimensions } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
 import TabBar from "../components/tabBar";
@@ -20,6 +20,55 @@ export default function HomeScreen( {navigation} ) {
     const [challengesCompleted, setChallengesCompleted] = useState(0);
 
     const isFocused = useIsFocused();
+
+    // Dev-only edge check. The cloud artwork is sliced flat on one side, and that
+    // flat side is meant to sit just off-screen so the cloud reads as bleeding
+    // past the edge. Anything beyond that bleed means the visible body is being
+    // cut, which is exactly the bug this screen keeps regrowing. Warn loudly.
+    //
+    // This deliberately does not use onLayout. ImageBackground keeps only style,
+    // imageStyle, imageRef, importantForAccessibility and children for its outer
+    // View and spreads every other prop onto the inner Image, and the native
+    // image view never emits onLayout, so an onLayout handler on a cloud is
+    // accepted and then silently never called. imageRef is the supported way in,
+    // and ImageBackground stretches that inner image to fill the container, so
+    // its window frame is the cloud's frame. Measuring it after each commit also
+    // means the check re-runs on every Fast Refresh, not just on first mount.
+    const { width: screenWidth } = useWindowDimensions();
+    const BLEED = 4;
+    const redRef = useRef(null);
+    const yellowRef = useRef(null);
+    const blueRef = useRef(null);
+
+    useEffect(() => {
+        if (!__DEV__) {
+            return;
+        }
+        let cancelled = false;
+        const clouds = [["red", redRef], ["yellow", yellowRef], ["blue", blueRef]];
+        // one frame of slack so the measurement reads the layout that was just committed
+        const handle = requestAnimationFrame(() => {
+            clouds.forEach(([name, ref]) => {
+                const node = ref.current;
+                if (cancelled || node == null || typeof node.measureInWindow !== "function") {
+                    return;
+                }
+                node.measureInWindow((x, y, width) => {
+                    if (cancelled || width == null) {
+                        return;
+                    }
+                    const past = Math.max(-x, x + width - screenWidth);
+                    if (past > BLEED) {
+                        console.warn(`[edge] ${name} cloud is cut off: ${past.toFixed(1)}pt past the screen edge (allowed ${BLEED})`);
+                    }
+                });
+            });
+        });
+        return () => {
+            cancelled = true;
+            cancelAnimationFrame(handle);
+        };
+    });
 
     useEffect(() => {
         const getStats = async () => {
@@ -60,18 +109,18 @@ export default function HomeScreen( {navigation} ) {
             </SafeAreaView>
 
             <ImageBackground source={blob} style={styles.statsSection} resizeMode="cover">
-                <ImageBackground source={redCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 191 / 142 }]}>
+                <ImageBackground source={redCloud} resizeMode="contain" imageRef={redRef} style={[styles.cloud, styles.cloudLeft, { aspectRatio: 191 / 142 }]}>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextRed]}>{streak}</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabelLarge, styles.cloudTextRed]}>day streak</Text>
                 </ImageBackground>
 
-                <ImageBackground source={yellowCloud} resizeMode="contain" style={[styles.cloud, styles.cloudRight, { aspectRatio: 184 / 133 }]}>
+                <ImageBackground source={yellowCloud} resizeMode="contain" imageRef={yellowRef} style={[styles.cloud, styles.cloudRight, { aspectRatio: 184 / 133 }]}>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{personalImprovement}x</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>personal</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>improvement</Text>
                 </ImageBackground>
 
-                <ImageBackground source={blueCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 172 / 128 }]}>
+                <ImageBackground source={blueCloud} resizeMode="contain" imageRef={blueRef} style={[styles.cloud, styles.cloudLeft, { aspectRatio: 172 / 128 }]}>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{challengesCompleted}</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>{challengesCompleted === 1 ? "challenge" : "challenges"}</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>completed</Text>
@@ -84,8 +133,6 @@ export default function HomeScreen( {navigation} ) {
         </View>
     );
 }
-
-const INK = "#2B2724";
 
 const styles = StyleSheet.create({
     root: {
@@ -124,11 +171,13 @@ const styles = StyleSheet.create({
     },
     cloudLeft: {
         alignSelf: "flex-start",
-        marginLeft: 6,
+        // pulled in toward the centre; the whole silhouette is on screen
+        marginLeft: 28,
     },
     cloudRight: {
         alignSelf: "flex-end",
-        marginRight: 6,
+        // pulled in toward the centre to match the left clouds
+        marginRight: 28,
     },
     cloudNumber: {
         fontSize: 30,
@@ -146,7 +195,8 @@ const styles = StyleSheet.create({
         color: "white",
     },
     cloudTextLight: {
-        color: INK,
+        // white on all three clouds, matching the red one, per Rustin
+        color: "white",
     },
     title: {
         color: "white",
