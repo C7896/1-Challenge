@@ -1,9 +1,9 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
-export default function TodayCard({ loading, challenge, completed, streak, navigation }) {
+export default function TodayCard({ loading, challenge, completed, streak, navigation, style }) {
     if (loading) {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, style]}>
                 <Text style={styles.body}>Loading today's challenge...</Text>
             </View>
         );
@@ -11,7 +11,7 @@ export default function TodayCard({ loading, challenge, completed, streak, navig
 
     if (completed) {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, style]}>
                 <Text style={styles.label}>Completed today</Text>
                 <Text style={styles.body} numberOfLines={2}>{challenge.challenge}</Text>
                 <Pressable style={styles.button} onPress={() => navigation.popTo("Log")}>
@@ -22,7 +22,7 @@ export default function TodayCard({ loading, challenge, completed, streak, navig
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
             <Text style={styles.label}>Today's challenge</Text>
             <Text style={styles.body} numberOfLines={2}>{challenge.challenge}</Text>
             <Pressable style={styles.button} onPress={() => navigation.navigate("Challenge1", { challenge, streak })}>
@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: "white",
         borderRadius: 15,
-        backgroundColor: "transparent",
+        // solid, not transparent: on Home this floats over the blob
+        backgroundColor: "#FF815E",
         paddingHorizontal: 20,
-        paddingVertical: 14,
+        paddingVertical: 10,
         alignItems: "center",
         alignSelf: "stretch",
         marginHorizontal: 20,
-        marginTop: 16,
     },
     label: {
         color: "white",
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 16,
         textAlign: "center",
-        marginBottom: 10,
+        marginBottom: 8,
     },
     button: {
         borderWidth: 2,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 30,
-        paddingVertical: 8,
+        paddingVertical: 6,
     },
     buttonText: {
         color: "white",

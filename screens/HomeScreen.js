@@ -34,6 +34,12 @@ export default function HomeScreen( {navigation} ) {
 
     const isFocused = useIsFocused();
 
+    // the card is parked directly under the header and the blob reserves exactly
+    // the card's own height, both measured rather than guessed, so this holds on
+    // any screen size and any safe area inset
+    const [headerHeight, setHeaderHeight] = useState(0);
+    const [cardHeight, setCardHeight] = useState(0);
+
     useEffect(() => {
         const getStats = async () => {
             const user = auth.currentUser;
@@ -79,69 +85,71 @@ export default function HomeScreen( {navigation} ) {
 
     return (
         <View style={styles.root}>
-            <SafeAreaView style={styles.safe}>
-                <ScrollView
-                    style={styles.scroll}
-                    contentContainerStyle={styles.scrollContent}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <View style={styles.header}>
-                        <Text style={styles.title}>1% Challenge</Text>
-                        <DeleteAccountButton navigation={navigation} />
-                    </View>
+            <SafeAreaView onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}>
+                <View style={styles.header}>
+                    <Text style={styles.title}>1% Challenge</Text>
+                </View>
+            </SafeAreaView>
 
-                    <TodayCard
-                        loading={todayLoading}
-                        challenge={todayChallenge}
-                        completed={todayCompleted}
-                        streak={streak}
-                        navigation={navigation}
-                    />
-
-                    <ImageBackground source={blob} style={styles.statsSection} resizeMode="cover">
-                        <Image source={travels} style={styles.travels} resizeMode="contain" accessible={false} />
-
-                        <ImageBackground source={redCloud} style={[styles.cloud, styles.cloudLeft]}>
-                            <Text style={[styles.cloudNumber, styles.cloudTextRed]}>{streak}</Text>
-                            <Text style={[styles.cloudLabelLarge, styles.cloudTextRed]}>day streak</Text>
-                        </ImageBackground>
-
-                        <ImageBackground source={yellowCloud} style={[styles.cloud, styles.cloudRight]}>
-                            <Text style={[styles.cloudNumber, styles.cloudTextLight]}>{personalImprovement}x</Text>
-                            <Text style={[styles.cloudLabel, styles.cloudTextLight]}>personal</Text>
-                            <Text style={[styles.cloudLabel, styles.cloudTextLight]}>improvement</Text>
-                        </ImageBackground>
-
-                        <ImageBackground source={blueCloud} style={[styles.cloud, styles.cloudLeft]}>
-                            <Text style={[styles.cloudNumber, styles.cloudTextLight]}>{challengesCompleted}</Text>
-                            <Text style={[styles.cloudLabel, styles.cloudTextLight]}>challenges</Text>
-                            <Text style={[styles.cloudLabel, styles.cloudTextLight]}>completed</Text>
-                        </ImageBackground>
+                <ImageBackground source={blob} style={[styles.statsSection, { paddingTop: cardHeight + 10 }]} resizeMode="cover">
+                    <ImageBackground source={redCloud} style={[styles.cloud, styles.cloudLeft]}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextRed]}>{streak}</Text>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabelLarge, styles.cloudTextRed]}>day streak</Text>
                     </ImageBackground>
 
-                    <View style={styles.greenSection}>
-                        <View style={styles.greenRow}>
-                            <Image source={globe} style={styles.globe} resizeMode="contain" accessible={false} />
-                            <View style={styles.greenText}>
-                                {challengesCompleted > 0 ? (
-                                    <>
-                                        <Text style={styles.subtitle}>{username ? `We love you, ${username}!` : "We love you!"}</Text>
-                                        <Text style={styles.text}>Thank you for making</Text>
-                                        <Text style={styles.text}>the world a better place!</Text>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Text style={styles.subtitle}>{username ? `Welcome, ${username}.` : "Welcome."}</Text>
-                                        <Text style={styles.text}>One small challenge a day.</Text>
-                                    </>
-                                )}
-                            </View>
+                    <ImageBackground source={yellowCloud} style={[styles.cloud, styles.cloudRight]}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{personalImprovement}x</Text>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>personal</Text>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>improvement</Text>
+                    </ImageBackground>
+
+                    <ImageBackground source={blueCloud} style={[styles.cloud, styles.cloudLeft]}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{challengesCompleted}</Text>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>challenges</Text>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>completed</Text>
+                    </ImageBackground>
+
+                    <Image source={travels} style={styles.travels} resizeMode="contain" accessible={false} />
+                </ImageBackground>
+
+                <View style={styles.greenSection}>
+                    <View style={styles.greenRow}>
+                        <Image source={globe} style={styles.globe} resizeMode="contain" accessible={false} />
+                        <View style={styles.greenText}>
+                            {challengesCompleted > 0 ? (
+                                <>
+                                    <Text style={styles.subtitle}>{username ? `We love you, ${username}!` : "We love you!"}</Text>
+                                    <Text style={styles.text}>Thank you for making</Text>
+                                    <Text style={styles.text}>the world a better place!</Text>
+                                </>
+                            ) : (
+                                <>
+                                    <Text style={styles.subtitle}>{username ? `Welcome, ${username}.` : "Welcome."}</Text>
+                                    <Text style={styles.text}>One small challenge a day.</Text>
+                                </>
+                            )}
                         </View>
-                        <ExploreButton link={CAUSES_URL}/>
-                        <PolicyLinks style={styles.policyLinks} onLight />
                     </View>
-                </ScrollView>
-            </SafeAreaView>
+                    <ExploreButton link={CAUSES_URL}/>
+                    <PolicyLinks style={styles.policyLinks} onLight />
+                    <DeleteAccountButton navigation={navigation} />
+                </View>
+
+            {/* floats over the top of the blob so it costs no layout height and
+                nothing below it is pushed off the screen */}
+            <View
+                style={[styles.todayOverlay, { top: headerHeight + 6 }]}
+                onLayout={(e) => setCardHeight(e.nativeEvent.layout.height)}
+                pointerEvents="box-none"
+            >
+                <TodayCard
+                    loading={todayLoading}
+                    challenge={todayChallenge}
+                    completed={todayCompleted}
+                    streak={streak}
+                    navigation={navigation}
+                />
+            </View>
 
             <SignOutButton navigation={navigation} />
             <TabBar nav={navigation} />
@@ -151,44 +159,42 @@ export default function HomeScreen( {navigation} ) {
 
 const INK = "#2B2724";
 
+
 const styles = StyleSheet.create({
     root: {
         flex: 1,
         backgroundColor: "#FF815E",
     },
-    safe: {
-        flex: 1,
-    },
-    scroll: {
-        flex: 1,
-        // the scroll area stops above the floating tab bar, so content can never
-        // sit underneath it at any scroll position or on any screen height
-        marginBottom: 105,
-    },
-    scrollContent: {
-        paddingBottom: 16,
-    },
     header: {
         alignItems: "center",
-        paddingTop: 8,
-        paddingBottom: 4,
+        paddingTop: 4,
+    },
+    todayOverlay: {
+        position: "absolute",
+        left: 0,
+        right: 0,
     },
     statsSection: {
+        flex: 1,
         width: "100%",
-        marginTop: 12,
-        alignItems: "center",
-        paddingVertical: 16,
-        gap: 4,
+        // paddingTop is set inline; it leaves the top of the blob clear for the card
+        justifyContent: "space-evenly",
+        paddingBottom: 4,
     },
     travels: {
-        width: "48%",
-        height: 96,
-        alignSelf: "flex-end",
-        marginRight: 8,
+        position: "absolute",
+        right: 10,
+        bottom: 18,
+        width: "34%",
+        height: 72,
     },
     cloud: {
-        width: "66%",
-        height: 120,
+        // flex rather than a fixed height, so three clouds always divide whatever
+        // space is left instead of overflowing on a short screen
+        flex: 1,
+        maxHeight: 96,
+        minHeight: 58,
+        width: "62%",
         justifyContent: "center",
         alignItems: "center",
     },
@@ -200,17 +206,17 @@ const styles = StyleSheet.create({
     },
     cloudNumber: {
         right: "18%",
-        fontSize: 35,
+        fontSize: 28,
         fontWeight: "bold",
     },
     cloudLabelLarge: {
         right: "18%",
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: "bold",
     },
     cloudLabel: {
         right: "18%",
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: "normal",
     },
     cloudTextRed: {
@@ -223,10 +229,11 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#A1D5AE",
         alignItems: "center",
-        paddingVertical: 24,
+        paddingTop: 10,
+        // clears the floating tab bar, which sits 50 up and is 55 tall
+        paddingBottom: 112,
         paddingHorizontal: 16,
-        gap: 16,
-        marginTop: 16,
+        gap: 10,
     },
     greenRow: {
         flexDirection: "row",
@@ -237,25 +244,25 @@ const styles = StyleSheet.create({
         flexShrink: 1,
     },
     globe: {
-        width: 130,
-        height: 130,
+        width: 84,
+        height: 84,
     },
     policyLinks: {
         justifyContent: "center",
     },
     title: {
         color: "white",
-        fontSize: 35,
+        fontSize: 30,
         fontWeight: "bold",
     },
     subtitle: {
         color: INK,
-        fontSize: 30,
+        fontSize: 22,
         fontWeight: "bold",
     },
     text: {
         color: INK,
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: "normal",
     },
 });

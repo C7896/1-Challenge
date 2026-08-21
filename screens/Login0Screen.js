@@ -9,6 +9,8 @@ export default function Login0Screen( {navigation} ) {
             <View style={styles.topContainer}>
                 <LargeImage src={location}/>
                 <Text style={styles.title}>1% Challenge</Text>
+                <Text style={styles.tagline}>A 1% improvement every day</Text>
+                <Text style={styles.taglineStrong}>is a 37x improvement a year!</Text>
             </View>
             <View style={styles.container}>
                 <LoginScreenButton title="Login" nav={navigation} dest="Login1" background={true} />
@@ -37,6 +39,19 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 50,
         fontWeight: "bold",
+    },
+    tagline: {
+        color: "white",
+        fontSize: 17,
+        textAlign: "center",
+        marginTop: 10,
+    },
+    taglineStrong: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginTop: 2,
     },
     previewLink: {
         marginTop: 16,

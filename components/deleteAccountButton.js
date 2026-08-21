@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
     text: {
-        color: "white",
+        // sits on the green section now, where white measures about 1.8:1
+        color: "#2B2724",
         fontSize: 15,
         textDecorationLine: "underline",
     },
