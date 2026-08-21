@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import ClearButton from "../components/clearButton";
 import LargeImage from "../components/largeImage";
+import IntroDots from "../components/introDots";
 const joy = require("../assets/Joy.png");
 
 export default function Intro1Screen({ navigation }) {
@@ -13,7 +14,10 @@ export default function Intro1Screen({ navigation }) {
                     <Text style={[styles.text, styles.title]}>Our Mission</Text>
                     <Text style={[styles.text, styles.body]}>Improve the world</Text>
                     <Text style={[styles.text, styles.body]}>by 1% every day.</Text>
-                    <ClearButton title="Next" nav={navigation} destination="Intro2" top={20} onLight/>
+                    <View style={styles.ctaBlock}>
+                        <IntroDots active={0} color={INK} />
+                        <ClearButton title="Next" nav={navigation} destination="Intro2" top={12} onLight/>
+                    </View>
                 </View>
             </View>
         </SafeAreaView>
@@ -33,6 +37,11 @@ const styles = StyleSheet.create({
         flexGrow: 6,
         alignItems: "flex-start",
         paddingLeft: "10%",
+    },
+    ctaBlock: {
+        alignSelf: "center",
+        alignItems: "center",
+        marginTop: 20,
     },
     hContainer: {
         flexDirection: "row",

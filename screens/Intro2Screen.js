@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import { withSafeAreaInsets } from "react-native-safe-area-context";
 import ClearButton from "../components/clearButton";
 import LargeImage from "../components/largeImage";
+import IntroDots from "../components/introDots";
 const relationship = require("../assets/Relationship.png");
 
 export default function Intro2Screen({ navigation }) {
@@ -15,7 +16,10 @@ export default function Intro2Screen({ navigation }) {
                     <Text style={[styles.text, styles.body]}>Daily challenges that</Text>
                     <Text style={[styles.text, styles.body]}>improve you and</Text>
                     <Text style={[styles.text, styles.body]}>those around you.</Text>
-                    <ClearButton title="Next" nav={navigation} destination="Intro3" top={20} onLight/>
+                    <View style={styles.ctaBlock}>
+                        <IntroDots active={1} color={INK} />
+                        <ClearButton title="Next" nav={navigation} destination="Intro3" top={12} onLight/>
+                    </View>
                 </View>
             </View>
         </SafeAreaView>
@@ -34,6 +38,11 @@ const styles = StyleSheet.create({
     textContainer: {
         flex: 1,
         paddingLeft: "10%",
+    },
+    ctaBlock: {
+        alignSelf: "center",
+        alignItems: "center",
+        marginTop: 20,
     },
     hContainer: {
         flexDirection: "row",

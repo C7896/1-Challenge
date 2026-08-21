@@ -62,10 +62,10 @@ export default function App() {
       <Stack.Navigator initialRouteName="Splash" screenOptions={{headerShown: false, animation: "fade", gestureEnabled: false}} >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login0" component={Login0Screen} />
-        <Stack.Screen name="Login1" component={Login1Screen} />
-        <Stack.Screen name="Sign up" component={SignupStart} />
-        <Stack.Screen name="SignupCredentials" component={SignupCredentials} />
-        <Stack.Screen name="SignupProfile" component={SignupProfile} />
+        <Stack.Screen name="Login1" component={Login1Screen} options={{ gestureEnabled: true }} />
+        <Stack.Screen name="Sign up" component={SignupStart} options={{ gestureEnabled: true }} />
+        <Stack.Screen name="SignupCredentials" component={SignupCredentials} options={{ gestureEnabled: true }} />
+        <Stack.Screen name="SignupProfile" component={SignupProfile} options={{ gestureEnabled: true }} />
         <Stack.Screen name="Intro1" component={Intro1Screen} />
         <Stack.Screen name="Intro2" component={Intro2Screen} />
         <Stack.Screen name="Intro3" component={Intro3Screen} />
@@ -81,9 +81,11 @@ export default function App() {
           },
           headerTintColor: INK,
           headerShadowVisible: false,
+          gestureEnabled: true,
         }}/>
         <Stack.Screen name="Challenge1" component={Challenge1Screen} options={{
           headerShown: false,
+          gestureEnabled: true,
         }} />
         <Stack.Screen name="Challenge2" component={Challenge2Screen} options={{
           headerShown: true,
@@ -94,6 +96,7 @@ export default function App() {
           },
           headerTintColor: "#FFF",
           headerShadowVisible: false,
+          gestureEnabled: true,
         }} />
         <Stack.Screen name="Challenge3" component={Challenge3Screen} options={{
           headerShown: true,
@@ -104,6 +107,7 @@ export default function App() {
           },
           headerTintColor: INK,
           headerShadowVisible: false,
+          gestureEnabled: true,
         }} />
         <Stack.Screen name="Challenge4" component={Challenge4Screen} options={{
           headerShown: false,

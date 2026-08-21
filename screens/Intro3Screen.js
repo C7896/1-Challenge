@@ -2,6 +2,7 @@ import { View, Pressable, Text, StyleSheet, SafeAreaView } from "react-native";
 import React, { useRef } from "react";
 
 import LargeImage from "../components/largeImage";
+import IntroDots from "../components/introDots";
 
 import { auth, db } from "../firebase";
 import { loadToday } from "../lib/challenge";
@@ -46,9 +47,12 @@ export default function Intro3Screen({ navigation }) {
                     <Text style={[styles.text, styles.body]}>every day is a 37x</Text>
                     <Text style={[styles.text, styles.body]}>improvement a year!</Text>
                     <Text style={[styles.text, styles.reminder]}>We'll remind you at 9:00 AM.</Text>
-                    <Pressable style={styles.buttonContainer} onPress={checkChallenges}>
-                        <Text style={styles.buttonText}>Start Challenge!</Text>
-                    </Pressable>
+                    <View style={styles.ctaBlock}>
+                        <IntroDots active={2} color="white" />
+                        <Pressable style={styles.buttonContainer} onPress={checkChallenges}>
+                            <Text style={styles.buttonText}>Start Challenge!</Text>
+                        </Pressable>
+                    </View>
                 </View>
             </View>
         </SafeAreaView>
@@ -65,6 +69,11 @@ const styles = StyleSheet.create({
     textContainer: {
         flex: 1,
         paddingLeft: "10%",
+    },
+    ctaBlock: {
+        alignSelf: "center",
+        alignItems: "center",
+        marginTop: 20,
     },
     hContainer: {
         flexDirection: "row",
@@ -94,7 +103,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 42,
         paddingVertical: 12,
-        marginTop: 20,
+        marginTop: 12,
     },
     buttonText: {
         color: "white",

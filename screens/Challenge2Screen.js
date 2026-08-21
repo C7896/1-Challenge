@@ -51,7 +51,7 @@ export default function Challenge2Screen({ navigation, route }) {
     return(
         <SafeAreaView style={styles.container}>
             <View style={[styles.container, {flex: 1}]}>
-                <Text style={styles.subtitle}>{hours}:{minutes} left</Text>
+                <Text style={styles.subtitle}>{hours > 0 ? `${hours}h ${minutes}m left` : `${minutes}m left`}</Text>
             </View>
             <LargeImage src={message} />
             <View style={styles.textContainer}>

@@ -2,6 +2,7 @@ import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, S
 import React, { useState } from 'react';
 import LargeImage from "../components/largeImage";
 import PolicyLinks from "../components/policyLinks";
+import BackButton from "../components/backButton";
 import { AUTH_SCHEMES } from "../constants/theme";
 import { setDraft } from "../lib/signupDraft";
 
@@ -16,6 +17,8 @@ export default function SignupCredentials( {navigation} ) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleContinue = () => {
         const trimmedEmail = email.trim();
@@ -38,6 +41,7 @@ export default function SignupCredentials( {navigation} ) {
 
     return(
         <SafeAreaView style={styles.safeArea}>
+            <BackButton navigation={navigation} onLight />
             <ScrollView
                 style={styles.scroll}
                 contentContainerStyle={styles.scrollContent}
@@ -66,11 +70,14 @@ export default function SignupCredentials( {navigation} ) {
                             style={styles.input}
                             onChangeText={(text) => setPassword(text)}
                             placeholder="Password"
-                            secureTextEntry
+                            secureTextEntry={!showPassword}
                             autoCapitalize="none"
                             autoCorrect={false}
                             autoComplete="off"
                         />
+                        <Pressable onPress={() => setShowPassword((v) => !v)} hitSlop={10} style={styles.toggleButton}>
+                            <Text style={styles.toggleText}>{showPassword ? "Hide" : "Show"}</Text>
+                        </Pressable>
                     </View>
                     <View style={[styles.inputContainer, {marginBottom: 15}]}>
                         <Image source={lock} style={styles.icon} resizeMode="contain" />
@@ -78,11 +85,14 @@ export default function SignupCredentials( {navigation} ) {
                             style={styles.input}
                             onChangeText={(text) => setConfirmPassword(text)}
                             placeholder="Confirm password"
-                            secureTextEntry
+                            secureTextEntry={!showConfirmPassword}
                             autoCapitalize="none"
                             autoCorrect={false}
                             autoComplete="off"
                         />
+                        <Pressable onPress={() => setShowConfirmPassword((v) => !v)} hitSlop={10} style={styles.toggleButton}>
+                            <Text style={styles.toggleText}>{showConfirmPassword ? "Hide" : "Show"}</Text>
+                        </Pressable>
                     </View>
                     <Pressable style={styles.buttoncontainer} onPress={handleContinue}>
                         <Text style={styles.buttontext}>Continue</Text>
@@ -149,9 +159,9 @@ const styles = StyleSheet.create({
     },
     buttoncontainer: {
         backgroundColor: scheme.cta,
-        width: 211,
+        width: 280,
         height: 56,
-        borderRadius: 20,
+        borderRadius: 28,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -159,6 +169,13 @@ const styles = StyleSheet.create({
         color: scheme.ctaText,
         fontSize: 22,
         fontWeight: "bold",
+    },
+    toggleButton: {
+        paddingHorizontal: 12,
+    },
+    toggleText: {
+        fontSize: 13,
+        color: "rgba(43,39,36,0.45)",
     },
     policyLinks: {
         marginTop: 24,

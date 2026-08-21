@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import ChallengeButton from "../components/challengeButton";
 import StreakContainer from "../components/streakContainer";
+import BackButton from "../components/backButton";
 
 const backgroundChallengeOne = require('../assets/backgroundChallengeOne.png');
 
@@ -45,9 +46,10 @@ export default function Challenge1Screen({ navigation, route }) {
 
   return (
   <SafeAreaView style={styles.container}>
+    <BackButton navigation={navigation} />
     <View style={{flex: 1}}/>
     <ImageBackground source={backgroundChallengeOne} style={styles.image}>
-      <Text style={[styles.text, styles.timerText]}>{hours}:{minutes} left</Text>
+      <Text style={[styles.text, styles.timerText]}>{hours > 0 ? `${hours}h ${minutes}m left` : `${minutes}m left`}</Text>
       <Text style={[styles.text, styles.title]}>New Challenge</Text>
     </ImageBackground>
     <View style={{ flex: 2 }} />

@@ -2,6 +2,7 @@ import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, S
 import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
 import PolicyLinks from "../components/policyLinks";
+import BackButton from "../components/backButton";
 import { AUTH_SCHEMES } from "../constants/theme";
 
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
@@ -19,6 +20,7 @@ export default function Login0Screen( {navigation} ) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false);
 
     const pressed = useRef(false);
 
@@ -67,6 +69,7 @@ export default function Login0Screen( {navigation} ) {
 
     return(
         <SafeAreaView style={styles.safeArea}>
+            <BackButton navigation={navigation} />
             <ScrollView
                 style={styles.scroll}
                 contentContainerStyle={styles.scrollContent}
@@ -95,11 +98,14 @@ export default function Login0Screen( {navigation} ) {
                         style={styles.input}
                         onChangeText={(text) => setPassword(text)}
                         placeholder="Password"
-                        secureTextEntry
+                        secureTextEntry={!showPassword}
                         autoCapitalize="none"
                         autoCorrect={false}
                         autoComplete="off"
                     />
+                    <Pressable onPress={() => setShowPassword((v) => !v)} hitSlop={10} style={styles.toggleButton}>
+                        <Text style={styles.toggleText}>{showPassword ? "Hide" : "Show"}</Text>
+                    </Pressable>
                 </View>
                 <Pressable style={[styles.buttoncontainer, {backgroundColor: scheme.cta}]} onPress={handleSignIn}>
                     <Text style={styles.buttontext}>Login</Text>
@@ -203,9 +209,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     buttoncontainer: {
-        width: 211,
+        width: 280,
         height: 56,
-        borderRadius: 20,
+        borderRadius: 28,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -213,6 +219,13 @@ const styles = StyleSheet.create({
         color: scheme.ctaText,
         fontSize: 22,
         fontWeight: "bold",
+    },
+    toggleButton: {
+        paddingHorizontal: 12,
+    },
+    toggleText: {
+        fontSize: 13,
+        color: "rgba(43,39,36,0.45)",
     },
     policyLinks: {
         marginTop: 24,

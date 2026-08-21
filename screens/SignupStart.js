@@ -1,6 +1,7 @@
 import { View, Text, Pressable, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LargeImage from "../components/largeImage";
 import PolicyLinks from "../components/policyLinks";
+import BackButton from "../components/backButton";
 import { AUTH_SCHEMES } from "../constants/theme";
 
 const createAccount = require("../assets/auth-create-account.png");
@@ -10,6 +11,7 @@ const scheme = AUTH_SCHEMES.green;
 export default function SignupStart( {navigation} ) {
     return(
         <SafeAreaView style={styles.safeArea}>
+            <BackButton navigation={navigation} onLight />
             <ScrollView
                 style={styles.scroll}
                 contentContainerStyle={styles.scrollContent}
@@ -70,9 +72,9 @@ const styles = StyleSheet.create({
     },
     buttoncontainer: {
         backgroundColor: scheme.cta,
-        width: 211,
+        width: 280,
         height: 56,
-        borderRadius: 20,
+        borderRadius: 28,
         justifyContent: "center",
         alignItems: "center",
     },

@@ -2,6 +2,7 @@ import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, S
 import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
 import PolicyLinks from "../components/policyLinks";
+import BackButton from "../components/backButton";
 import { AUTH_SCHEMES } from "../constants/theme";
 import { getDraft, clearDraft } from "../lib/signupDraft";
 
@@ -78,6 +79,7 @@ export default function SignupProfile( {navigation} ) {
 
     return(
         <SafeAreaView style={styles.safeArea}>
+            <BackButton navigation={navigation} onLight />
             <ScrollView
                 style={styles.scroll}
                 contentContainerStyle={styles.scrollContent}
@@ -177,9 +179,9 @@ const styles = StyleSheet.create({
     },
     buttoncontainer: {
         backgroundColor: scheme.cta,
-        width: 211,
+        width: 280,
         height: 56,
-        borderRadius: 20,
+        borderRadius: 28,
         justifyContent: "center",
         alignItems: "center",
     },
