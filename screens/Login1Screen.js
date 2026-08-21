@@ -1,7 +1,6 @@
 import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
-import LoginScreenButton from "../components/loginScreenButton";
 import PolicyLinks from "../components/policyLinks";
 import { AUTH_SCHEMES } from "../constants/theme";
 
@@ -111,8 +110,12 @@ export default function Login0Screen( {navigation} ) {
 
                 {/* Apple and Google sign-in mount here once Sign In with Apple is enabled on the App ID */}
             </KeyboardAvoidingView>
-            <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 24}]}>
-                <LoginScreenButton title="Sign up" nav={navigation} dest="Sign up" background={false} />
+            <View style={styles.footer}>
+                <Pressable onPress={() => navigation.navigate("Sign up")} hitSlop={{ top: 12, bottom: 12 }}>
+                    <Text style={styles.signupText}>
+                        Don't have an account? <Text style={styles.signupLink}>Sign up here</Text>
+                    </Text>
+                </Pressable>
                 <PolicyLinks small color={scheme.muted} style={styles.policyLinks} />
             </View>
             </ScrollView>
@@ -170,6 +173,22 @@ const styles = StyleSheet.create({
     forgotRow: {
         marginTop: 12,
         alignItems: "center",
+    },
+    footer: {
+        // sits as low as the layout allows while staying above the home indicator,
+        // so a reviewer can still see the way to create an account without scrolling
+        alignItems: "center",
+        paddingTop: 28,
+        paddingBottom: 12,
+        gap: 10,
+    },
+    signupText: {
+        color: scheme.text,
+        fontSize: 15,
+    },
+    signupLink: {
+        fontWeight: "bold",
+        textDecorationLine: "underline",
     },
     forgotText: {
         // solid, not muted: this is a functional link, and muted white over coral

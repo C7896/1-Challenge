@@ -150,11 +150,13 @@ const styles = StyleSheet.create({
         paddingBottom: 112,
     },
     travels: {
+        // back to the original artwork size, parked bottom right where the blue
+        // cloud does not reach
         position: "absolute",
-        right: 10,
-        bottom: 122,
-        width: "34%",
-        height: 72,
+        right: 2,
+        bottom: 108,
+        width: "50%",
+        height: 170,
     },
     cloud: {
         // height comes from flex, width follows the artwork's own aspect ratio.
