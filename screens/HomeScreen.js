@@ -99,29 +99,26 @@ const styles = StyleSheet.create({
     statsSection: {
         flex: 1,
         width: "100%",
-        paddingTop: 4,
-        justifyContent: "space-evenly",
-        // lifts the cloud stack clear of the travels artwork below it
-        paddingBottom: 236,
+        // starts below the blob's curve so every cloud sits on the lighter orange,
+        // then stacks the three with a tight gap instead of spreading them out
+        paddingTop: 84,
+        justifyContent: "flex-start",
+        gap: 4,
     },
     travels: {
         // the artwork carries the bottom third of the screen now that the clouds
         // are smaller, so it gets real size
         position: "absolute",
         right: 0,
-        bottom: 96,
-        width: "66%",
-        height: 215,
+        bottom: 86,
+        width: "62%",
+        height: 200,
     },
     cloud: {
         // height comes from flex, width follows the artwork's own aspect ratio.
         // The clouds are near square, so forcing them into a wide box was cropping
         // the top and bottom off every one of them.
-        flex: 1,
-        // large enough that three of them nearly fill the blob, which is what
-        // closes up the empty band that used to sit through the middle
-        maxHeight: 148,
-        minHeight: 88,
+        height: 140,
         justifyContent: "center",
         alignItems: "center",
     },
