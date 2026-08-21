@@ -34,6 +34,12 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "ascAppId": "6803742479",
+        "appleId": "rustinkatsura@yahoo.com",
+        "appleTeamId": "36B5LDGH7H"
+      }
+    }
   }
 }
