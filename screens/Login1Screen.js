@@ -71,7 +71,7 @@ export default function Login0Screen( {navigation} ) {
             </View>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <View style={styles.inputContainer}>
-                    <Image source={mail} style={styles.icon} />
+                    <Image source={mail} style={styles.icon} resizeMode="contain" />
                     <TextInput
                         style={styles.input}
                         onChangeText={(text) => setEmail(text)}
@@ -83,7 +83,7 @@ export default function Login0Screen( {navigation} ) {
                     />
                 </View>
                 <View style={[styles.inputContainer, {marginBottom: 5}]}>
-                    <Image source={lock} style={styles.icon} />
+                    <Image source={lock} style={styles.icon} resizeMode="contain" />
                     <TextInput
                         style={styles.input}
                         onChangeText={(text) => setPassword(text)}
@@ -149,14 +149,14 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     input: {
-        width: 256,
+        flex: 1,
         height: 45,
         paddingLeft: 5,
     },
     icon: {
         width: 24,
         height: 24,
-        paddingLeft: 5,
+        marginRight: 5,
     },
     forgotRow: {
         width: 300,

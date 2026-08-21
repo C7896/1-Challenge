@@ -78,7 +78,7 @@ export default function SignupScreen( {navigation} ) {
                 </View>
                 <KeyboardAvoidingView style={styles.formContainer} behavior="padding">
                     <View style={styles.inputContainer}>
-                        <Image source={user} style={styles.icon} />
+                        <Image source={user} style={styles.icon} resizeMode="contain" />
                         <TextInput
                             style={styles.input}
                             placeholder="Username"
@@ -90,7 +90,7 @@ export default function SignupScreen( {navigation} ) {
                         />
                     </View>
                     <View style={styles.inputContainer}>
-                        <Image source={mail} style={styles.icon} />
+                        <Image source={mail} style={styles.icon} resizeMode="contain" />
                         <TextInput
                             placeholder="Email"
                             onChangeText={(text) => setEmail(text)}
@@ -102,7 +102,7 @@ export default function SignupScreen( {navigation} ) {
                         />
                     </View>
                     <View style={[styles.inputContainer, {marginBottom: 15}]}>
-                        <Image source={lock} style={styles.icon} />
+                        <Image source={lock} style={styles.icon} resizeMode="contain" />
                         <TextInput
                             placeholder="Password"
                             onChangeText={(text) => setPassword(text)}
@@ -172,14 +172,14 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     input: {
-        width: 256,
+        flex: 1,
         height: 45,
         paddingLeft: 5,
     },
     icon: {
         width: 24,
         height: 24,
-        paddingLeft: 5,
+        marginRight: 5,
     },
     title: {
         color: "white",

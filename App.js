@@ -15,8 +15,11 @@ import Challenge1Screen from "./screens/Challenge1Screen";
 import Challenge2Screen from "./screens/Challenge2Screen";
 import Challenge3Screen from "./screens/Challenge3Screen";
 import Challenge4Screen from "./screens/Challenge4Screen";
-import React from 'react';
+import React, { useEffect } from 'react';
+import { AppState } from 'react-native';
 import * as Notifications from 'expo-notifications';
+
+import { clearDeliveredNotifications, ensureDailyNotificationScheduled } from "./ScheduleNotification";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -32,6 +35,25 @@ const Stack = createNativeStackNavigator();
 const INK = "#2B2724";
 
 export default function App() {
+
+  useEffect(() => {
+    // Delivered reminders otherwise pile up in Notification Centre, one per day,
+    // so clear them whenever the app comes to the front. Also re-arm the daily
+    // reminder if permission is already granted but nothing is scheduled.
+    const sync = () => {
+      clearDeliveredNotifications();
+      ensureDailyNotificationScheduled();
+    };
+
+    sync();
+    const sub = AppState.addEventListener("change", (state) => {
+      if (state === "active") {
+        sync();
+      }
+    });
+
+    return () => sub.remove();
+  }, []);
 
   return (
     <NavigationContainer>
