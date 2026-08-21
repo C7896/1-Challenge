@@ -1,19 +1,30 @@
-import { SafeAreaView, View, Text, ImageBackground, Image, StyleSheet, useWindowDimensions } from "react-native";
+import { SafeAreaView, View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
 import TabBar from "../components/tabBar";
+import StatCloud from "../components/statCloud";
+import ExploreButton from "../components/exploreButton";
 
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import { CAUSES_URL } from "../constants/links";
 
-const blob = require("../assets/blob.png");
+const background = require("../assets/homeBackground.png");
+const greenBlob = require("../assets/greenBlob.png");
 const blueCloud = require("../assets/clouds/blue.png");
 const redCloud = require("../assets/clouds/red.png");
 const yellowCloud = require("../assets/clouds/yellow.png");
 const travels = require("../assets/Travels.png");
+const globe = require("../assets/Globe.png");
 
-export default function HomeScreen( {navigation} ) {
+// Every number below is read straight off the Figma design, whose frame is
+// 430 x 933. The whole screen is scaled by one factor so the composition keeps
+// its proportions on any device instead of drifting piece by piece.
+const DW = 430;
+const DH = 933;
+
+export default function HomeScreen({ navigation }) {
 
     const [streak, setStreak] = useState(0);
     const [personalImprovement, setPersonalImprovement] = useState(0);
@@ -21,21 +32,17 @@ export default function HomeScreen( {navigation} ) {
 
     const isFocused = useIsFocused();
 
-    // Dev-only edge check. The cloud artwork is sliced flat on one side, and that
-    // flat side is meant to sit just off-screen so the cloud reads as bleeding
-    // past the edge. Anything beyond that bleed means the visible body is being
-    // cut, which is exactly the bug this screen keeps regrowing. Warn loudly.
-    //
-    // This deliberately does not use onLayout. ImageBackground keeps only style,
-    // imageStyle, imageRef, importantForAccessibility and children for its outer
-    // View and spreads every other prop onto the inner Image, and the native
-    // image view never emits onLayout, so an onLayout handler on a cloud is
-    // accepted and then silently never called. imageRef is the supported way in,
-    // and ImageBackground stretches that inner image to fill the container, so
-    // its window frame is the cloud's frame. Measuring it after each commit also
-    // means the check re-runs on every Fast Refresh, not just on first mount.
-    const { width: screenWidth } = useWindowDimensions();
-    const BLEED = 4;
+    const { width, height } = useWindowDimensions();
+    const s = Math.min(width / DW, height / DH);
+    // the design is anchored to the top and centred horizontally, so a narrower
+    // or shorter screen shrinks the whole composition rather than clipping it
+    const originX = (width - DW * s) / 2;
+
+    // Dev-only edge check. onLayout is useless on ImageBackground: it keeps only
+    // style, imageStyle, imageRef, importantForAccessibility and children for its
+    // outer View and spreads everything else onto the inner Image, whose native
+    // view never emits layout. imageRef is the supported way in, and because the
+    // inner image fills the container its window frame is the cloud's frame.
     const redRef = useRef(null);
     const yellowRef = useRef(null);
     const blueRef = useRef(null);
@@ -45,19 +52,19 @@ export default function HomeScreen( {navigation} ) {
             return;
         }
         let cancelled = false;
+        const BLEED = 4;
         const clouds = [["red", redRef], ["yellow", yellowRef], ["blue", blueRef]];
-        // one frame of slack so the measurement reads the layout that was just committed
         const handle = requestAnimationFrame(() => {
             clouds.forEach(([name, ref]) => {
                 const node = ref.current;
                 if (cancelled || node == null || typeof node.measureInWindow !== "function") {
                     return;
                 }
-                node.measureInWindow((x, y, width) => {
-                    if (cancelled || width == null) {
+                node.measureInWindow((x, y, w) => {
+                    if (cancelled || w == null) {
                         return;
                     }
-                    const past = Math.max(-x, x + width - screenWidth);
+                    const past = Math.max(-x, x + w - width);
                     if (past > BLEED) {
                         console.warn(`[edge] ${name} cloud is cut off: ${past.toFixed(1)}pt past the screen edge (allowed ${BLEED})`);
                     }
@@ -73,25 +80,23 @@ export default function HomeScreen( {navigation} ) {
     useEffect(() => {
         const getStats = async () => {
             const user = auth.currentUser;
-
-            if (user) {
-                try {
-                    const userRef = doc(db, "users", user.uid);
-                    const userDoc = await getDoc(userRef);
-
-                    if (userDoc.exists()) {
-                        const userData = userDoc.data();
-                        setStreak(userData.current_streak);
-                        setPersonalImprovement(new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** userData.total_completed_challenges)));
-                        setChallengesCompleted(userData.total_completed_challenges);
-                        console.log("Successfully read user document");
-                    } else {
-                        console.log("Error reading user document");
-                    }
-                } catch (error) {
-                    // keep previously-loaded stats on screen rather than falling back to zeros
-                    console.error("Error reading user stats: ", error);
+            if (!user) {
+                return;
+            }
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    setStreak(userData.current_streak);
+                    setPersonalImprovement(new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** userData.total_completed_challenges)));
+                    setChallengesCompleted(userData.total_completed_challenges);
+                    console.log("Successfully read user document");
+                } else {
+                    console.log("Error reading user document");
                 }
+            } catch (error) {
+                // keep previously-loaded stats on screen rather than falling back to zeros
+                console.error("Error reading user stats: ", error);
             }
         };
 
@@ -100,34 +105,89 @@ export default function HomeScreen( {navigation} ) {
         }
     }, [isFocused]);
 
+    // design point -> screen point
+    const x = (v) => originX + v * s;
+    const p = (v) => v * s;
+
     return (
         <View style={styles.root}>
+            {/* the coral, peach and green bands with the design's own curved
+                boundaries, drawn as one image so the two curves cannot drift
+                apart from each other on a different screen size */}
+            <Image
+                source={background}
+                resizeMode="stretch"
+                accessible={false}
+                style={{ position: "absolute", left: 0, top: 0, width, height }}
+            />
+
             <SafeAreaView>
-                <View style={styles.header}>
-                    <Text style={styles.title}>1% Challenge</Text>
-                </View>
+                <Text style={[styles.title, { fontSize: p(34), marginTop: p(6) }]}>1% Challenge</Text>
             </SafeAreaView>
 
-            <ImageBackground source={blob} style={styles.statsSection} resizeMode="cover">
-                <ImageBackground source={redCloud} resizeMode="contain" imageRef={redRef} style={[styles.cloud, styles.cloudLeft, { aspectRatio: 191 / 142 }]}>
-                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextRed]}>{streak}</Text>
-                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabelLarge, styles.cloudTextRed]}>day streak</Text>
-                </ImageBackground>
+            <StatCloud
+                source={redCloud}
+                aspectRatio={195 / 118}
+                imageRef={redRef}
+                value={`${streak}`}
+                caption="day streak"
+                style={{ position: "absolute", left: x(10), top: p(235), width: p(195) }}
+            />
 
-                <ImageBackground source={yellowCloud} resizeMode="contain" imageRef={yellowRef} style={[styles.cloud, styles.cloudRight, { aspectRatio: 184 / 133 }]}>
-                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{personalImprovement}x</Text>
-                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>personal</Text>
-                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>improvement</Text>
-                </ImageBackground>
+            <Image
+                source={travels}
+                resizeMode="contain"
+                accessible={false}
+                style={{ position: "absolute", left: x(228), top: p(222), width: p(192), height: p(168) }}
+            />
 
-                <ImageBackground source={blueCloud} resizeMode="contain" imageRef={blueRef} style={[styles.cloud, styles.cloudLeft, { aspectRatio: 172 / 128 }]}>
-                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{challengesCompleted}</Text>
-                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>{challengesCompleted === 1 ? "challenge" : "challenges"}</Text>
-                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>completed</Text>
-                </ImageBackground>
+            <StatCloud
+                source={yellowCloud}
+                aspectRatio={182 / 112}
+                imageRef={yellowRef}
+                captionFirst
+                value={`${personalImprovement}x`}
+                caption={"Personal\nImprovement"}
+                style={{ position: "absolute", left: x(68), top: p(392), width: p(182) }}
+            />
 
-                <Image source={travels} style={styles.travels} resizeMode="contain" accessible={false} />
-            </ImageBackground>
+            <StatCloud
+                source={blueCloud}
+                aspectRatio={180 / 116}
+                imageRef={blueRef}
+                captionFirst
+                value={`${challengesCompleted}`}
+                caption={"Challenges\nCompleted"}
+                style={{ position: "absolute", left: x(245), top: p(452), width: p(180) }}
+            />
+
+            <Image
+                source={greenBlob}
+                resizeMode="contain"
+                accessible={false}
+                style={{ position: "absolute", left: x(14), top: p(624), width: p(186), height: p(186) }}
+            />
+            <Image
+                source={globe}
+                resizeMode="contain"
+                accessible={false}
+                style={{ position: "absolute", left: x(52), top: p(648), width: p(124), height: p(150) }}
+            />
+
+            <View style={{ position: "absolute", left: x(212), top: p(652), width: p(206) }}>
+                <Text style={[styles.greeting, { fontSize: p(23) }]}>
+                    {challengesCompleted > 0 ? "We love you!" : "Welcome!"}
+                </Text>
+                <Text style={[styles.body, { fontSize: p(16), marginTop: p(6) }]}>
+                    {challengesCompleted > 0
+                        ? "Thank you for making\nthe world a better place!"
+                        : "One small challenge a day\nmakes a better world."}
+                </Text>
+            </View>
+
+            <View style={{ position: "absolute", left: x(212), top: p(758) }}>
+                <ExploreButton link={CAUSES_URL} label="Explore more" onDark />
+            </View>
 
             <TabBar nav={navigation} />
         </View>
@@ -139,68 +199,23 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#FF815E",
     },
-    header: {
-        alignItems: "center",
-        paddingTop: 4,
-    },
-    statsSection: {
-        flex: 1,
-        width: "100%",
-        // starts below the blob's curve so every cloud sits on the lighter orange,
-        // then stacks the three with a tight gap instead of spreading them out
-        paddingTop: 84,
-        justifyContent: "flex-start",
-        gap: 4,
-    },
-    travels: {
-        // the artwork carries the bottom third of the screen now that the clouds
-        // are smaller, so it gets real size
+    green: {
         position: "absolute",
+        left: 0,
         right: 0,
-        bottom: 86,
-        width: "62%",
-        height: 200,
-    },
-    cloud: {
-        // height comes from flex, width follows the artwork's own aspect ratio.
-        // The clouds are near square, so forcing them into a wide box was cropping
-        // the top and bottom off every one of them.
-        height: 140,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    cloudLeft: {
-        alignSelf: "flex-start",
-        // pulled in toward the centre; the whole silhouette is on screen
-        marginLeft: 28,
-    },
-    cloudRight: {
-        alignSelf: "flex-end",
-        // pulled in toward the centre to match the left clouds
-        marginRight: 28,
-    },
-    cloudNumber: {
-        fontSize: 30,
-        fontWeight: "bold",
-    },
-    cloudLabelLarge: {
-        fontSize: 21,
-        fontWeight: "bold",
-    },
-    cloudLabel: {
-        fontSize: 17,
-        fontWeight: "normal",
-    },
-    cloudTextRed: {
-        color: "white",
-    },
-    cloudTextLight: {
-        // white on all three clouds, matching the red one, per Rustin
-        color: "white",
+        bottom: 0,
+        backgroundColor: "#A1D5AE",
     },
     title: {
         color: "white",
-        fontSize: 30,
         fontWeight: "bold",
+        textAlign: "center",
+    },
+    greeting: {
+        color: "white",
+        fontWeight: "bold",
+    },
+    body: {
+        color: "white",
     },
 });
