@@ -2,7 +2,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SplashScreen from "./screens/SplashScreen";
 import Login0Screen from "./screens/Login0Screen";
-import PreviewScreen from "./screens/PreviewScreen";
 import Login1Screen from "./screens/Login1Screen";
 import SignupStart from "./screens/SignupStart";
 import SignupCredentials from "./screens/SignupCredentials";
@@ -63,7 +62,6 @@ export default function App() {
       <Stack.Navigator initialRouteName="Splash" screenOptions={{headerShown: false, animation: "fade", gestureEnabled: false}} >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login0" component={Login0Screen} />
-        <Stack.Screen name="Preview" component={PreviewScreen} />
         <Stack.Screen name="Login1" component={Login1Screen} />
         <Stack.Screen name="Sign up" component={SignupStart} />
         <Stack.Screen name="SignupCredentials" component={SignupCredentials} />

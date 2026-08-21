@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
 import TabBar from "../components/tabBar";
-import TodayCard from "../components/todayCard";
 
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
-import { loadToday } from "../lib/challenge";
 
 const blob = require("../assets/blob.png");
-const blueCloud = require("../assets/blue_cloud.png");
-const redCloud = require("../assets/red_cloud.png");
-const yellowCloud = require("../assets/yellow_cloud.png");
+const blueCloud = require("../assets/clouds/blue.png");
+const redCloud = require("../assets/clouds/red.png");
+const yellowCloud = require("../assets/clouds/yellow.png");
 const travels = require("../assets/Travels.png");
 
 export default function HomeScreen( {navigation} ) {
@@ -21,17 +19,7 @@ export default function HomeScreen( {navigation} ) {
     const [personalImprovement, setPersonalImprovement] = useState(0);
     const [challengesCompleted, setChallengesCompleted] = useState(0);
 
-    const [todayChallenge, setTodayChallenge] = useState(null);
-    const [todayCompleted, setTodayCompleted] = useState(false);
-    const [todayLoading, setTodayLoading] = useState(true);
-
     const isFocused = useIsFocused();
-
-    // the card is parked directly under the header and the blob reserves exactly
-    // the card's own height, both measured rather than guessed, so this holds on
-    // any screen size and any safe area inset
-    const [headerHeight, setHeaderHeight] = useState(0);
-    const [cardHeight, setCardHeight] = useState(0);
 
     useEffect(() => {
         const getStats = async () => {
@@ -58,67 +46,39 @@ export default function HomeScreen( {navigation} ) {
             }
         };
 
-        const getTodayChallenge = async () => {
-            const user = auth.currentUser;
-            if (user) {
-                setTodayLoading(true);
-                const { challenge, completed } = await loadToday(db, user.uid);
-                setTodayChallenge(challenge);
-                setTodayCompleted(completed);
-                setTodayLoading(false);
-            }
-        };
-
         if (auth.currentUser) {
             getStats();
-            getTodayChallenge();
         }
     }, [isFocused]);
 
     return (
         <View style={styles.root}>
-            <SafeAreaView onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}>
+            <SafeAreaView>
                 <View style={styles.header}>
                     <Text style={styles.title}>1% Challenge</Text>
                 </View>
             </SafeAreaView>
 
-                <ImageBackground source={blob} style={[styles.statsSection, { paddingTop: cardHeight + 10 }]} resizeMode="cover">
-                    <ImageBackground source={redCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 191 / 200 }]}>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextRed]}>{streak}</Text>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabelLarge, styles.cloudTextRed]}>day streak</Text>
-                    </ImageBackground>
-
-                    <ImageBackground source={yellowCloud} resizeMode="contain" style={[styles.cloud, styles.cloudRight, { aspectRatio: 184 / 185 }]}>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{personalImprovement}x</Text>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>personal</Text>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>improvement</Text>
-                    </ImageBackground>
-
-                    <ImageBackground source={blueCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 172 / 179 }]}>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{challengesCompleted}</Text>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>challenges</Text>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>completed</Text>
-                    </ImageBackground>
-
-                    <Image source={travels} style={styles.travels} resizeMode="contain" accessible={false} />
+            <ImageBackground source={blob} style={styles.statsSection} resizeMode="cover">
+                <ImageBackground source={redCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 226 / 142 }]}>
+                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextRed]}>{streak}</Text>
+                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabelLarge, styles.cloudTextRed]}>day streak</Text>
                 </ImageBackground>
 
-            {/* floats over the top of the blob so it costs no layout height and
-                nothing below it is pushed off the screen */}
-            <View
-                style={[styles.todayOverlay, { top: headerHeight + 6 }]}
-                onLayout={(e) => setCardHeight(e.nativeEvent.layout.height)}
-                pointerEvents="box-none"
-            >
-                <TodayCard
-                    loading={todayLoading}
-                    challenge={todayChallenge}
-                    completed={todayCompleted}
-                    streak={streak}
-                    navigation={navigation}
-                />
-            </View>
+                <ImageBackground source={yellowCloud} resizeMode="contain" style={[styles.cloud, styles.cloudRight, { aspectRatio: 197 / 133 }]}>
+                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{personalImprovement}x</Text>
+                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>personal</Text>
+                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>improvement</Text>
+                </ImageBackground>
+
+                <ImageBackground source={blueCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 200 / 128 }]}>
+                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{challengesCompleted}</Text>
+                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>challenges</Text>
+                    <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>completed</Text>
+                </ImageBackground>
+
+                <Image source={travels} style={styles.travels} resizeMode="contain" accessible={false} />
+            </ImageBackground>
 
             <TabBar nav={navigation} />
         </View>
@@ -136,15 +96,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 4,
     },
-    todayOverlay: {
-        position: "absolute",
-        left: 0,
-        right: 0,
-    },
     statsSection: {
         flex: 1,
         width: "100%",
-        // paddingTop is set inline; it leaves the top of the blob clear for the card
+        paddingTop: 4,
         justifyContent: "space-evenly",
         // clears the floating tab bar, which sits 50 up and is 55 tall
         paddingBottom: 112,
@@ -163,29 +118,31 @@ const styles = StyleSheet.create({
         // The clouds are near square, so forcing them into a wide box was cropping
         // the top and bottom off every one of them.
         flex: 1,
-        maxHeight: 172,
+        // large enough that three of them nearly fill the blob, which is what
+        // closes up the empty band that used to sit through the middle
+        maxHeight: 196,
         minHeight: 96,
         justifyContent: "center",
         alignItems: "center",
     },
     cloudLeft: {
         alignSelf: "flex-start",
-        marginLeft: 12,
+        marginLeft: 6,
     },
     cloudRight: {
         alignSelf: "flex-end",
-        marginRight: 12,
+        marginRight: 6,
     },
     cloudNumber: {
-        fontSize: 28,
+        fontSize: 34,
         fontWeight: "bold",
     },
     cloudLabelLarge: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: "bold",
     },
     cloudLabel: {
-        fontSize: 16,
+        fontSize: 19,
         fontWeight: "normal",
     },
     cloudTextRed: {
