@@ -4,7 +4,9 @@ import SplashScreen from "./screens/SplashScreen";
 import Login0Screen from "./screens/Login0Screen";
 import PreviewScreen from "./screens/PreviewScreen";
 import Login1Screen from "./screens/Login1Screen";
-import SignupScreen from "./screens/SignupScreen";
+import SignupStart from "./screens/SignupStart";
+import SignupCredentials from "./screens/SignupCredentials";
+import SignupProfile from "./screens/SignupProfile";
 import Intro1Screen from "./screens/Intro1Screen";
 import Intro2Screen from "./screens/Intro2Screen";
 import Intro3Screen from "./screens/Intro3Screen";
@@ -62,7 +64,9 @@ export default function App() {
         <Stack.Screen name="Login0" component={Login0Screen} />
         <Stack.Screen name="Preview" component={PreviewScreen} />
         <Stack.Screen name="Login1" component={Login1Screen} />
-        <Stack.Screen name="Sign up" component={SignupScreen} />
+        <Stack.Screen name="Sign up" component={SignupStart} />
+        <Stack.Screen name="SignupCredentials" component={SignupCredentials} />
+        <Stack.Screen name="SignupProfile" component={SignupProfile} />
         <Stack.Screen name="Intro1" component={Intro1Screen} />
         <Stack.Screen name="Intro2" component={Intro2Screen} />
         <Stack.Screen name="Intro3" component={Intro3Screen} />

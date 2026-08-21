@@ -1,23 +1,23 @@
-import { View, Text, Image, TextInput, StyleSheet, Pressable, Alert, KeyboardAvoidingView, ScrollView, SafeAreaView } from "react-native";
+import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
-import LoginScreenButton from "../components/loginScreenButton";
 import PolicyLinks from "../components/policyLinks";
+import { AUTH_SCHEMES } from "../constants/theme";
+import { getDraft, clearDraft } from "../lib/signupDraft";
 
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc } from "firebase/firestore"
 import { auth, db } from "../firebase";
 
-const mountain = require("../assets/Victory.png");
+const authName = require("../assets/auth-name.png");
 const user = require("../assets/user.png");
-const mail = require("../assets/mail.png");
-const lock = require("../assets/lock.png");
 
-export default function SignupScreen( {navigation} ) {
+const scheme = AUTH_SCHEMES.yellow;
 
+export default function SignupProfile( {navigation} ) {
+
+    const [name, setName] = useState('');
     const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
     const pressed = useRef(false);
 
@@ -26,20 +26,27 @@ export default function SignupScreen( {navigation} ) {
             return;
         }
 
+        const trimmedName = name.trim();
         const trimmedUsername = username.trim();
-        const trimmedEmail = email.trim();
-        if (trimmedUsername.length === 0) { Alert.alert("Add a username", "Enter a name so we know what to call you."); return; }
-        if (trimmedEmail.length === 0) { Alert.alert("Add your email", "Enter the email address you want to use."); return; }
-        if (password.length < 8) { Alert.alert("Pick a longer password", "Passwords need at least 8 characters."); return; }
+        if (trimmedName.length === 0) { Alert.alert("Add your name", "Enter a name so we know what to call you."); return; }
+        if (trimmedUsername.length === 0) { Alert.alert("Add a username", "Pick a short handle. It is what shows on your streak."); return; }
+
+        const { email, password } = getDraft();
+        if (email.length === 0 || password.length === 0) {
+            Alert.alert("Let's get your email first", "Something interrupted the sign up. Enter your email and password again.");
+            navigation.navigate("SignupCredentials");
+            return;
+        }
 
         pressed.current = true;
-        createUserWithEmailAndPassword(auth, trimmedEmail, password)
+        createUserWithEmailAndPassword(auth, email, password)
         .then (async (userCredential) => {
             console.log('Account Created!')
             const user = userCredential.user;
 
             try {
                 await setDoc(doc(db, "users", user.uid), {
+                    name: trimmedName,
                     username: trimmedUsername,
                     current_streak: 0,
                     longest_streak: 0,
@@ -52,6 +59,7 @@ export default function SignupScreen( {navigation} ) {
 
             sendEmailVerification(user).catch(() => {});
 
+            clearDraft();
             navigation.navigate("Intro1");
         })
         .catch(error => {
@@ -68,16 +76,30 @@ export default function SignupScreen( {navigation} ) {
         });
     }
 
-
     return(
         <SafeAreaView style={styles.safeArea}>
-            <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+            <ScrollView
+                style={styles.scroll}
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps="handled"
+            >
                 <View style={styles.topContainer}>
-                    <LargeImage src={mountain}/>
-                    <Text style={styles.title}>1% Challenge</Text>
+                    <LargeImage src={authName}/>
+                    <Text style={styles.title}>What should we call you?</Text>
                 </View>
-                <KeyboardAvoidingView style={styles.formContainer} behavior="padding">
+                <KeyboardAvoidingView style={styles.container} behavior="padding">
                     <View style={styles.inputContainer}>
+                        <Image source={user} style={styles.icon} resizeMode="contain" />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Name"
+                            onChangeText={(text) => setName(text)}
+                            autoCapitalize="words"
+                            autoCorrect={false}
+                            maxLength={40}
+                        />
+                    </View>
+                    <View style={[styles.inputContainer, {marginBottom: 15}]}>
                         <Image source={user} style={styles.icon} resizeMode="contain" />
                         <TextInput
                             style={styles.input}
@@ -89,84 +111,56 @@ export default function SignupScreen( {navigation} ) {
                             maxLength={40}
                         />
                     </View>
-                    <View style={styles.inputContainer}>
-                        <Image source={mail} style={styles.icon} resizeMode="contain" />
-                        <TextInput
-                            placeholder="Email"
-                            onChangeText={(text) => setEmail(text)}
-                            style={styles.input}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            autoComplete="email"
-                            keyboardType="email-address"
-                        />
-                    </View>
-                    <View style={[styles.inputContainer, {marginBottom: 15}]}>
-                        <Image source={lock} style={styles.icon} resizeMode="contain" />
-                        <TextInput
-                            placeholder="Password"
-                            onChangeText={(text) => setPassword(text)}
-                            style={styles.input}
-                            secureTextEntry
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            autoComplete="off"
-                        />
-                    </View>
                     <Pressable style={styles.buttoncontainer} onPress={handleCreateAccount}>
-                         <Text style={styles.buttontext}>Create Account</Text>
+                        <Text style={styles.buttontext}>Create account</Text>
                     </Pressable>
                     <Text style={styles.agreementText}>By creating an account you agree to our Privacy Policy.</Text>
-                    <PolicyLinks style={styles.policyLinks} />
+                    <PolicyLinks small color={scheme.muted} style={styles.policyLinks} />
                 </KeyboardAvoidingView>
-                <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
-                    <LoginScreenButton title="Login" nav={navigation} dest="Login1" background={false} />
-                </View>
             </ScrollView>
         </SafeAreaView>
     );
 }
 
-const INK = "#2B2724";
-
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: "#FF815E",
+        backgroundColor: scheme.bg,
     },
     scroll: {
         flex: 1,
         width: "100%",
     },
-    container: {
-        flex: 1,
-        backgroundColor: "#FF815E",
-        justifyContent: "center",
-        alignItems: "center",
-    },
     scrollContent: {
         flexGrow: 1,
         justifyContent: "center",
         alignItems: "center",
+        paddingVertical: 16,
     },
     topContainer: {
-        flex: 6,
         justifyContent: "flex-end",
         alignItems: "center",
         marginBottom: 20,
     },
-    formContainer: {
-        flex: 3,
-        justifyContent: "flex-start",
+    container: {
+        justifyContent: "center",
         alignItems: "center",
     },
+    title: {
+        color: scheme.text,
+        fontSize: 34,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginBottom: 20,
+        paddingHorizontal: 24,
+    },
     inputContainer: {
-        backgroundColor: "white",
+        backgroundColor: scheme.field,
         width: 300,
         height: 50,
         flexDirection: "row",
         justifyContent: "flex-start",
-        alignItems: "center", 
+        alignItems: "center",
         borderRadius: 20,
         paddingLeft: 10,
         marginBottom: 5,
@@ -181,13 +175,8 @@ const styles = StyleSheet.create({
         height: 24,
         marginRight: 5,
     },
-    title: {
-        color: "white",
-        fontSize: 50,
-        fontWeight: "bold",
-    },
     buttoncontainer: {
-        backgroundColor: "#FFC0A2",
+        backgroundColor: scheme.cta,
         width: 211,
         height: 56,
         borderRadius: 20,
@@ -195,16 +184,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     buttontext: {
-        color: INK,
+        color: scheme.ctaText,
         fontSize: 22,
         fontWeight: "bold",
     },
     agreementText: {
-        color: "white",
+        color: scheme.text,
         fontSize: 12,
         marginTop: 10,
     },
     policyLinks: {
-        marginTop: 4,
+        marginTop: 24,
     },
 });

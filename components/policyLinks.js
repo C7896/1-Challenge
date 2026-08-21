@@ -16,14 +16,15 @@ async function openLink(url) {
     }
 }
 
-export default function PolicyLinks({ style, onLight }) {
+export default function PolicyLinks({ style, onLight, small, color }) {
+    const smallStyle = small && [styles.linkSmall, color && { color }];
     return (
         <View style={[styles.row, style]}>
             <Pressable onPress={() => openLink(PRIVACY_POLICY_URL)}>
-                <Text style={[styles.link, onLight && styles.linkLight]}>Privacy Policy</Text>
+                <Text style={[styles.link, onLight && styles.linkLight, smallStyle]}>Privacy Policy</Text>
             </Pressable>
             <Pressable onPress={() => openLink(`mailto:${SUPPORT_EMAIL}`)}>
-                <Text style={[styles.link, onLight && styles.linkLight]}>Contact</Text>
+                <Text style={[styles.link, onLight && styles.linkLight, smallStyle]}>Contact</Text>
             </Pressable>
         </View>
     );
@@ -42,5 +43,9 @@ const styles = StyleSheet.create({
     },
     linkLight: {
         color: INK,
+    },
+    linkSmall: {
+        fontSize: 11,
+        textDecorationLine: "none",
     },
 });

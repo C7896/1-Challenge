@@ -2,6 +2,8 @@ import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, S
 import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
 import LoginScreenButton from "../components/loginScreenButton";
+import PolicyLinks from "../components/policyLinks";
+import { AUTH_SCHEMES } from "../constants/theme";
 
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth, db } from "../firebase";
@@ -11,6 +13,8 @@ import { loadToday } from "../lib/challenge";
 const location = require("../assets/Location.png");
 const mail = require("../assets/mail.png");
 const lock = require("../assets/lock.png");
+
+const scheme = AUTH_SCHEMES.coral;
 
 export default function Login0Screen( {navigation} ) {
 
@@ -64,7 +68,11 @@ export default function Login0Screen( {navigation} ) {
 
     return(
         <SafeAreaView style={styles.safeArea}>
-            <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+            <ScrollView
+                style={styles.scroll}
+                contentContainerStyle={styles.scrollContent}
+                keyboardShouldPersistTaps="handled"
+            >
             <View style={styles.topContainer}>
                 <LargeImage src={location}/>
                 <Text style={styles.title}>1% Challenge</Text>
@@ -82,7 +90,7 @@ export default function Login0Screen( {navigation} ) {
                         keyboardType="email-address"
                     />
                 </View>
-                <View style={[styles.inputContainer, {marginBottom: 5}]}>
+                <View style={[styles.inputContainer, {marginBottom: 15}]}>
                     <Image source={lock} style={styles.icon} resizeMode="contain" />
                     <TextInput
                         style={styles.input}
@@ -94,33 +102,34 @@ export default function Login0Screen( {navigation} ) {
                         autoComplete="off"
                     />
                 </View>
+                <Pressable style={[styles.buttoncontainer, {backgroundColor: scheme.cta}]} onPress={handleSignIn}>
+                    <Text style={styles.buttontext}>Login</Text>
+                </Pressable>
                 <Pressable onPress={handleForgotPassword} style={styles.forgotRow} hitSlop={{ top: 12, bottom: 12 }}>
                     <Text style={styles.forgotText}>Forgot password?</Text>
                 </Pressable>
-                <Pressable style={[styles.buttoncontainer, {backgroundColor:"#FFC0A2"}]} onPress={handleSignIn}>
-                    <Text style={styles.buttontext}>Login</Text>
-                </Pressable>
+
+                {/* Apple and Google sign-in mount here once Sign In with Apple is enabled on the App ID */}
             </KeyboardAvoidingView>
-            <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 40}]}>
+            <View style={[styles.container, {justifyContent: "flex-end", paddingBottom: 24}]}>
                 <LoginScreenButton title="Sign up" nav={navigation} dest="Sign up" background={false} />
+                <PolicyLinks small color={scheme.muted} style={styles.policyLinks} />
             </View>
             </ScrollView>
         </SafeAreaView>
     );
 }
 
-const INK = "#2B2724";
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FF815E",
+        backgroundColor: scheme.bg,
         justifyContent: "center",
         alignItems: "center",
     },
     safeArea: {
         flex: 1,
-        backgroundColor: "#FF815E",
+        backgroundColor: scheme.bg,
     },
     scroll: {
         flex: 1,
@@ -138,12 +147,12 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     inputContainer: {
-        backgroundColor: "white",
+        backgroundColor: scheme.field,
         width: 300,
         height: 50,
         flexDirection: "row",
         justifyContent: "flex-start",
-        alignItems: "center", 
+        alignItems: "center",
         borderRadius: 20,
         paddingLeft: 10,
         marginBottom: 5,
@@ -159,17 +168,18 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     forgotRow: {
-        width: 300,
-        alignItems: "flex-end",
-        marginBottom: 15,
+        marginTop: 12,
+        alignItems: "center",
     },
     forgotText: {
-        color: "white",
+        // solid, not muted: this is a functional link, and muted white over coral
+        // composites to roughly 2.0:1. The muted treatment is for the policy links.
+        color: scheme.text,
         fontSize: 14,
         textDecorationLine: "underline",
     },
     title: {
-        color: "white",
+        color: scheme.text,
         fontSize: 50,
         fontWeight: "bold",
     },
@@ -181,8 +191,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     buttontext: {
-        color: INK,
+        color: scheme.ctaText,
         fontSize: 22,
         fontWeight: "bold",
+    },
+    policyLinks: {
+        marginTop: 24,
     },
 });
