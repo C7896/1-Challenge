@@ -42,8 +42,7 @@
           "backgroundColor": "#ffffff",
           "enableFullScreenImage_legacy": true
         }
-      ],
-      "@react-native-google-signin/google-signin"
+      ]
     ],
     "extra": {
       "eas": {
