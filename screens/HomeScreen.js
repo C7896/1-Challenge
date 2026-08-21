@@ -60,18 +60,18 @@ export default function HomeScreen( {navigation} ) {
             </SafeAreaView>
 
             <ImageBackground source={blob} style={styles.statsSection} resizeMode="cover">
-                <ImageBackground source={redCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 226 / 142 }]}>
+                <ImageBackground source={redCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 191 / 142 }]}>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextRed]}>{streak}</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabelLarge, styles.cloudTextRed]}>day streak</Text>
                 </ImageBackground>
 
-                <ImageBackground source={yellowCloud} resizeMode="contain" style={[styles.cloud, styles.cloudRight, { aspectRatio: 197 / 133 }]}>
+                <ImageBackground source={yellowCloud} resizeMode="contain" style={[styles.cloud, styles.cloudRight, { aspectRatio: 184 / 133 }]}>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{personalImprovement}x</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>personal</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>improvement</Text>
                 </ImageBackground>
 
-                <ImageBackground source={blueCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 200 / 128 }]}>
+                <ImageBackground source={blueCloud} resizeMode="contain" style={[styles.cloud, styles.cloudLeft, { aspectRatio: 172 / 128 }]}>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudNumber, styles.cloudTextLight]}>{challengesCompleted}</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>{challengesCompleted === 1 ? "challenge" : "challenges"}</Text>
                     <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.cloudLabel, styles.cloudTextLight]}>completed</Text>
@@ -101,17 +101,17 @@ const styles = StyleSheet.create({
         width: "100%",
         paddingTop: 4,
         justifyContent: "space-evenly",
-        // clears the floating tab bar, which sits 50 up and is 55 tall
-        paddingBottom: 112,
+        // lifts the cloud stack clear of the travels artwork below it
+        paddingBottom: 236,
     },
     travels: {
         // the artwork carries the bottom third of the screen now that the clouds
         // are smaller, so it gets real size
         position: "absolute",
         right: 0,
-        bottom: 100,
-        width: "62%",
-        height: 235,
+        bottom: 96,
+        width: "66%",
+        height: 215,
     },
     cloud: {
         // height comes from flex, width follows the artwork's own aspect ratio.
