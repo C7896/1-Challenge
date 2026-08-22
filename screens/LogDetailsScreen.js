@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, Image, TextInput, StyleSheet } from "react-native";
+import { SafeAreaView, View, Text, Image, ScrollView, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
 
 const topBlob = require("../assets/topBlob.png");
@@ -20,29 +20,30 @@ export default function LogDetailsScreen({ navigation, route }) {
     return(
         <View style={styles.container}>
             <Image source={topBlob} style={styles.image} />
-            <SafeAreaView style={styles.clearContainer}>
-                <View style={styles.textContainer}>
+            <SafeAreaView style={styles.safe}>
+                {/* A read-only page, so the answers are plain text that grows with
+                    its content inside one scrolling page. They used to be
+                    fixed-height read-only TextInputs, which scrolled internally
+                    with no scrollbar or fade, so a long answer looked truncated
+                    and there was no way to tell the rest was still there. */}
+                <ScrollView
+                    style={styles.scroll}
+                    contentContainerStyle={styles.scrollContent}
+                    showsVerticalScrollIndicator
+                >
                     <Text style={styles.title}>Challenge:</Text>
                     <Text style={styles.body}>{journal.challenge}</Text>
-                </View>
-                <View style={{flex: 0.5}} />
-                <View style={[styles.textContainer, {flex: 6}]}>
-                    <Text style={styles.body}>What did you do?</Text>
-                    <TextInput
-                        style={styles.questionInput}
-                        defaultValue={journal.action}
-                        readOnly
-                        multiline
-                    />
-                    <Text style={styles.body}>How did it make you feel?</Text>
-                    <TextInput
-                        style={[styles.questionInput, {height: 300}]}
-                        defaultValue={journal.reflection}
-                        readOnly
-                        multiline
-                    />
-                </View>
-                <View style={{flex: 2.5}} />
+
+                    <Text style={[styles.body, styles.question]}>What did you do?</Text>
+                    <View style={styles.answerBox}>
+                        <Text style={styles.answer}>{journal.action}</Text>
+                    </View>
+
+                    <Text style={[styles.body, styles.question]}>How did it make you feel?</Text>
+                    <View style={styles.answerBox}>
+                        <Text style={styles.answer}>{journal.reflection}</Text>
+                    </View>
+                </ScrollView>
             </SafeAreaView>
         </View>
     );
@@ -55,13 +56,19 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    clearContainer: {
-        flex: 2,
-        // an explicit width: the parent centres its children, which otherwise
-        // shrink-wraps this box and makes any child percentage width circular
+    safe: {
+        flex: 1,
         width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
+    },
+    scroll: {
+        flex: 1,
+        width: "100%",
+    },
+    scrollContent: {
+        paddingHorizontal: 20,
+        // clears the blob artwork at the top of the screen
+        paddingTop: 150,
+        paddingBottom: 40,
     },
     image: {
         position: "absolute",
@@ -69,27 +76,15 @@ const styles = StyleSheet.create({
         height: "35%",
         bottom: "80%",
     },
-    textContainer: {
-        flex: 2,
-        justifyContent: "center",
-        alignItems: "stretch",
-        // the parent centres its children, which shrink-wraps this box and left
-        // the inputs' width: "100%" with no width to resolve against
-        alignSelf: "stretch",
-        marginHorizontal: 20,
+    question: {
+        marginTop: 18,
+        marginBottom: 8,
     },
-    questionInput: {
+    answerBox: {
         backgroundColor: "white",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
         borderRadius: 15,
-        width: "100%",
-        height: 50,
-        paddingHorizontal: 10,
-        marginBottom: 10,
-        color: "black",
-        fontSize: 20,
-        fontWeight: "normal",
+        paddingHorizontal: 14,
+        paddingVertical: 12,
         shadowColor: "black",
         shadowOffset: {
             width: 0,
@@ -97,6 +92,11 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         elevation: 5,
+    },
+    answer: {
+        color: "#2B2724",
+        fontSize: 18,
+        lineHeight: 24,
     },
     title: {
         color: "white",

@@ -44,7 +44,13 @@ export default function TabBar( {nav, onLight} ) {
                 return;
             }
             if (completed) {
-                nav.popTo("Log");
+                // Say so before moving. Landing on Past Challenges with no
+                // explanation looked like the tab had sent you to the wrong place.
+                Alert.alert(
+                    "Today's challenge is complete",
+                    "Nice work. Here are your past challenges.",
+                    [{ text: "OK", onPress: () => nav.popTo("Log") }]
+                );
             } else {
                 nav.navigate("Challenge1", { challenge, streak });
             }

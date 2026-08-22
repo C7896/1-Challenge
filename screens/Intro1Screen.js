@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         alignItems: "center",
         marginTop: 20,
+            marginBottom: 28,
     },
     hContainer: {
         flexDirection: "row",
