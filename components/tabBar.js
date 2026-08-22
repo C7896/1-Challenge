@@ -39,6 +39,10 @@ export default function TabBar( {nav, onLight} ) {
         opening.current = true;
         try {
             const { challenge, completed, streak } = await loadToday(db, user.uid);
+            if (completed === null) {
+                Alert.alert("Could not check today", "We could not tell whether you have finished today's challenge. Check your connection and try again.");
+                return;
+            }
             if (completed) {
                 nav.popTo("Log");
             } else {

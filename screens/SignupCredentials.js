@@ -26,6 +26,13 @@ export default function SignupCredentials( {navigation} ) {
             Alert.alert("Add your email", "Enter the email address you want to use.");
             return;
         }
+        // Catch a typo'd address here rather than after the next screen. Firebase
+        // rejects it either way, but it used to do so only once the name and
+        // username had already been filled in.
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmedEmail)) {
+            Alert.alert("That email does not look right", "Check the address and try again.");
+            return;
+        }
         if (password.length < 8) {
             Alert.alert("Pick a longer password", "Passwords need at least 8 characters.");
             return;

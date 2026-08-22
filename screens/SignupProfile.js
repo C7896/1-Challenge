@@ -55,7 +55,14 @@ export default function SignupProfile( {navigation} ) {
                 });
                 console.log("Blank user document created");
             } catch (e) {
+                // An auth user with no users/{uid} document can never complete a
+                // challenge: every counter update fails NOT_FOUND forever. Undo
+                // the signup instead of stranding them there.
                 console.error("Error adding document: ", e);
+                pressed.current = false;
+                await user.delete().catch(() => {});
+                Alert.alert("Could not finish creating your account", "Nothing was saved. Please check your connection and try again.");
+                return;
             }
 
             sendEmailVerification(user).catch(() => {});

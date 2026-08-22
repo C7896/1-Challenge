@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
 import TabBar from "../components/tabBar";
+import { MONTHS } from "../constants/fallbackChallenges";
 import Journal from "../components/Journal";
 
 import { collection, getDocs } from "firebase/firestore";
@@ -26,7 +27,14 @@ export default function LogScreen( {navigation} ) {
                 const journalDocs = collection(db, "users", user.uid, "journals");
                 const journalQuery = await getDocs(journalDocs);
                 const journals = journalQuery.docs.map(doc => ({ docId: doc.id, ...doc.data() }));
-                journals.sort((a, b) => {return (b.timestamp?.toMillis?.() ?? 0) - (a.timestamp?.toMillis?.() ?? 0)});
+                // Sort by the day the entry is FOR, not the moment it was written.
+                // Rewriting an entry updates its timestamp, which used to jump an
+                // old day to the top of the list.
+                const entryOrder = (j) => {
+                    const m = MONTHS.indexOf(j.month);
+                    return (j.year ?? 0) * 10000 + (m < 0 ? 0 : m) * 100 + (j.day ?? 0);
+                };
+                journals.sort((a, b) => entryOrder(b) - entryOrder(a));
                 setChallengeLog(journals);
             } else {
                 console.log("User is not signed in");
@@ -101,7 +109,7 @@ export default function LogScreen( {navigation} ) {
                 />
             </View>
             <View style={{ flex: 5 }} />
-            <TabBar nav={navigation} />
+            <TabBar nav={navigation} onLight />
         </View>
     );
 }

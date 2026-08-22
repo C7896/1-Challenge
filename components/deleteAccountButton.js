@@ -4,6 +4,7 @@ import { TouchableOpacity, Text, Alert, Modal, View, TextInput, Pressable, Style
 import { EmailAuthProvider, reauthenticateWithCredential, deleteUser } from 'firebase/auth';
 import { collection, doc, getDocs, deleteDoc, writeBatch } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import { cancelDailyNotification } from '../ScheduleNotification';
 
 export default function DeleteAccountButton({ navigation }) {
 
@@ -46,9 +47,12 @@ export default function DeleteAccountButton({ navigation }) {
             await deleteDoc(doc(db, "users", user.uid));
         } catch (error) {
             setBusy(false);
-            Alert.alert("Could not finish deleting", "Your account and entries are still here. Please check your connection and try again.");
+            Alert.alert("Could not finish deleting", "Some entries may already have been removed. Please check your connection and tap Delete account again to finish.");
             return;
         }
+        // stop the 9am reminder before the account goes away
+        await cancelDailyNotification().catch(() => {});
+
         try {
             await deleteUser(user);
         } catch (error) {

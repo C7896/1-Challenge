@@ -87,9 +87,9 @@ export default function HomeScreen({ navigation }) {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    setStreak(userData.current_streak);
-                    setPersonalImprovement(new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** userData.total_completed_challenges)));
-                    setChallengesCompleted(userData.total_completed_challenges);
+                    setStreak(userData.current_streak ?? 0);
+                    setPersonalImprovement(new Intl.NumberFormat('en-US', { notation: 'compact', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** (userData.total_completed_challenges ?? 0))));
+                    setChallengesCompleted(userData.total_completed_challenges ?? 0);
                     console.log("Successfully read user document");
                 } else {
                     console.log("Error reading user document");
@@ -129,6 +129,7 @@ export default function HomeScreen({ navigation }) {
                 source={redCloud}
                 aspectRatio={195 / 118}
                 imageRef={redRef}
+                scale={s}
                 value={`${streak}`}
                 caption="day streak"
                 style={{ position: "absolute", left: x(10), top: p(235), width: p(195) }}
@@ -145,6 +146,7 @@ export default function HomeScreen({ navigation }) {
                 source={yellowCloud}
                 aspectRatio={182 / 112}
                 imageRef={yellowRef}
+                scale={s}
                 captionFirst
                 value={`${personalImprovement}x`}
                 caption={"Personal\nImprovement"}
@@ -155,6 +157,7 @@ export default function HomeScreen({ navigation }) {
                 source={blueCloud}
                 aspectRatio={180 / 116}
                 imageRef={blueRef}
+                scale={s}
                 captionFirst
                 value={`${challengesCompleted}`}
                 caption={"Challenges\nCompleted"}
@@ -189,7 +192,7 @@ export default function HomeScreen({ navigation }) {
                 <ExploreButton link={CAUSES_URL} label="Explore more" onDark />
             </View>
 
-            <TabBar nav={navigation} />
+            <TabBar nav={navigation} onLight />
         </View>
     );
 }

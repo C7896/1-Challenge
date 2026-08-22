@@ -51,3 +51,8 @@ export async function clearDeliveredNotifications() {
     console.error("Could not clear delivered notifications: ", error);
   }
 }
+
+export async function cancelDailyNotification() {
+    // called when an account is deleted, so a removed user stops being reminded
+    await Notifications.cancelAllScheduledNotificationsAsync();
+}
