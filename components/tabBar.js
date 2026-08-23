@@ -1,4 +1,4 @@
-import { Animated, View, Pressable, Image, Alert, StyleSheet } from "react-native";
+import { View, Pressable, Image, Alert, StyleSheet } from "react-native";
 import { useEffect, useRef } from "react";
 import { useNavigationState } from "@react-navigation/native";
 
@@ -35,32 +35,14 @@ export default function TabBar( {nav, onLight} ) {
             : activeRoute?.startsWith("Challenge")
                 ? 1
                 : 0;
-    const indicatorX = useRef(new Animated.Value(activeIndex * 60)).current;
-    const barOpacity = useRef(new Animated.Value(1)).current;
 
-    const animateIndicator = (index, onSelect) => {
-        Animated.spring(indicatorX, {
-            toValue: index * 60,
-            damping: 18,
-            stiffness: 190,
-            mass: 0.8,
-            useNativeDriver: true,
-        }).start();
-
-        if (onSelect) {
-            clearTimeout(navigationTimer.current);
-            navigationTimer.current = setTimeout(onSelect, 75);
-        }
-    };
 
     const animationFor = (index) => index < activeIndex ? "ios_from_left" : "ios_from_right";
     const openTab = (index, routeName) => {
-        animateIndicator(index, () => nav.popTo(routeName, { tabAnimation: animationFor(index) }));
+        nav.popTo(routeName, { tabAnimation: animationFor(index) });
     };
 
-    useEffect(() => {
-        animateIndicator(activeIndex);
-    }, [activeIndex, indicatorX]);
+
 
     useEffect(() => () => clearTimeout(navigationTimer.current), []);
 
@@ -90,11 +72,6 @@ export default function TabBar( {nav, onLight} ) {
                     [{ text: "OK", onPress: () => nav.popTo("Log", { tabAnimation: animationFor(2) }) }]
                 );
             } else {
-                Animated.timing(barOpacity, {
-                    toValue: 0,
-                    duration: 320,
-                    useNativeDriver: true,
-                }).start();
                 nav.navigate("Challenge1", { challenge, streak, tabAnimation });
             }
         } catch (error) {
@@ -105,15 +82,11 @@ export default function TabBar( {nav, onLight} ) {
     };
 
     return (
-        <Animated.View style={[styles.container, onLight && styles.containerLight, { opacity: barOpacity }]}>
-            <Animated.View
-                pointerEvents="none"
-                style={[styles.activeIndicator, { transform: [{ translateX: indicatorX }] }]}
-            />
+        <View style={[styles.container, onLight && styles.containerLight]}>
             <Pressable style={styles.tabItem} onPress={() => openTab(0, "Home")} accessibilityRole="button" accessibilityLabel="Home">
                 <Image source={set.home} style={styles.image} resizeMode="contain" />
             </Pressable>
-            <Pressable style={styles.tabItem} onPress={() => { animateIndicator(1); openToday(animationFor(1)); }} accessibilityRole="button" accessibilityLabel="Today's challenge">
+            <Pressable style={styles.tabItem} onPress={() => openToday(animationFor(1))} accessibilityRole="button" accessibilityLabel="Today's challenge">
                 <Image source={set.today} style={styles.image} resizeMode="contain" />
             </Pressable>
             <Pressable style={styles.tabItem} onPress={() => openTab(2, "Log")} accessibilityRole="button" accessibilityLabel="Past challenges">
@@ -122,7 +95,7 @@ export default function TabBar( {nav, onLight} ) {
             <Pressable style={styles.tabItem} onPress={() => openTab(3, "Profile")} accessibilityRole="button" accessibilityLabel="Profile">
                 <Image source={set.profile} style={styles.image} resizeMode="contain" />
             </Pressable>
-        </Animated.View>
+        </View>
     );
 }
 
@@ -149,22 +122,6 @@ const styles = StyleSheet.create({
     containerLight: {
         backgroundColor: "rgba(255, 255, 255, 0.38)",
         borderColor: "rgba(255, 255, 255, 0.72)",
-    },
-    activeIndicator: {
-        position: "absolute",
-        left: 22,
-        top: 5,
-        width: 44,
-        height: 44,
-        borderRadius: 22,
-        backgroundColor: "rgba(255, 255, 255, 0.62)",
-        borderWidth: 1,
-        borderColor: "rgba(255, 255, 255, 0.88)",
-        shadowColor: "#FFFFFF",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.42,
-        shadowRadius: 8,
-        elevation: 4,
     },
     tabItem: {
         width: 32,

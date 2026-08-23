@@ -2,6 +2,7 @@ import { View, Text, Image, TextInput, Pressable, Alert, KeyboardAvoidingView, S
 import React, { useState, useRef } from 'react';
 import LargeImage from "../components/largeImage";
 import PolicyLinks from "../components/policyLinks";
+import SocialSignInButtons from "../components/socialSignInButtons";
 import BackButton from "../components/backButton";
 import { AUTH_SCHEMES } from "../constants/theme";
 
@@ -80,6 +81,20 @@ export default function Login0Screen( {navigation} ) {
                 <Text style={styles.title}>1% Challenge</Text>
             </View>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
+                <SocialSignInButtons
+                    muted={scheme.muted}
+                    dividerLabel="or"
+                    onSignedIn={({ needsProfile, suggestedName }) => {
+                        // someone signing in with Apple or Google for the first time
+                        // has no username yet, so they finish setting up first
+                        if (needsProfile) {
+                            navigation.navigate("SignupProfile", { social: true, suggestedName });
+                        } else {
+                            navigation.reset({ index: 0, routes: [{ name: "Home" }] });
+                        }
+                    }}
+                />
+
                 <View style={styles.inputContainer}>
                     <Image source={mail} style={styles.icon} resizeMode="contain" />
                     <TextInput
@@ -114,7 +129,6 @@ export default function Login0Screen( {navigation} ) {
                     <Text style={styles.forgotText}>Forgot password?</Text>
                 </Pressable>
 
-                {/* Apple and Google sign-in mount here once Sign In with Apple is enabled on the App ID */}
             </KeyboardAvoidingView>
             <View style={styles.footer}>
                 <Pressable onPress={() => navigation.navigate("Sign up")} hitSlop={{ top: 12, bottom: 12 }}>

@@ -2,12 +2,12 @@ import { SafeAreaView, Pressable, Text, StyleSheet } from "react-native";
 
 const INK = "#2B2724";
 
-export default function BackButton({ navigation, onLight }) {
+export default function BackButton({ navigation, onLight, onBack }) {
     return (
         <SafeAreaView style={styles.safeArea} pointerEvents="box-none">
             <Pressable
                 style={[styles.button, onLight && styles.buttonLight]}
-                onPress={() => navigation.goBack()}
+                onPress={onBack ?? (() => navigation.goBack())}
                 accessibilityRole="button"
                 accessibilityLabel="Back"
                 hitSlop={8}

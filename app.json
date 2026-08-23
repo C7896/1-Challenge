@@ -14,8 +14,17 @@
       "bundleIdentifier": "com.onepercentchallenge.app",
       "buildNumber": "1",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.86438317972-15k4l9ctaq52tflf6m43ag3m7dv9lpha"
+            ]
+          }
+        ]
+      },
+      "usesAppleSignIn": true,
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -42,7 +51,9 @@
           "backgroundColor": "#ffffff",
           "enableFullScreenImage_legacy": true
         }
-      ]
+      ],
+      "@react-native-google-signin/google-signin",
+      "expo-apple-authentication"
     ],
     "extra": {
       "eas": {

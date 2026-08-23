@@ -76,8 +76,8 @@ export default function App() {
       >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login0" component={Login0Screen} />
-        <Stack.Screen name="Login1" component={Login1Screen} options={{ gestureEnabled: true, animation: "fade", animationDuration: 280 }} />
-        <Stack.Screen name="Sign up" component={SignupStart} options={{ gestureEnabled: false, animation: "fade", animationDuration: 280 }} />
+        <Stack.Screen name="Login1" component={Login1Screen} options={{ gestureEnabled: true }} />
+        <Stack.Screen name="Sign up" component={SignupStart} options={{ gestureEnabled: true }} />
         <Stack.Screen name="SignupCredentials" component={SignupCredentials} options={{ gestureEnabled: true }} />
         <Stack.Screen name="SignupProfile" component={SignupProfile} options={{ gestureEnabled: true }} />
         <Stack.Screen name="Intro1" component={Intro1Screen} />

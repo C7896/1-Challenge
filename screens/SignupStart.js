@@ -1,6 +1,7 @@
 import { View, Text, Pressable, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LargeImage from "../components/largeImage";
 import PolicyLinks from "../components/policyLinks";
+import SocialSignInButtons from "../components/socialSignInButtons";
 import { AUTH_SCHEMES } from "../constants/theme";
 
 const createAccount = require("../assets/auth-create-account.png");
@@ -20,9 +21,20 @@ export default function SignupStart( {navigation} ) {
                     <Text style={styles.title}>Create your account</Text>
                 </View>
 
-                {/* Apple and Google sign-in mount here once Sign In with Apple is enabled on the App ID */}
-
                 <View style={styles.actions}>
+                    <SocialSignInButtons
+                        muted={scheme.muted}
+                        onSignedIn={({ needsProfile, suggestedName }) => {
+                            // a brand new social account still has no username, so it
+                            // finishes at the same profile step the email path uses
+                            if (needsProfile) {
+                                navigation.navigate("SignupProfile", { social: true, suggestedName });
+                            } else {
+                                navigation.reset({ index: 0, routes: [{ name: "Home" }] });
+                            }
+                        }}
+                    />
+
                     <Pressable style={styles.buttoncontainer} onPress={() => navigation.navigate("SignupCredentials")}>
                         <Text style={styles.buttontext}>Sign up with email</Text>
                     </Pressable>
@@ -62,7 +74,9 @@ const styles = StyleSheet.create({
     actions: {
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 100,
+        alignSelf: "stretch",
+        // the social buttons sit above, so the email button now starts lower down
+        marginTop: 36,
     },
     footer: {
         marginTop: "auto",
@@ -99,6 +113,7 @@ const styles = StyleSheet.create({
         textDecorationLine: "underline",
     },
     policyLinks: {
-        marginTop: 28,
+        // sits close under the log in link, as asked
+        marginTop: 15,
     },
 });
