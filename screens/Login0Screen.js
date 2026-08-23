@@ -1,19 +1,21 @@
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import { ActivityIndicator, View, Text, SafeAreaView, StyleSheet } from "react-native";
+import { useEffect } from "react";
 import LargeImage from "../components/largeImage";
-import LoginScreenButton from "../components/loginScreenButton";
 const location = require("../assets/Location.png");
 
 export default function Login0Screen( {navigation} ) {
+    useEffect(() => {
+        const timer = setTimeout(() => navigation.replace("Sign up"), 900);
+        return () => clearTimeout(timer);
+    }, [navigation]);
+
     return(
         <SafeAreaView style={styles.container}>
-            <View style={styles.topContainer}>
+            <View style={styles.content}>
                 <LargeImage src={location}/>
                 <Text style={styles.title}>1% Challenge</Text>
             </View>
-            <View style={styles.container}>
-                <LoginScreenButton title="Login" nav={navigation} dest="Login1" background={true} />
-                <LoginScreenButton title="Sign up" nav={navigation} dest="Sign up" background={false} />
-            </View>
+            <ActivityIndicator style={styles.loader} size="small" color="#FFFFFF" />
         </SafeAreaView>
     );
 }
@@ -25,14 +27,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    topContainer: {
-        flex: 2,
-        justifyContent: "flex-end",
+    content: {
         alignItems: "center",
+        justifyContent: "center",
+    },
+    loader: {
+        position: "absolute",
+        bottom: 64,
     },
     title: {
         color: "white",
         fontSize: 50,
         fontWeight: "bold",
+        marginTop: 20,
     },
 });

@@ -1,7 +1,6 @@
 import { View, Text, Pressable, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LargeImage from "../components/largeImage";
 import PolicyLinks from "../components/policyLinks";
-import BackButton from "../components/backButton";
 import { AUTH_SCHEMES } from "../constants/theme";
 
 const createAccount = require("../assets/auth-create-account.png");
@@ -11,7 +10,6 @@ const scheme = AUTH_SCHEMES.green;
 export default function SignupStart( {navigation} ) {
     return(
         <SafeAreaView style={styles.safeArea}>
-            <BackButton navigation={navigation} onLight />
             <ScrollView
                 style={styles.scroll}
                 contentContainerStyle={styles.scrollContent}
@@ -24,10 +22,13 @@ export default function SignupStart( {navigation} ) {
 
                 {/* Apple and Google sign-in mount here once Sign In with Apple is enabled on the App ID */}
 
-                <View style={styles.container}>
+                <View style={styles.actions}>
                     <Pressable style={styles.buttoncontainer} onPress={() => navigation.navigate("SignupCredentials")}>
                         <Text style={styles.buttontext}>Sign up with email</Text>
                     </Pressable>
+                </View>
+
+                <View style={styles.footer}>
                     <Pressable style={styles.loginLink} onPress={() => navigation.navigate("Login1")} hitSlop={{ top: 12, bottom: 12 }}>
                         <Text style={styles.loginText}>Already have an account? Log in</Text>
                     </Pressable>
@@ -49,18 +50,24 @@ const styles = StyleSheet.create({
     },
     scrollContent: {
         flexGrow: 1,
-        justifyContent: "center",
         alignItems: "center",
-        paddingVertical: 16,
+        paddingTop: 48,
+        paddingBottom: 8,
     },
     topContainer: {
         justifyContent: "flex-end",
         alignItems: "center",
         marginBottom: 20,
     },
-    container: {
+    actions: {
         justifyContent: "center",
         alignItems: "center",
+        marginTop: 100,
+    },
+    footer: {
+        marginTop: "auto",
+        alignItems: "center",
+        paddingBottom: 4,
     },
     title: {
         color: scheme.text,
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     loginLink: {
-        marginTop: 16,
+        marginTop: 24,
     },
     loginText: {
         color: scheme.text,
@@ -92,6 +99,6 @@ const styles = StyleSheet.create({
         textDecorationLine: "underline",
     },
     policyLinks: {
-        marginTop: 24,
+        marginTop: 28,
     },
 });

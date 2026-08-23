@@ -51,11 +51,11 @@ export default function Challenge1Screen({ navigation, route }) {
     <ImageBackground source={backgroundChallengeOne} style={styles.image}>
       <Text style={[styles.text, styles.timerText]}>{hours > 0 ? `${hours}h ${minutes}m left` : `${minutes}m left`}</Text>
       <Text style={[styles.text, styles.title]}>New Challenge</Text>
+      <StreakContainer streak={streak} centered />
     </ImageBackground>
     <View style={{ flex: 2 }} />
     <View style={styles.bottomContainer}>
-      <StreakContainer streak={streak} />
-      <ChallengeButton title="Next" nav={navigation} destination="Challenge2" challenge={challenge} />
+      <ChallengeButton title="Let's Go!" nav={navigation} destination="Challenge2" challenge={challenge} />
     </View>
     <View style={{flex: 0.5}} />
   </SafeAreaView>

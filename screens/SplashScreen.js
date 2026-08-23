@@ -45,7 +45,7 @@ export default function SplashScreen({ navigation }) {
                 clearTimeout(watchdog);
                 navigation.navigate("Login0");
               }
-            }, 1000);
+            }, 100);
           }
         } else {
           console.log("Tried but not on splash");

@@ -122,7 +122,7 @@ export default function HomeScreen({ navigation }) {
             />
 
             <SafeAreaView>
-                <Text style={[styles.title, { fontSize: p(34), marginTop: p(6) }]}>1% Challenge</Text>
+                <Text style={[styles.title, { fontSize: p(34), marginTop: p(18) }]}>1% Challenge</Text>
             </SafeAreaView>
 
             <StatCloud
@@ -131,37 +131,35 @@ export default function HomeScreen({ navigation }) {
                 imageRef={redRef}
                 scale={s}
                 value={`${streak}`}
-                caption="day streak"
-                style={{ position: "absolute", left: x(10), top: p(235), width: p(195) }}
+                caption="Day Streak"
+                style={{ position: "absolute", left: x(16), top: p(235), width: p(195) }}
             />
 
             <Image
                 source={travels}
                 resizeMode="contain"
                 accessible={false}
-                style={{ position: "absolute", left: x(228), top: p(222), width: p(192), height: p(168) }}
+                style={{ position: "absolute", left: x(176), top: p(196.5), width: p(274), height: p(239) }}
             />
 
             <StatCloud
                 source={yellowCloud}
-                aspectRatio={182 / 112}
+                aspectRatio={195 / 118}
                 imageRef={yellowRef}
                 scale={s}
-                captionFirst
                 value={`${personalImprovement}x`}
                 caption={"Personal\nImprovement"}
-                style={{ position: "absolute", left: x(68), top: p(392), width: p(182) }}
+                style={{ position: "absolute", left: x(31), top: p(379), width: p(195) }}
             />
 
             <StatCloud
                 source={blueCloud}
-                aspectRatio={180 / 116}
+                aspectRatio={195 / 118}
                 imageRef={blueRef}
                 scale={s}
-                captionFirst
                 value={`${challengesCompleted}`}
                 caption={"Challenges\nCompleted"}
-                style={{ position: "absolute", left: x(245), top: p(452), width: p(180) }}
+                style={{ position: "absolute", left: x(227), top: p(451), width: p(195) }}
             />
 
             <Image
@@ -174,7 +172,7 @@ export default function HomeScreen({ navigation }) {
                 source={globe}
                 resizeMode="contain"
                 accessible={false}
-                style={{ position: "absolute", left: x(52), top: p(648), width: p(124), height: p(150) }}
+                style={{ position: "absolute", left: x(21), top: p(610.5), width: p(186), height: p(225) }}
             />
 
             <View style={{ position: "absolute", left: x(212), top: p(652), width: p(206) }}>

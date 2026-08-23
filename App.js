@@ -18,7 +18,7 @@ import Challenge2Screen from "./screens/Challenge2Screen";
 import Challenge3Screen from "./screens/Challenge3Screen";
 import Challenge4Screen from "./screens/Challenge4Screen";
 import React, { useEffect } from 'react';
-import { AppState } from 'react-native';
+import { AppState, Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 
 import { clearDeliveredNotifications, ensureDailyNotificationScheduled } from "./ScheduleNotification";
@@ -35,6 +35,12 @@ Notifications.setNotificationHandler({
 const Stack = createNativeStackNavigator();
 
 const INK = "#2B2724";
+const tabTransition = (route) => ({
+  animation: Platform.OS === "ios"
+    ? "simple_push"
+    : route.params?.tabAnimation ?? "ios_from_right",
+  animationDuration: 320,
+});
 
 export default function App() {
 
@@ -59,19 +65,27 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash" screenOptions={{headerShown: false, animation: "fade", gestureEnabled: false}} >
+      <Stack.Navigator
+        initialRouteName="Splash"
+        screenOptions={{
+          headerShown: false,
+          gestureEnabled: false,
+          animation: "simple_push",
+          animationDuration: 320,
+        }}
+      >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login0" component={Login0Screen} />
-        <Stack.Screen name="Login1" component={Login1Screen} options={{ gestureEnabled: true }} />
-        <Stack.Screen name="Sign up" component={SignupStart} options={{ gestureEnabled: true }} />
+        <Stack.Screen name="Login1" component={Login1Screen} options={{ gestureEnabled: true, animation: "fade", animationDuration: 280 }} />
+        <Stack.Screen name="Sign up" component={SignupStart} options={{ gestureEnabled: false, animation: "fade", animationDuration: 280 }} />
         <Stack.Screen name="SignupCredentials" component={SignupCredentials} options={{ gestureEnabled: true }} />
         <Stack.Screen name="SignupProfile" component={SignupProfile} options={{ gestureEnabled: true }} />
         <Stack.Screen name="Intro1" component={Intro1Screen} />
         <Stack.Screen name="Intro2" component={Intro2Screen} />
         <Stack.Screen name="Intro3" component={Intro3Screen} />
-        <Stack.Screen name="Home" component={ HomeScreen } />
-        <Stack.Screen name="Log" component={ LogScreen } />
-        <Stack.Screen name="Profile" component={ ProfileScreen } />
+        <Stack.Screen name="Home" component={ HomeScreen } options={({ route }) => tabTransition(route)} />
+        <Stack.Screen name="Log" component={ LogScreen } options={({ route }) => tabTransition(route)} />
+        <Stack.Screen name="Profile" component={ ProfileScreen } options={({ route }) => tabTransition(route)} />
         <Stack.Screen name="Log Details" component={ LogDetailsScreen } options={{
           headerShown: true,
           title: "",
@@ -83,10 +97,11 @@ export default function App() {
           headerShadowVisible: false,
           gestureEnabled: true,
         }}/>
-        <Stack.Screen name="Challenge1" component={Challenge1Screen} options={{
+        <Stack.Screen name="Challenge1" component={Challenge1Screen} options={({ route }) => ({
+          ...tabTransition(route),
           headerShown: false,
           gestureEnabled: true,
-        }} />
+        })} />
         <Stack.Screen name="Challenge2" component={Challenge2Screen} options={{
           headerShown: true,
           title: "",

@@ -152,7 +152,7 @@ export default function Challenge3Screen({ navigation, route }) {
         <View style={styles.container}>
             <Image source={topBlob} style={styles.image} />
             <SafeAreaView style={styles.clearContainer}>
-                <View style={styles.textContainer}>
+                <View style={[styles.textContainer, styles.challengeTextContainer]}>
                     <Text style={styles.title}>Challenge:</Text>
                     <Text style={styles.body}>{challenge.challenge}</Text>
                 </View>
@@ -218,6 +218,9 @@ const styles = StyleSheet.create({
         // the inputs' width: "100%" with no width to resolve against
         alignSelf: "stretch",
         marginHorizontal: 20,
+    },
+    challengeTextContainer: {
+        transform: [{ translateY: -110 }],
     },
     questionInput: {
         backgroundColor: "white",

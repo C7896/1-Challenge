@@ -148,7 +148,10 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: "center",
         alignItems: "center",
-        paddingVertical: 16,
+        paddingTop: 16,
+        // no bottom padding: the footer sets its own, and the SafeAreaView
+        // already reserves the home indicator below that
+        paddingBottom: 0,
     },
     topContainer: {
         justifyContent: "flex-end",
@@ -185,8 +188,8 @@ const styles = StyleSheet.create({
         // so a reviewer can still see the way to create an account without scrolling
         alignItems: "center",
         paddingTop: 28,
-        paddingBottom: 12,
-        gap: 10,
+        paddingBottom: 0,
+        gap: 8,
     },
     signupText: {
         color: scheme.text,
@@ -228,6 +231,8 @@ const styles = StyleSheet.create({
         color: "rgba(43,39,36,0.45)",
     },
     policyLinks: {
-        marginTop: 24,
+        // spacing to the signup line comes from the footer's gap; this used to add
+        // 24 on top of it, which read as two unrelated blocks
+        marginTop: 0,
     },
 });
