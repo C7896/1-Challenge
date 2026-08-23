@@ -1,8 +1,7 @@
-import { SafeAreaView, ScrollView, View, Text, Image, StyleSheet } from "react-native";
+import { SafeAreaView, View, Text, Image, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
-import TabBar from "../components/tabBar";
 import SignOutButton from "../components/signOutButton";
 import DeleteAccountButton from "../components/deleteAccountButton";
 import ExploreButton from "../components/exploreButton";
@@ -52,7 +51,7 @@ export default function ProfileScreen({ navigation }) {
     return (
         <View style={styles.root}>
             <SafeAreaView style={styles.safe}>
-                <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+                <View style={styles.page}>
                     <Text style={styles.title}>Profile</Text>
 
                     <View style={styles.hero}>
@@ -94,11 +93,10 @@ export default function ProfileScreen({ navigation }) {
                         <PolicyLinks style={styles.policyLinks} onLight />
                         <DeleteAccountButton navigation={navigation} />
                     </View>
-                </ScrollView>
+                </View>
             </SafeAreaView>
 
             <SignOutButton navigation={navigation} />
-            <TabBar nav={navigation} onLight />
         </View>
     );
 }
@@ -113,15 +111,10 @@ const styles = StyleSheet.create({
     safe: {
         flex: 1,
     },
-    scroll: {
+    page: {
         flex: 1,
-        width: "100%",
-    },
-    scrollContent: {
         alignItems: "center",
         paddingTop: 4,
-        // clears the floating tab bar, which sits 50 up and is 55 tall
-        paddingBottom: 125,
     },
     title: {
         color: INK,

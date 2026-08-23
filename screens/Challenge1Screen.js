@@ -75,9 +75,12 @@ const styles = StyleSheet.create({
     height: 402.94,
   },
   bottomContainer: {
-    flex: 1,
+    // sized to its content: flex plus a large bottom margin squeezed the box
+    // shorter than the button and clipped the label
     alignItems: 'center',
     justifyContent: "center",
+    // the tab bar is on this screen now, so the button clears it
+    marginBottom: 110,
   },
   text: {
     fontWeight: "bold",

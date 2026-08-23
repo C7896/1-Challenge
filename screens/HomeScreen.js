@@ -2,7 +2,6 @@ import { SafeAreaView, View, Text, Image, StyleSheet, useWindowDimensions } from
 import React, { useEffect, useRef, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
-import TabBar from "../components/tabBar";
 import StatCloud from "../components/statCloud";
 import ExploreButton from "../components/exploreButton";
 
@@ -190,7 +189,6 @@ export default function HomeScreen({ navigation }) {
                 <ExploreButton link={CAUSES_URL} label="Explore more" onDark />
             </View>
 
-            <TabBar nav={navigation} onLight />
         </View>
     );
 }

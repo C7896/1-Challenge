@@ -2,7 +2,6 @@ import { View, Text, ImageBackground, FlatList, Pressable, StyleSheet } from "re
 import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
-import TabBar from "../components/tabBar";
 import { MONTHS } from "../constants/fallbackChallenges";
 import Journal from "../components/Journal";
 
@@ -109,7 +108,6 @@ export default function LogScreen( {navigation} ) {
                 />
             </View>
             <View style={{ flex: 5 }} />
-            <TabBar nav={navigation} onLight />
         </View>
     );
 }

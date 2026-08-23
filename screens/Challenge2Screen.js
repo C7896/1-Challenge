@@ -58,7 +58,10 @@ export default function Challenge2Screen({ navigation, route }) {
                 <Text style={styles.title}>Challenge:</Text>
                 <Text style={styles.body}>{challenge.challenge}</Text>
             </View>
-            <ChallengeButton title="Let's GO!" nav={navigation} destination="Challenge3" challenge={challenge}/>
+            {/* lifted clear of the floating tab bar, which now sits on this screen too */}
+            <View style={styles.ctaBlock}>
+                <ChallengeButton title="Let's GO!" nav={navigation} destination="Challenge3" challenge={challenge}/>
+            </View>
         </SafeAreaView>
     );
 }
@@ -69,6 +72,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#FF815E",
         justifyContent: "center",
         alignItems: "center",
+    },
+    ctaBlock: {
+        alignItems: "center",
+        marginBottom: 110,
     },
     textContainer: {
         flex: 2,

@@ -18,7 +18,9 @@ import Challenge2Screen from "./screens/Challenge2Screen";
 import Challenge3Screen from "./screens/Challenge3Screen";
 import Challenge4Screen from "./screens/Challenge4Screen";
 import React, { useEffect } from 'react';
-import { AppState, Platform } from 'react-native';
+import { AppState, Platform, View } from 'react-native';
+import { useNavigationContainerRef } from '@react-navigation/native';
+import TabBar from './components/tabBar';
 import * as Notifications from 'expo-notifications';
 
 import { clearDeliveredNotifications, ensureDailyNotificationScheduled } from "./ScheduleNotification";
@@ -35,6 +37,15 @@ Notifications.setNotificationHandler({
 const Stack = createNativeStackNavigator();
 
 const INK = "#2B2724";
+
+// The bar lives above the navigator so it stays put while pages slide beneath
+// it. Rendering it inside each screen made it animate in and out with the page.
+const TAB_BAR_ROUTES = new Set([
+  "Home", "Log", "Profile",
+  "Challenge1", "Challenge2", "Challenge3", "Challenge4",
+]);
+// screens whose background under the bar is light
+const TAB_BAR_ON_LIGHT = new Set(["Home", "Log", "Profile", "Challenge3"]);
 const tabTransition = (route) => ({
   animation: Platform.OS === "ios"
     ? "simple_push"
@@ -43,6 +54,9 @@ const tabTransition = (route) => ({
 });
 
 export default function App() {
+
+  const navRef = useNavigationContainerRef();
+  const [routeName, setRouteName] = React.useState(undefined);
 
   useEffect(() => {
     // Delivered reminders otherwise pile up in Notification Centre, one per day,
@@ -64,7 +78,12 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navRef}
+      onReady={() => setRouteName(navRef.getCurrentRoute()?.name)}
+      onStateChange={() => setRouteName(navRef.getCurrentRoute()?.name)}
+    >
+      <View style={{ flex: 1 }}>
       <Stack.Navigator
         initialRouteName="Splash"
         screenOptions={{
@@ -128,6 +147,10 @@ export default function App() {
           headerShown: false,
         }} />
       </Stack.Navigator>
+        {TAB_BAR_ROUTES.has(routeName) ? (
+          <TabBar nav={navRef} activeRoute={routeName} onLight={TAB_BAR_ON_LIGHT.has(routeName)} />
+        ) : null}
+      </View>
     </NavigationContainer>
   );
 }

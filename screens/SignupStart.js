@@ -1,4 +1,4 @@
-import { View, Text, Pressable, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, Text, Pressable, SafeAreaView, StyleSheet } from "react-native";
 import LargeImage from "../components/largeImage";
 import PolicyLinks from "../components/policyLinks";
 import SocialSignInButtons from "../components/socialSignInButtons";
@@ -11,11 +11,7 @@ const scheme = AUTH_SCHEMES.green;
 export default function SignupStart( {navigation} ) {
     return(
         <SafeAreaView style={styles.safeArea}>
-            <ScrollView
-                style={styles.scroll}
-                contentContainerStyle={styles.scrollContent}
-                keyboardShouldPersistTaps="handled"
-            >
+            <View style={styles.page}>
                 <View style={styles.topContainer}>
                     <LargeImage src={createAccount}/>
                     <Text style={styles.title}>Create your account</Text>
@@ -46,7 +42,7 @@ export default function SignupStart( {navigation} ) {
                     </Pressable>
                     <PolicyLinks small color={scheme.muted} style={styles.policyLinks} />
                 </View>
-            </ScrollView>
+            </View>
         </SafeAreaView>
     );
 }
@@ -56,15 +52,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: scheme.bg,
     },
-    scroll: {
+    page: {
         flex: 1,
-        width: "100%",
-    },
-    scrollContent: {
-        flexGrow: 1,
         alignItems: "center",
         paddingTop: 48,
-        paddingBottom: 8,
     },
     topContainer: {
         justifyContent: "flex-end",
@@ -79,9 +70,10 @@ const styles = StyleSheet.create({
         marginTop: 36,
     },
     footer: {
+        // pinned near the bottom edge rather than floating under the buttons
         marginTop: "auto",
         alignItems: "center",
-        paddingBottom: 4,
+        paddingBottom: 12,
     },
     title: {
         color: scheme.text,

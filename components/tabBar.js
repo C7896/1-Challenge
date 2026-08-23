@@ -1,6 +1,6 @@
 import { View, Pressable, Image, Alert, StyleSheet } from "react-native";
-import { useEffect, useRef } from "react";
-import { useNavigationState } from "@react-navigation/native";
+import { useRef } from "react";
+import { StackActions } from "@react-navigation/native";
 
 import { auth, db } from "../firebase";
 import { loadToday } from "../lib/challenge";
@@ -23,11 +23,13 @@ const icons = {
     },
 };
 
-export default function TabBar( {nav, onLight} ) {
+// Rendered once, above the navigator, so it never slides in and out with the
+// page. That means it cannot use navigation hooks (there is no navigator context
+// out there), so the current route arrives as a prop and navigation goes through
+// the container ref.
+export default function TabBar( {nav, onLight, activeRoute} ) {
     const set = onLight ? icons.light : icons.dark;
     const opening = useRef(false);
-    const navigationTimer = useRef(null);
-    const activeRoute = useNavigationState((state) => state.routes[state.index]?.name);
     const activeIndex = activeRoute === "Profile"
         ? 3
         : activeRoute === "Log"
@@ -38,13 +40,19 @@ export default function TabBar( {nav, onLight} ) {
 
 
     const animationFor = (index) => index < activeIndex ? "ios_from_left" : "ios_from_right";
-    const openTab = (index, routeName) => {
-        nav.popTo(routeName, { tabAnimation: animationFor(index) });
+    const go = (routeName, params) => {
+        // popTo keeps the stack flat when the screen is already below us, and
+        // falls back to navigate when it is not in the stack at all
+        try {
+            nav.dispatch(StackActions.popTo(routeName, params));
+        } catch {
+            nav.navigate(routeName, params);
+        }
     };
 
-
-
-    useEffect(() => () => clearTimeout(navigationTimer.current), []);
+    const openTab = (index, routeName) => {
+        go(routeName, { tabAnimation: animationFor(index) });
+    };
 
     // the tab has to fetch today's challenge before it can open it, so it repeats
     // what the Today card on Home does rather than routing through Home
@@ -69,7 +77,7 @@ export default function TabBar( {nav, onLight} ) {
                 Alert.alert(
                     "Today's challenge is complete",
                     "Nice work. Here are your past challenges.",
-                    [{ text: "OK", onPress: () => nav.popTo("Log", { tabAnimation: animationFor(2) }) }]
+                    [{ text: "OK", onPress: () => go("Log", { tabAnimation: animationFor(2) }) }]
                 );
             } else {
                 nav.navigate("Challenge1", { challenge, streak, tabAnimation });

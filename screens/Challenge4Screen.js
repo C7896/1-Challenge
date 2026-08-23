@@ -51,9 +51,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottomContainer: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 110,
   },
   streakContainer: {
     backgroundColor: '#FFC0A2',
