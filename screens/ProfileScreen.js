@@ -198,9 +198,11 @@ const styles = StyleSheet.create({
         marginTop: 22,
     },
     footer: {
-        // pushed to the bottom of the page by the spacer above it
+        // pushed to the bottom by the spacer above it. The padding is what keeps
+        // it clear of the floating tab bar, which occupies 50 to 105 up from the
+        // screen edge; 86 here plus the safe area inset leaves a small gap above it.
         alignItems: "center",
-        paddingBottom: 118,
+        paddingBottom: 86,
         gap: 2,
     },
     policyLinks: {
