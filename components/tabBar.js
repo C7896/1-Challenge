@@ -92,17 +92,25 @@ export default function TabBar( {nav, activeRoute} ) {
 
     return (
         <View style={styles.container}>
-            <Pressable style={styles.tabItem} onPress={() => openTab(0, "Home")} accessibilityRole="button" accessibilityLabel="Home">
-                <Image source={set.home} style={styles.image} resizeMode="contain" />
+            <Pressable style={styles.tabItem} onPress={() => openTab(0, "Home")} accessibilityRole="button" accessibilityLabel="Home" accessibilityState={{ selected: activeIndex === 0 }}>
+                <View style={[styles.slot, activeIndex === 0 && styles.slotActive]}>
+                    <Image source={set.home} style={styles.image} resizeMode="contain" />
+                </View>
             </Pressable>
-            <Pressable style={styles.tabItem} onPress={() => openToday(animationFor(1))} accessibilityRole="button" accessibilityLabel="Today's challenge">
-                <Image source={set.today} style={styles.image} resizeMode="contain" />
+            <Pressable style={styles.tabItem} onPress={() => openToday(animationFor(1))} accessibilityRole="button" accessibilityLabel="Today's challenge" accessibilityState={{ selected: activeIndex === 1 }}>
+                <View style={[styles.slot, activeIndex === 1 && styles.slotActive]}>
+                    <Image source={set.today} style={styles.image} resizeMode="contain" />
+                </View>
             </Pressable>
-            <Pressable style={styles.tabItem} onPress={() => openTab(2, "Log")} accessibilityRole="button" accessibilityLabel="Past challenges">
-                <Image source={set.log} style={styles.image} resizeMode="contain" />
+            <Pressable style={styles.tabItem} onPress={() => openTab(2, "Log")} accessibilityRole="button" accessibilityLabel="Past challenges" accessibilityState={{ selected: activeIndex === 2 }}>
+                <View style={[styles.slot, activeIndex === 2 && styles.slotActive]}>
+                    <Image source={set.log} style={styles.image} resizeMode="contain" />
+                </View>
             </Pressable>
-            <Pressable style={styles.tabItem} onPress={() => openTab(3, "Profile")} accessibilityRole="button" accessibilityLabel="Profile">
-                <Image source={set.profile} style={styles.image} resizeMode="contain" />
+            <Pressable style={styles.tabItem} onPress={() => openTab(3, "Profile")} accessibilityRole="button" accessibilityLabel="Profile" accessibilityState={{ selected: activeIndex === 3 }}>
+                <View style={[styles.slot, activeIndex === 3 && styles.slotActive]}>
+                    <Image source={set.profile} style={styles.image} resizeMode="contain" />
+                </View>
             </Pressable>
         </View>
     );
@@ -112,10 +120,11 @@ const styles = StyleSheet.create({
     container: {
         width: 268,
         height: 55,
-        // Dark translucent so the white glyphs read on every background the bar sits
-        // over. The light pill left them at about 1.2 to 1 on Profile, which is
-        // why they looked washed out. At 0.62 the weakest case still measures 4.7.
-        backgroundColor: "rgba(43, 39, 36, 0.62)",
+        // Lighter than it was, but not so light the white glyphs fade. 0.48 is the
+        // lightest value where the weakest background, the light green Profile,
+        // still clears 3 to 1 for a UI element; it measures 3.2 there and 5.6 on
+        // the coral. The original near transparent pill left them at about 1.2.
+        backgroundColor: "rgba(43, 39, 36, 0.48)",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-evenly",
@@ -137,6 +146,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         zIndex: 1,
+    },
+    slot: {
+        width: 44,
+        height: 40,
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    slotActive: {
+        // marks the tab you are on. A lighter chip rather than a moving pill,
+        // since the sliding indicator was removed deliberately.
+        backgroundColor: "rgba(255, 255, 255, 0.30)",
     },
     image: {
         width: 32,
