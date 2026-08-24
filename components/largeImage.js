@@ -1,8 +1,8 @@
 import { Image, StyleSheet, useWindowDimensions } from "react-native";
 
-export default function LargeImage( {src} ) {
+export default function LargeImage({ src, size: requestedSize }) {
     const windowWidth = useWindowDimensions().width;
-    const size = Math.min(windowWidth * 0.8, 400);
+    const size = requestedSize ?? Math.min(windowWidth * 0.8, 400);
     return (
         <Image source={src} style={[styles.image, { width: size, height: size }]} resizeMode="contain" accessible={false} />
     );

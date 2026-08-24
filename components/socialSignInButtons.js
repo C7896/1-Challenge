@@ -1,16 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Text, Pressable, Alert, ActivityIndicator, StyleSheet } from "react-native";
+import { View, Text, Image, Pressable, Alert, ActivityIndicator, StyleSheet } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
-import { GoogleSigninButton } from "@react-native-google-signin/google-signin";
 
 import { isAppleAvailable, signInWithApple, signInWithGoogle, friendlySocialError } from "../lib/socialAuth";
 
 const INK = "#2B2724";
+const googleBrandButton = require("../assets/google-signin-brand.png");
 
 // Both providers land here. onSignedIn receives { needsProfile, suggestedName }
 // so the caller can send a brand new account to the profile step and an existing
 // one straight to Home.
-export default function SocialSignInButtons({ onSignedIn, dividerLabel = "or", muted }) {
+export default function SocialSignInButtons({
+    onSignedIn,
+    dividerLabel = "or",
+    googleLabel = "Continue with Google",
+    muted,
+}) {
     const [appleReady, setAppleReady] = useState(false);
     const [busy, setBusy] = useState(null);
     const running = useRef(false);
@@ -63,17 +68,25 @@ export default function SocialSignInButtons({ onSignedIn, dividerLabel = "or", m
             ) : null}
 
             <View style={styles.buttonRow}>
-                {/* Google's own button, for the same reason: their brand guidelines
-                    do not allow a redrawn mark. */}
-                <View style={styles.googleClip}>
-                    <GoogleSigninButton
-                        size={GoogleSigninButton.Size.Wide}
-                        color={GoogleSigninButton.Color.Light}
-                        style={styles.googleButton}
-                        onPress={() => run("google", signInWithGoogle)}
-                        disabled={busy !== null}
-                    />
-                </View>
+                <Pressable
+                    style={({ pressed }) => [
+                        styles.googleButton,
+                        pressed && styles.googleButtonPressed,
+                        busy !== null && styles.googleButtonDisabled,
+                    ]}
+                    onPress={() => run("google", signInWithGoogle)}
+                    disabled={busy !== null}
+                    accessibilityRole="button"
+                    accessibilityLabel={googleLabel}
+                    accessibilityState={{ disabled: busy !== null, busy: busy === "google" }}
+                >
+                    {/* Crop the current Google "G" directly from Google's
+                        pre-approved iOS button asset so the mark is never redrawn. */}
+                    <View style={styles.googleLogoCrop} pointerEvents="none">
+                        <Image source={googleBrandButton} style={styles.googleBrandAsset} resizeMode="stretch" />
+                    </View>
+                    <Text style={styles.googleButtonText}>{googleLabel}</Text>
+                </Pressable>
             </View>
 
             {busy ? (
@@ -105,19 +118,48 @@ const styles = StyleSheet.create({
         width: 280,
         height: 52,
     },
-    googleClip: {
+    googleButton: {
         width: 280,
         height: 52,
-        borderRadius: 28,
-        overflow: "hidden",
+        borderRadius: 26,
+        borderWidth: 1,
+        borderColor: "#747775",
+        backgroundColor: "#FFFFFF",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 12,
+        shadowColor: "#2B2724",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.12,
+        shadowRadius: 5,
+        elevation: 3,
     },
-    googleButton: {
-        // slightly oversized inside the clip so its square corners are cut off
-        // cleanly and no white shows at the rounded edges
-        width: 292,
-        height: 58,
-        marginLeft: -6,
-        marginTop: -3,
+    googleButtonPressed: {
+        backgroundColor: "#F8F9FA",
+        shadowOpacity: 0.06,
+    },
+    googleButtonDisabled: {
+        opacity: 0.62,
+    },
+    googleLogoCrop: {
+        width: 20,
+        height: 20,
+        overflow: "hidden",
+        backgroundColor: "#FFFFFF",
+    },
+    googleBrandAsset: {
+        position: "absolute",
+        width: 188,
+        height: 44,
+        left: -16,
+        top: -12,
+    },
+    googleButtonText: {
+        color: "#1F1F1F",
+        fontSize: 14,
+        lineHeight: 20,
+        fontWeight: "500",
     },
     busyRow: {
         flexDirection: "row",

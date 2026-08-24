@@ -20,6 +20,7 @@ export default function SignupStart( {navigation} ) {
                 <View style={styles.actions}>
                     <SocialSignInButtons
                         muted={scheme.muted}
+                        googleLabel="Sign up with Google"
                         onSignedIn={({ needsProfile, suggestedName }) => {
                             // a brand new social account still has no username, so it
                             // finishes at the same profile step the email path uses
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     buttontext: {
-        color: scheme.ctaText,
+        color: "#FFFFFF",
         fontSize: 22,
         fontWeight: "bold",
     },
