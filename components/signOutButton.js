@@ -3,12 +3,15 @@ import { TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
 
 import { signOut } from 'firebase/auth';
 import { auth } from "../firebase";
+import { clearCachedUser } from "../lib/userCache";
 
 const signOutIcon = require("../assets/signOut.png");
 
 export default function SignOutButton({ navigation }) {
 
     const handleSignOut = () => {
+        // never let one account's figures seed the next one's screens
+        clearCachedUser();
         signOut(auth).then(() => {
             navigation.reset({ index: 0, routes: [{ name: "Splash" }] });
           }).catch((error) => {

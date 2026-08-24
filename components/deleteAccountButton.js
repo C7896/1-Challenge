@@ -4,6 +4,7 @@ import { TouchableOpacity, Text, Alert, Modal, View, TextInput, Pressable, Style
 import { EmailAuthProvider, reauthenticateWithCredential, deleteUser } from 'firebase/auth';
 import { collection, doc, getDocs, deleteDoc, writeBatch } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import { clearCachedUser } from '../lib/userCache';
 import { cancelDailyNotification } from '../ScheduleNotification';
 
 export default function DeleteAccountButton({ navigation }) {
@@ -52,6 +53,7 @@ export default function DeleteAccountButton({ navigation }) {
         }
         // stop the 9am reminder before the account goes away
         await cancelDailyNotification().catch(() => {});
+        clearCachedUser();
 
         try {
             await deleteUser(user);

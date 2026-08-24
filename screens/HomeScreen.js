@@ -8,6 +8,7 @@ import ExploreButton from "../components/exploreButton";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { CAUSES_URL } from "../constants/links";
+import { getCachedUser, setCachedUser } from "../lib/userCache";
 
 const background = require("../assets/homeBackground.png");
 const greenBlob = require("../assets/greenBlob.png");
@@ -25,9 +26,13 @@ const DH = 933;
 
 export default function HomeScreen({ navigation }) {
 
-    const [streak, setStreak] = useState(0);
-    const [personalImprovement, setPersonalImprovement] = useState(0);
-    const [challengesCompleted, setChallengesCompleted] = useState(0);
+    // same seeding as Profile: the stats paint from the last known values rather
+    // than counting up from zero every time the tab is opened
+    const seed = getCachedUser(auth.currentUser?.uid) ?? {};
+    const fmt = (n) => new Intl.NumberFormat('en-US', { notation: 'compact', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(1.01 ** (n ?? 0));
+    const [streak, setStreak] = useState(seed.current_streak ?? 0);
+    const [personalImprovement, setPersonalImprovement] = useState(fmt(seed.total_completed_challenges ?? 0));
+    const [challengesCompleted, setChallengesCompleted] = useState(seed.total_completed_challenges ?? 0);
 
     const isFocused = useIsFocused();
 
@@ -86,6 +91,7 @@ export default function HomeScreen({ navigation }) {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
+                    setCachedUser(user.uid, userData);
                     setStreak(userData.current_streak ?? 0);
                     setPersonalImprovement(new Intl.NumberFormat('en-US', { notation: 'compact', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((1.01 ** (userData.total_completed_challenges ?? 0))));
                     setChallengesCompleted(userData.total_completed_challenges ?? 0);

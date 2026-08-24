@@ -10,14 +10,19 @@ import PolicyLinks from "../components/policyLinks";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { CAUSES_URL } from "../constants/links";
+import { getCachedUser, setCachedUser } from "../lib/userCache";
 
 const globe = require("../assets/Globe.png");
 
 export default function ProfileScreen({ navigation }) {
 
-    const [name, setName] = useState("");
-    const [username, setUsername] = useState("");
-    const [challengesCompleted, setChallengesCompleted] = useState(0);
+    // seeded from the last known values so the screen paints correct immediately
+    // instead of flashing its empty defaults before the read returns
+    const seed = getCachedUser(auth.currentUser?.uid) ?? {};
+    const [name, setName] = useState(seed.name ?? "");
+    const [username, setUsername] = useState(seed.username ?? "");
+    const [challengesCompleted, setChallengesCompleted] = useState(seed.total_completed_challenges ?? 0);
+    const [loaded, setLoaded] = useState(Boolean(getCachedUser(auth.currentUser?.uid)));
 
     const isFocused = useIsFocused();
 
@@ -31,10 +36,12 @@ export default function ProfileScreen({ navigation }) {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if (userDoc.exists()) {
                     const data = userDoc.data();
+                    setCachedUser(user.uid, data);
                     setName(data.name ?? "");
                     setUsername(data.username ?? "");
                     setChallengesCompleted(data.total_completed_challenges ?? 0);
                 }
+                setLoaded(true);
             } catch (error) {
                 // keep whatever is already on screen rather than blanking the page
                 console.error("Error reading profile: ", error);
@@ -57,27 +64,29 @@ export default function ProfileScreen({ navigation }) {
                     <View style={styles.hero}>
                         <Image source={globe} style={styles.globe} resizeMode="contain" accessible={false} />
                         <Text style={styles.greeting}>
-                            {challengesCompleted > 0
-                                ? (username ? `We love you, ${username}!` : "We love you!")
-                                : (username ? `Welcome, ${username}.` : "Welcome.")}
+                            {!loaded
+                                ? " "
+                                : challengesCompleted > 0
+                                    ? (username ? `We love you, ${username}!` : "We love you!")
+                                    : (username ? `Welcome, ${username}.` : "Welcome.")}
                         </Text>
                         <Text style={styles.greetingSub}>
-                            {challengesCompleted > 0
-                                ? "Thank you for making the world a better place."
-                                : "One small challenge a day."}
+                            {!loaded
+                                ? " "
+                                : challengesCompleted > 0
+                                    ? "Thank you for making the world a better place."
+                                    : "One small challenge a day."}
                         </Text>
                     </View>
 
                     <View style={styles.card}>
-                        {name.length > 0 ? (
-                            <View style={styles.row}>
-                                <Text style={styles.rowLabel}>Name</Text>
-                                <Text style={styles.rowValue} numberOfLines={1}>{name}</Text>
-                            </View>
-                        ) : null}
+                        <View style={styles.row}>
+                            <Text style={styles.rowLabel}>Name</Text>
+                            <Text style={styles.rowValue} numberOfLines={1}>{name}</Text>
+                        </View>
                         <View style={styles.row}>
                             <Text style={styles.rowLabel}>Username</Text>
-                            <Text style={styles.rowValue} numberOfLines={1}>{username || "Not set"}</Text>
+                            <Text style={styles.rowValue} numberOfLines={1}>{loaded ? (username || "Not set") : ""}</Text>
                         </View>
                         <View style={[styles.row, styles.rowLast]}>
                             <Text style={styles.rowLabel}>Email</Text>
