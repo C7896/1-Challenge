@@ -54,6 +54,7 @@ export default function ProfileScreen({ navigation }) {
     }, [isFocused]);
 
     const email = auth.currentUser?.email ?? "";
+    const displayName = username ? username.charAt(0).toUpperCase() + username.slice(1) : "";
 
     return (
         <View style={styles.root}>
@@ -67,8 +68,8 @@ export default function ProfileScreen({ navigation }) {
                             {!loaded
                                 ? " "
                                 : challengesCompleted > 0
-                                    ? (username ? `We love you, ${username}!` : "We love you!")
-                                    : (username ? `Welcome, ${username}.` : "Welcome.")}
+                                    ? (displayName ? `We love you, ${displayName}!` : "We love you!")
+                                    : (displayName ? `Welcome, ${displayName}.` : "Welcome.")}
                         </Text>
                         <Text style={styles.greetingSub}>
                             {!loaded
@@ -98,6 +99,8 @@ export default function ProfileScreen({ navigation }) {
                         <ExploreButton link={CAUSES_URL} />
                     </View>
 
+                    <View style={styles.spacer} />
+
                     <View style={styles.footer}>
                         <PolicyLinks style={styles.policyLinks} onLight />
                         <DeleteAccountButton navigation={navigation} />
@@ -125,6 +128,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 4,
     },
+    spacer: {
+        flex: 1,
+    },
     title: {
         color: INK,
         fontSize: 30,
@@ -133,6 +139,7 @@ const styles = StyleSheet.create({
     hero: {
         alignItems: "center",
         marginTop: 8,
+        marginBottom: 4,
     },
     globe: {
         width: 120,
@@ -140,18 +147,21 @@ const styles = StyleSheet.create({
     },
     greeting: {
         color: INK,
-        fontSize: 24,
+        fontSize: 26,
+        lineHeight: 32,
         fontWeight: "bold",
         textAlign: "center",
-        marginTop: 4,
-        paddingHorizontal: 24,
+        marginTop: 10,
     },
     greetingSub: {
-        color: INK,
-        fontSize: 16,
+        // held to a narrower measure so it wraps into two balanced lines instead
+        // of running the full width of the screen under a much shorter heading
+        color: "rgba(43,39,36,0.72)",
+        fontSize: 15,
+        lineHeight: 21,
         textAlign: "center",
-        marginTop: 2,
-        paddingHorizontal: 24,
+        marginTop: 6,
+        maxWidth: 260,
     },
     card: {
         backgroundColor: "white",
@@ -188,8 +198,9 @@ const styles = StyleSheet.create({
         marginTop: 22,
     },
     footer: {
+        // pushed to the bottom of the page by the spacer above it
         alignItems: "center",
-        marginTop: 24,
+        paddingBottom: 118,
         gap: 2,
     },
     policyLinks: {

@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 0,
         width: "100%",
-        height: "34%",
+        height: "26%",
         resizeMode: "cover",
     },
     scroll: {
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     scrollContent: {
         flexGrow: 1,
         paddingHorizontal: 20,
-        paddingTop: 56,
+        paddingTop: 46,
         paddingBottom: 24,
     },
     footer: {
@@ -156,12 +156,12 @@ const styles = StyleSheet.create({
         paddingTop: 24,
     },
     header: {
-        // sized to sit inside the peach shape so the challenge does not hang over
-        // the edge onto the coral below it
-        minHeight: 128,
+        // sits wholly inside the light shape, with the first question falling
+        // below it on the coral rather than straddling the boundary
+        minHeight: 96,
         justifyContent: "center",
         paddingRight: 8,
-        marginBottom: 18,
+        marginBottom: 26,
     },
     date: {
         color: "rgba(43,39,36,0.6)",
@@ -171,9 +171,9 @@ const styles = StyleSheet.create({
     },
     challenge: {
         color: INK,
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: "bold",
-        lineHeight: 30,
+        lineHeight: 28,
     },
     question: {
         color: "white",

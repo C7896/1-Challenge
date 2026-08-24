@@ -112,7 +112,10 @@ const styles = StyleSheet.create({
     container: {
         width: 268,
         height: 55,
-        backgroundColor: "rgba(244, 250, 246, 0.30)",
+        // Dark translucent so the white glyphs read on every background the bar sits
+        // over. The light pill left them at about 1.2 to 1 on Profile, which is
+        // why they looked washed out. At 0.62 the weakest case still measures 4.7.
+        backgroundColor: "rgba(43, 39, 36, 0.62)",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-evenly",
