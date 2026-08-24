@@ -44,8 +44,7 @@ const TAB_BAR_ROUTES = new Set([
   "Home", "Log", "Profile",
   "Challenge1", "Challenge2", "Challenge3", "Challenge4",
 ]);
-// screens whose background under the bar is light
-const TAB_BAR_ON_LIGHT = new Set(["Home", "Log", "Profile", "Challenge3"]);
+
 // Tab presses cut straight to the screen with no transition. Anything else
 // reaching these screens keeps the normal push.
 const tabTransition = (route) => (
@@ -155,7 +154,7 @@ export default function App() {
       <View style={{ flex: 1 }}>
       {navigator}
         {TAB_BAR_ROUTES.has(routeName) ? (
-          <TabBar nav={navRef} activeRoute={routeName} onLight={TAB_BAR_ON_LIGHT.has(routeName)} />
+          <TabBar nav={navRef} activeRoute={routeName} />
         ) : null}
       </View>
     </NavigationContainer>

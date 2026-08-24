@@ -27,8 +27,8 @@ const icons = {
 // page. That means it cannot use navigation hooks (there is no navigator context
 // out there), so the current route arrives as a prop and navigation goes through
 // the container ref.
-export default function TabBar( {nav, onLight, activeRoute} ) {
-    const set = onLight ? icons.light : icons.dark;
+export default function TabBar( {nav, activeRoute} ) {
+    const set = icons.dark;
     const opening = useRef(false);
     const activeIndex = activeRoute === "Profile"
         ? 3
@@ -91,7 +91,7 @@ export default function TabBar( {nav, onLight, activeRoute} ) {
     };
 
     return (
-        <View style={[styles.container, onLight && styles.containerLight]}>
+        <View style={styles.container}>
             <Pressable style={styles.tabItem} onPress={() => openTab(0, "Home")} accessibilityRole="button" accessibilityLabel="Home">
                 <Image source={set.home} style={styles.image} resizeMode="contain" />
             </Pressable>
@@ -127,10 +127,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.16,
         shadowRadius: 22,
         elevation: 8,
-    },
-    containerLight: {
-        backgroundColor: "rgba(255, 255, 255, 0.38)",
-        borderColor: "rgba(255, 255, 255, 0.72)",
     },
     tabItem: {
         width: 32,

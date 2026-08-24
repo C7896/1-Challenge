@@ -7,18 +7,25 @@ import Journal from "../components/Journal";
 
 import { collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import { getCachedJournals, setCachedJournals } from "../lib/userCache";
 
 const purpleBlob = require("../assets/purpleBlob.png");
 
 export default function LogScreen( {navigation} ) {
 
-    const [challengeLog, setChallengeLog] = useState([]);
-    const [loading, setLoading] = useState(true);
+    // seeded from the last known list so the log paints immediately instead of
+    // showing an empty screen while the read comes back
+    const cached = getCachedJournals(auth.currentUser?.uid);
+    const [challengeLog, setChallengeLog] = useState(cached ?? []);
+    const [loading, setLoading] = useState(cached == null);
     const [loadError, setLoadError] = useState(false);
     const isFocused = useIsFocused();
 
     const getChallengeLog = async () => {
-        setLoading(true);
+        // only show the loading state when there is nothing to show yet
+        if (getCachedJournals(auth.currentUser?.uid) == null) {
+            setLoading(true);
+        }
         setLoadError(false);
         try {
             const user = auth.currentUser;
@@ -34,6 +41,7 @@ export default function LogScreen( {navigation} ) {
                     return (j.year ?? 0) * 10000 + (m < 0 ? 0 : m) * 100 + (j.day ?? 0);
                 };
                 journals.sort((a, b) => entryOrder(b) - entryOrder(a));
+                setCachedJournals(user.uid, journals);
                 setChallengeLog(journals);
             } else {
                 console.log("User is not signed in");
