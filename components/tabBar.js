@@ -28,7 +28,7 @@ const icons = {
 // out there), so the current route arrives as a prop and navigation goes through
 // the container ref.
 export default function TabBar( {nav, activeRoute} ) {
-    const set = icons.dark;
+    const set = icons.light;
     const opening = useRef(false);
     const activeIndex = activeRoute === "Profile"
         ? 3
@@ -120,11 +120,19 @@ const styles = StyleSheet.create({
     container: {
         width: 268,
         height: 55,
-        // Lighter than it was, but not so light the white glyphs fade. 0.48 is the
-        // lightest value where the weakest background, the light green Profile,
-        // still clears 3 to 1 for a UI element; it measures 3.2 there and 5.6 on
-        // the coral. The original near transparent pill left them at about 1.2.
-        backgroundColor: "rgba(43, 39, 36, 0.48)",
+        // Frosted white, the same treatment as the flip clock cards: translucent
+        // white with a brighter rim and a soft shadow so the pill still reads as
+        // an object. The glyphs are ink, because white on a white pill measures
+        // about 1.4 to 1, which is what made them vanish before. Ink measures
+        // 10.3 at worst here.
+        backgroundColor: "rgba(255, 255, 255, 0.62)",
+        borderWidth: 1,
+        borderColor: "rgba(255, 255, 255, 0.9)",
+        shadowColor: "#2B2724",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.16,
+        shadowRadius: 6,
+        elevation: 4,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-evenly",
@@ -155,9 +163,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     slotActive: {
-        // marks the tab you are on. A lighter chip rather than a moving pill,
-        // since the sliding indicator was removed deliberately.
-        backgroundColor: "rgba(255, 255, 255, 0.30)",
+        // marks the tab you are on. A soft ink chip now that the pill is light,
+        // still static rather than a moving pill.
+        backgroundColor: "rgba(43, 39, 36, 0.12)",
     },
     image: {
         width: 32,
