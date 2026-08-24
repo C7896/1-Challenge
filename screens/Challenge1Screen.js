@@ -47,7 +47,7 @@ export default function Challenge1Screen({ navigation, route }) {
     <View style={{flex: 1}}/>
     <ImageBackground source={backgroundChallengeOne} style={styles.image}>
       <Text style={[styles.text, styles.title]}>New Challenge</Text>
-      <FlipClock hours={hours} minutes={minutes} seconds={seconds} label="left today" />
+      <FlipClock hours={hours} minutes={minutes} seconds={seconds} />
       <StreakContainer streak={streak} centered />
     </ImageBackground>
     <View style={{ flex: 2 }} />

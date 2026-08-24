@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { View, Text, Animated, Easing, StyleSheet } from "react-native";
 
+const INK = "#2B2724";
+
 // A split-flap card. When the digit changes the card folds through the middle,
 // swaps its value while edge-on, then unfolds, which is how a real flip clock
 // reads. rotateX on a small perspective gives the fold its depth.
@@ -101,21 +103,28 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     card: {
-        backgroundColor: "#2B2724",
-        borderRadius: 8,
+        // frosted glass rather than a black slab: translucent white over the blob,
+        // with a brighter rim so the card edge still reads
+        backgroundColor: "rgba(255,255,255,0.62)",
+        borderRadius: 10,
         borderWidth: 1,
-        borderColor: "rgba(255,255,255,0.35)",
+        borderColor: "rgba(255,255,255,0.9)",
         marginHorizontal: 2,
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
+        shadowColor: "#2B2724",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.16,
+        shadowRadius: 4,
+        elevation: 3,
     },
     face: {
         alignItems: "center",
         justifyContent: "center",
     },
     digit: {
-        color: "white",
+        color: INK,
         fontWeight: "bold",
         fontVariant: ["tabular-nums"],
     },
@@ -125,15 +134,15 @@ const styles = StyleSheet.create({
         right: 0,
         top: "50%",
         height: 1,
-        backgroundColor: "rgba(0,0,0,0.55)",
+        backgroundColor: "rgba(43,39,36,0.18)",
     },
     separator: {
-        color: "white",
+        color: INK,
         fontWeight: "bold",
         marginHorizontal: 5,
     },
     label: {
-        color: "white",
+        color: INK,
         fontSize: 14,
         marginTop: 8,
         letterSpacing: 0.4,
