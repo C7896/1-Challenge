@@ -59,6 +59,74 @@ export default function App() {
   const navRef = useNavigationContainerRef();
   const [routeName, setRouteName] = React.useState(undefined);
 
+  // Built once. It does not depend on routeName, and rebuilding it on every
+  // navigation is what made tab switching lag.
+  const navigator = React.useMemo(() => (
+        <Stack.Navigator
+          initialRouteName="Splash"
+          screenOptions={{
+            headerShown: false,
+            gestureEnabled: false,
+            animation: "simple_push",
+            animationDuration: 320,
+          }}
+        >
+          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="Login0" component={Login0Screen} />
+          <Stack.Screen name="Login1" component={Login1Screen} options={{ gestureEnabled: true }} />
+          <Stack.Screen name="Sign up" component={SignupStart} options={{ gestureEnabled: true }} />
+          <Stack.Screen name="SignupCredentials" component={SignupCredentials} options={{ gestureEnabled: true }} />
+          <Stack.Screen name="SignupProfile" component={SignupProfile} options={{ gestureEnabled: true }} />
+          <Stack.Screen name="Intro1" component={Intro1Screen} />
+          <Stack.Screen name="Intro2" component={Intro2Screen} />
+          <Stack.Screen name="Intro3" component={Intro3Screen} />
+          <Stack.Screen name="Home" component={ HomeScreen } options={({ route }) => tabTransition(route)} />
+          <Stack.Screen name="Log" component={ LogScreen } options={({ route }) => tabTransition(route)} />
+          <Stack.Screen name="Profile" component={ ProfileScreen } options={({ route }) => tabTransition(route)} />
+          <Stack.Screen name="Log Details" component={ LogDetailsScreen } options={{
+            headerShown: true,
+            title: "",
+            headerBackButtonDisplayMode: "minimal",
+            headerStyle: {
+              backgroundColor: "#FFC0A2",
+            },
+            headerTintColor: INK,
+            headerShadowVisible: false,
+            gestureEnabled: true,
+          }}/>
+          <Stack.Screen name="Challenge1" component={Challenge1Screen} options={({ route }) => ({
+            ...tabTransition(route),
+            headerShown: false,
+            gestureEnabled: true,
+          })} />
+          <Stack.Screen name="Challenge2" component={Challenge2Screen} options={{
+            headerShown: true,
+            title: "",
+            headerBackButtonDisplayMode: "minimal",
+            headerStyle: {
+              backgroundColor: "#FF815E",
+            },
+            headerTintColor: "#FFF",
+            headerShadowVisible: false,
+            gestureEnabled: true,
+          }} />
+          <Stack.Screen name="Challenge3" component={Challenge3Screen} options={{
+            headerShown: true,
+            title: "",
+            headerBackButtonDisplayMode: "minimal",
+            headerStyle: {
+              backgroundColor: "#FFC0A2",
+            },
+            headerTintColor: INK,
+            headerShadowVisible: false,
+            gestureEnabled: true,
+          }} />
+          <Stack.Screen name="Challenge4" component={Challenge4Screen} options={{
+            headerShown: false,
+          }} />
+        </Stack.Navigator>
+  ), []);
+
   useEffect(() => {
     // Delivered reminders otherwise pile up in Notification Centre, one per day,
     // so clear them whenever the app comes to the front. Also re-arm the daily
@@ -85,69 +153,7 @@ export default function App() {
       onStateChange={() => setRouteName(navRef.getCurrentRoute()?.name)}
     >
       <View style={{ flex: 1 }}>
-      <Stack.Navigator
-        initialRouteName="Splash"
-        screenOptions={{
-          headerShown: false,
-          gestureEnabled: false,
-          animation: "simple_push",
-          animationDuration: 320,
-        }}
-      >
-        <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="Login0" component={Login0Screen} />
-        <Stack.Screen name="Login1" component={Login1Screen} options={{ gestureEnabled: true }} />
-        <Stack.Screen name="Sign up" component={SignupStart} options={{ gestureEnabled: true }} />
-        <Stack.Screen name="SignupCredentials" component={SignupCredentials} options={{ gestureEnabled: true }} />
-        <Stack.Screen name="SignupProfile" component={SignupProfile} options={{ gestureEnabled: true }} />
-        <Stack.Screen name="Intro1" component={Intro1Screen} />
-        <Stack.Screen name="Intro2" component={Intro2Screen} />
-        <Stack.Screen name="Intro3" component={Intro3Screen} />
-        <Stack.Screen name="Home" component={ HomeScreen } options={({ route }) => tabTransition(route)} />
-        <Stack.Screen name="Log" component={ LogScreen } options={({ route }) => tabTransition(route)} />
-        <Stack.Screen name="Profile" component={ ProfileScreen } options={({ route }) => tabTransition(route)} />
-        <Stack.Screen name="Log Details" component={ LogDetailsScreen } options={{
-          headerShown: true,
-          title: "",
-          headerBackButtonDisplayMode: "minimal",
-          headerStyle: {
-            backgroundColor: "#FFC0A2",
-          },
-          headerTintColor: INK,
-          headerShadowVisible: false,
-          gestureEnabled: true,
-        }}/>
-        <Stack.Screen name="Challenge1" component={Challenge1Screen} options={({ route }) => ({
-          ...tabTransition(route),
-          headerShown: false,
-          gestureEnabled: true,
-        })} />
-        <Stack.Screen name="Challenge2" component={Challenge2Screen} options={{
-          headerShown: true,
-          title: "",
-          headerBackButtonDisplayMode: "minimal",
-          headerStyle: {
-            backgroundColor: "#FF815E",
-          },
-          headerTintColor: "#FFF",
-          headerShadowVisible: false,
-          gestureEnabled: true,
-        }} />
-        <Stack.Screen name="Challenge3" component={Challenge3Screen} options={{
-          headerShown: true,
-          title: "",
-          headerBackButtonDisplayMode: "minimal",
-          headerStyle: {
-            backgroundColor: "#FFC0A2",
-          },
-          headerTintColor: INK,
-          headerShadowVisible: false,
-          gestureEnabled: true,
-        }} />
-        <Stack.Screen name="Challenge4" component={Challenge4Screen} options={{
-          headerShown: false,
-        }} />
-      </Stack.Navigator>
+      {navigator}
         {TAB_BAR_ROUTES.has(routeName) ? (
           <TabBar nav={navRef} activeRoute={routeName} onLight={TAB_BAR_ON_LIGHT.has(routeName)} />
         ) : null}
