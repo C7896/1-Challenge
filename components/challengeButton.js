@@ -10,6 +10,7 @@ export default function ChallengeButton( {title, nav, destination, challenge} ) 
 
 const styles = StyleSheet.create({
     buttonContainer: {
+        minHeight: 62,
         borderWidth: 2,
         borderColor: "white",
         borderRadius: 15,
@@ -22,6 +23,11 @@ const styles = StyleSheet.create({
     text: {
         color: "white",
         fontSize: 30,
+        lineHeight: 38,
+        // an explicit line height and no vertical clipping: the label was being
+        // cut in half whenever the surrounding box got squeezed
+        includeFontPadding: false,
+        textAlignVertical: "center",
         fontWeight: "bold"
     },
 });

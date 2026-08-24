@@ -46,12 +46,13 @@ const TAB_BAR_ROUTES = new Set([
 ]);
 // screens whose background under the bar is light
 const TAB_BAR_ON_LIGHT = new Set(["Home", "Log", "Profile", "Challenge3"]);
-const tabTransition = (route) => ({
-  animation: Platform.OS === "ios"
-    ? "simple_push"
-    : route.params?.tabAnimation ?? "ios_from_right",
-  animationDuration: 320,
-});
+// Tab presses cut straight to the screen with no transition. Anything else
+// reaching these screens keeps the normal push.
+const tabTransition = (route) => (
+  route.params?.tabAnimation === "none"
+    ? { animation: "none", animationDuration: 0 }
+    : { animation: "simple_push", animationDuration: 320 }
+);
 
 export default function App() {
 

@@ -39,7 +39,8 @@ export default function TabBar( {nav, onLight, activeRoute} ) {
                 : 0;
 
 
-    const animationFor = (index) => index < activeIndex ? "ios_from_left" : "ios_from_right";
+    // tapping a tab cuts straight there rather than sliding
+    const animationFor = () => "none";
     const go = (routeName, params) => {
         // popTo keeps the stack flat when the screen is already below us, and
         // falls back to navigate when it is not in the stack at all

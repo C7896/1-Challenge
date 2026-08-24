@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import ChallengeButton from "../components/challengeButton";
 import StreakContainer from "../components/streakContainer";
+import FlipClock from "../components/flipClock";
 import BackButton from "../components/backButton";
 
 const backgroundChallengeOne = require('../assets/backgroundChallengeOne.png');
@@ -12,24 +13,20 @@ export default function Challenge1Screen({ navigation, route }) {
 
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
   let first = true;
 
   const getTimeRemaining = () => {
+    // counts down to midnight, when the next challenge appears
     const now = new Date();
-  
-    // Calculate hours and minutes
-    const hours = now.getMinutes() !== 0 ? 23 - now.getHours() : 24 - now.getHours();
-    let minutes = now.getMinutes() !== 0 ? 60 - now.getMinutes() : 0;
-    
-    // Format minutes to always be two digits
-    minutes = minutes < 10 ? `0${minutes}` : minutes;
-  
-    // Update state
-    setHours(hours);
-    setMinutes(minutes);
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0);
+    const total = Math.max(0, Math.floor((midnight - now) / 1000));
+    setHours(Math.floor(total / 3600));
+    setMinutes(Math.floor((total % 3600) / 60));
+    setSeconds(total % 60);
   };
-  
 
   useEffect(() => {
     if (first) {
@@ -49,8 +46,8 @@ export default function Challenge1Screen({ navigation, route }) {
     <BackButton navigation={navigation} />
     <View style={{flex: 1}}/>
     <ImageBackground source={backgroundChallengeOne} style={styles.image}>
-      <Text style={[styles.text, styles.timerText]}>{hours > 0 ? `${hours}h ${minutes}m left` : `${minutes}m left`}</Text>
       <Text style={[styles.text, styles.title]}>New Challenge</Text>
+      <FlipClock hours={hours} minutes={minutes} seconds={seconds} label="left today" />
       <StreakContainer streak={streak} centered />
     </ImageBackground>
     <View style={{ flex: 2 }} />
@@ -66,13 +63,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FF815E',
-    justifyContent: 'space-around',
     alignItems: 'center',
   },
   image: {
     justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
     height: 402.94,
+    gap: 14,
   },
   bottomContainer: {
     // sized to its content: flex plus a large bottom margin squeezed the box
