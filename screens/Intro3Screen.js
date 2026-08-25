@@ -1,8 +1,8 @@
-import { View, Pressable, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Pressable, Text, Image, StyleSheet } from "react-native";
 import React, { useRef } from "react";
 
-import LargeImage from "../components/largeImage";
 import IntroDots from "../components/introDots";
+import { useIntroLayout } from "../lib/introLayout";
 
 import { auth, db } from "../firebase";
 import { loadToday } from "../lib/challenge";
@@ -37,23 +37,28 @@ export default function Intro3Screen({ navigation }) {
         }
     }
 
+    const layout = useIntroLayout();
+
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.group}>
-                <LargeImage src={growth} />
-                <Text style={[styles.text, styles.title]}>Why</Text>
-                <Text style={[styles.text, styles.body]}>A 1% improvement</Text>
-                <Text style={[styles.text, styles.body]}>every day is a 37x</Text>
-                <Text style={[styles.text, styles.body]}>improvement a year!</Text>
-                <Text style={[styles.text, styles.reminder]}>We'll remind you at 9:00 AM.</Text>
-            </View>
-            <View style={styles.ctaBlock}>
-                <IntroDots active={2} color="white" />
-                <Pressable style={styles.buttonContainer} onPress={checkChallenges}>
-                    <Text style={styles.buttonText}>Start Challenge!</Text>
+        <View style={styles.container}>
+            <Image source={growth} style={layout.image} resizeMode="contain" accessible={false} />
+
+            <View style={layout.stack}>
+                <Text style={[styles.text, layout.title]}>Why</Text>
+                <Text style={[styles.text, layout.body]}>A 1% improvement</Text>
+                <Text style={[styles.text, layout.body]}>every day is a 37x</Text>
+                <Text style={[styles.text, layout.body]}>improvement a year!</Text>
+                <Text style={[styles.text, layout.reminder]}>We'll remind you at 9:00 AM.</Text>
+                <IntroDots style={layout.dots} active={2} color="white" />
+                <Pressable
+                    style={[styles.button, layout.button]}
+                    onPress={checkChallenges}
+                    accessibilityRole="button"
+                >
+                    <Text style={[styles.buttonText, layout.buttonText]}>Start Challenge!</Text>
                 </Pressable>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -61,52 +66,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#9884BA",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        paddingTop: 56,
-    },
-    group: {
-        alignItems: "center",
-        marginTop: 12,
-    },
-    ctaBlock: {
-        // pinned to the bottom edge, independent of how tall the copy is
-        position: "absolute",
-        left: 0,
-        right: 0,
-        bottom: 28,
-        alignItems: "center",
     },
     text: {
         color: "white",
-        textAlign: "center",
     },
-    title: {
-        fontSize: 35,
-        fontWeight: "bold",
-    },
-    body: {
-        fontSize: 30,
-        fontWeight: "normal",
-    },
-    reminder: {
-        fontSize: 14,
-        fontWeight: "normal",
-        marginTop: 10,
-    },
-    buttonContainer: {
-        borderWidth: 2,
+    button: {
         borderColor: "white",
-        borderRadius: 15,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: 42,
-        paddingVertical: 12,
-        marginTop: 12,
     },
     buttonText: {
         color: "white",
-        fontSize: 30,
-        fontWeight: "bold"
     },
 });

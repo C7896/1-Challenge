@@ -1,61 +1,49 @@
-import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
-import { withSafeAreaInsets } from "react-native-safe-area-context";
-import ClearButton from "../components/clearButton";
-import LargeImage from "../components/largeImage";
+import { View, Text, Image, Pressable, StyleSheet } from "react-native";
+
 import IntroDots from "../components/introDots";
+import { useIntroLayout } from "../lib/introLayout";
+
 const relationship = require("../assets/Relationship.png");
 
+const INK = "#2B2724";
+
 export default function Intro2Screen({ navigation }) {
+    const layout = useIntroLayout();
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.group}>
-                <LargeImage src={relationship} />
-                <Text style={[styles.text, styles.title]}>How</Text>
-                <Text style={[styles.text, styles.body]}>Daily challenges that</Text>
-                <Text style={[styles.text, styles.body]}>improve you and</Text>
-                <Text style={[styles.text, styles.body]}>those around you.</Text>
+        <View style={styles.container}>
+            <Image source={relationship} style={layout.image} resizeMode="contain" accessible={false} />
+
+            <View style={layout.stack}>
+                <Text style={[styles.text, layout.title]}>How</Text>
+                <Text style={[styles.text, layout.body]}>Daily challenges that</Text>
+                <Text style={[styles.text, layout.body]}>improve you and</Text>
+                <Text style={[styles.text, layout.body]}>those around you.</Text>
+                <IntroDots style={layout.dots} active={1} color={INK} />
+                <Pressable
+                    style={[styles.button, layout.button]}
+                    onPress={() => navigation.navigate("Intro3")}
+                    accessibilityRole="button"
+                >
+                    <Text style={[styles.buttonText, layout.buttonText]}>Next</Text>
+                </Pressable>
             </View>
-            <View style={styles.ctaBlock}>
-                <IntroDots active={1} color={INK} />
-                <ClearButton title="Next" nav={navigation} destination="Intro3" top={12} onLight/>
-            </View>
-        </SafeAreaView>
+        </View>
     );
 }
-
-const INK = "#2B2724";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#E4A7C1",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        paddingTop: 56,
-    },
-    group: {
-        alignItems: "center",
-        marginTop: 12,
-    },
-    ctaBlock: {
-        // pinned to the bottom edge, independent of how tall the copy is
-        position: "absolute",
-        left: 0,
-        right: 0,
-        bottom: 28,
-        alignItems: "center",
     },
     text: {
         color: INK,
-        textAlign: "center",
     },
-    title: {
-        fontSize: 35,
-        fontWeight: "bold",
+    button: {
+        borderColor: INK,
     },
-    body: {
-        fontSize: 30,
-        fontWeight: "normal",
+    buttonText: {
+        color: INK,
     },
 });

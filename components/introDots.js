@@ -1,8 +1,8 @@
 import { View, StyleSheet } from "react-native";
 
-export default function IntroDots({ active, color }) {
+export default function IntroDots({ active, color, style }) {
     return (
-        <View style={styles.row}>
+        <View style={[styles.row, style]}>
             {[0, 1, 2].map((index) => (
                 <View
                     key={index}
