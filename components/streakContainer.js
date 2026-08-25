@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
-const CORAL = "#E97555";
+const CORAL = "#C0503A";
 
 function FlameIcon() {
   return (
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   streakContainer: {
     height: 38,
     paddingHorizontal: 12,
-    backgroundColor: "rgba(255, 255, 255, 0.34)",
+    backgroundColor: "rgba(255, 255, 255, 0.55)",
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.88)",
     flexDirection: "row",
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   text: {
-    fontWeight: "600",
-    color: CORAL,
+    fontWeight: "700",
+    color: "#C0503A",
     textAlign: "center",
     fontSize: 16,
     letterSpacing: -0.2,
