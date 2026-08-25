@@ -51,10 +51,10 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   text: {
-    fontWeight: "400",
+    fontWeight: "600",
     color: CORAL,
     textAlign: "center",
-    fontSize: 15,
+    fontSize: 16,
     letterSpacing: -0.2,
   },
 });
