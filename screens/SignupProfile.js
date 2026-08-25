@@ -26,6 +26,10 @@ export default function SignupProfile( {navigation, route} ) {
 
     const pressed = useRef(false);
 
+    // both fields must have something in them; the button stays inactive until
+    // they do, so nobody gets interrupted by an alert
+    const canSubmit = name.trim().length > 0 && username.trim().length > 0;
+
     const handleCreateAccount = () => {
         if (pressed.current) {
             return;
@@ -33,8 +37,9 @@ export default function SignupProfile( {navigation, route} ) {
 
         const trimmedName = name.trim();
         const trimmedUsername = username.trim();
-        if (trimmedName.length === 0) { Alert.alert("Add your name", "Enter a name so we know what to call you."); return; }
-        if (trimmedUsername.length === 0) { Alert.alert("Add a username", "Pick a short handle. It is what shows on your streak."); return; }
+        if (trimmedName.length === 0 || trimmedUsername.length === 0) {
+            return;
+        }
 
         if (social) {
             const signedIn = auth.currentUser;
@@ -164,7 +169,12 @@ export default function SignupProfile( {navigation, route} ) {
                             maxLength={40}
                         />
                     </View>
-                    <Pressable style={styles.buttoncontainer} onPress={handleCreateAccount}>
+                    <Pressable
+                        style={[styles.buttoncontainer, !canSubmit && styles.buttonDisabled]}
+                        onPress={handleCreateAccount}
+                        disabled={!canSubmit}
+                        accessibilityState={{ disabled: !canSubmit }}
+                    >
                         <Text style={styles.buttontext}>Create account</Text>
                     </Pressable>
                     <Text style={styles.agreementText}>By creating an account you agree to our Privacy Policy.</Text>
@@ -227,6 +237,9 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         marginRight: 5,
+    },
+    buttonDisabled: {
+        opacity: 0.45,
     },
     buttoncontainer: {
         backgroundColor: scheme.cta,
