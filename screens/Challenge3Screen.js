@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TextInput, Pressable, Keyboard, Alert, StyleSheet } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TextInput, Pressable, ScrollView, Keyboard, Alert, StyleSheet, useWindowDimensions } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 
 import { doc, runTransaction, serverTimestamp } from "firebase/firestore"
@@ -6,12 +6,31 @@ import { auth, db } from "../firebase";
 import { todayParts } from "../lib/challenge";
 
 import CloseKeyboard from "../components/closeKeyboard";
+import { useVerticalScale } from "../lib/verticalScale";
 
 const topBlob = require("../assets/topBlob.png");
+
+// Same treatment as the log entry screen, which shows the same two questions.
+// The shape keeps the asset's proportions so its own curve is the edge, the
+// challenge sits inside it, and the questions start below it.
+const SHAPE_ASPECT = 430 / 274;
+const SHAPE_TOP = -72;
+const SHAPE_GAP = 16;
+const CONTENT_TOP = 46;
+const HEADER_TEXT_LIFT = -56;
+// the floating tab bar occupies this much of the bottom edge
+const TAB_BAR_SPACE = 105;
+
+const INK = "#2B2724";
 
 
 export default function Challenge3Screen({ navigation, route }) {
     const { challenge } = route.params ?? {};
+
+    const { width } = useWindowDimensions();
+    const scale = useVerticalScale();
+    const shapeBottom = SHAPE_TOP + width / SHAPE_ASPECT;
+    const headerHeight = Math.max(96, shapeBottom + SHAPE_GAP - CONTENT_TOP);
 
     const [action, setAction] = useState('');
     const [reflection, setReflection] = useState('');
@@ -151,38 +170,50 @@ export default function Challenge3Screen({ navigation, route }) {
     return(
         <View style={styles.container}>
             <Image source={topBlob} style={styles.image} />
-            <SafeAreaView style={styles.clearContainer}>
-                <View style={[styles.textContainer, styles.challengeTextContainer]}>
-                    <Text style={styles.title}>Challenge:</Text>
-                    <Text style={styles.body}>{challenge.challenge}</Text>
-                </View>
-                <View style={{flex: 0.5}} />
-                <KeyboardAvoidingView behavior="padding" style={[styles.textContainer, {flex: 6}]}>
-                    <Text style={styles.body}>What did you do?</Text>
-                    <TextInput
-                        style={styles.questionInput}
-                        onChangeText={(text) => setAction(text)}
-                        placeholder="I..."
-                        multiline
-                        autoCorrect={false}
-                        autoComplete="off"
-                        maxLength={2000}
-                    />
-                    <Text style={styles.body}>How did it make you feel?</Text>
-                    <TextInput
-                        style={[styles.questionInput, {height: 300}]}
-                        onChangeText={(text) => setReflection(text)}
-                        placeholder="I felt..."
-                        multiline
-                        autoCorrect={false}
-                        autoComplete="off"
-                        maxLength={2000}
-                    />
+            <SafeAreaView style={styles.safe}>
+                <KeyboardAvoidingView style={styles.safe} behavior="padding">
+                    <ScrollView
+                        style={styles.scroll}
+                        contentContainerStyle={[styles.scrollContent, { paddingBottom: TAB_BAR_SPACE * scale + 16 }]}
+                        keyboardShouldPersistTaps="handled"
+                    >
+                        <View style={[styles.header, { minHeight: headerHeight }]}>
+                            <Text style={styles.title}>Challenge:</Text>
+                            <Text style={styles.challenge}>{challenge.challenge}</Text>
+                        </View>
+
+                        <Text style={styles.question}>What did you do?</Text>
+                        <TextInput
+                            style={styles.answerBox}
+                            onChangeText={(text) => setAction(text)}
+                            placeholder="I..."
+                            placeholderTextColor="rgba(43,39,36,0.35)"
+                            multiline
+                            autoCorrect={false}
+                            autoComplete="off"
+                            maxLength={2000}
+                        />
+
+                        <Text style={styles.question}>How did it make you feel?</Text>
+                        <TextInput
+                            style={[styles.answerBox, { minHeight: 120 * scale }]}
+                            onChangeText={(text) => setReflection(text)}
+                            placeholder="I felt..."
+                            placeholderTextColor="rgba(43,39,36,0.35)"
+                            multiline
+                            autoCorrect={false}
+                            autoComplete="off"
+                            maxLength={2000}
+                        />
+
+                        {/* clear of the floating tab bar, whatever the screen size */}
+                        <View style={styles.footer}>
+                            <Pressable style={styles.buttonContainer} onPress={createJournalDoc}>
+                                <Text style={styles.buttonText}>Complete</Text>
+                            </Pressable>
+                        </View>
+                    </ScrollView>
                 </KeyboardAvoidingView>
-                <View style={{flex: 0.5}} />
-                <Pressable style={styles.buttonContainer} onPress={createJournalDoc}>
-                    <Text style={styles.buttonText}>Complete</Text>
-                </Pressable>
             </SafeAreaView>
             <CloseKeyboard visible={isKeyboardVisible} />
         </View>
@@ -191,99 +222,81 @@ export default function Challenge3Screen({ navigation, route }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 2,
+        flex: 1,
         backgroundColor: "#FF815E",
-        justifyContent: "center",
-        alignItems: "center",
     },
-    clearContainer: {
-        flex: 2,
-        // an explicit width: the parent centres its children, which otherwise
-        // shrink-wraps this box and makes any child percentage width circular
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
+    safe: {
+        flex: 1,
     },
     image: {
         position: "absolute",
+        top: SHAPE_TOP,
         width: "100%",
-        height: "35%",
-        bottom: "80%",
+        aspectRatio: SHAPE_ASPECT,
     },
-    textContainer: {
-        flex: 2,
+    scroll: {
+        flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
+        paddingHorizontal: 20,
+        paddingTop: CONTENT_TOP,
+    },
+    header: {
         justifyContent: "center",
-        alignItems: "stretch",
-        // the parent centres its children, which shrink-wraps this box and left
-        // the inputs' width: "100%" with no width to resolve against
-        alignSelf: "stretch",
-        marginHorizontal: 20,
-    },
-    challengeTextContainer: {
-        transform: [{ translateY: -110 }],
-    },
-    questionInput: {
-        backgroundColor: "white",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        borderRadius: 15,
-        width: "100%",
-        height: 50,
-        paddingHorizontal: 10,
-        marginBottom: 10,
-        color: "black",
-        fontSize: 20,
-        fontWeight: "normal",
-        shadowColor: "black",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        elevation: 5,
-    },
-    buttonContainer: {
-        borderWidth: 2,
-        borderColor: "white",
-        borderRadius: 15,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: 42,
-        paddingVertical: 12,
-        marginTop: 10,
-    },
-    buttonText: {
-        color: "white",
-        fontSize: 30,
-        fontWeight: "bold"
+        paddingRight: 8,
+        paddingBottom: SHAPE_GAP,
+        transform: [{ translateY: HEADER_TEXT_LIFT }],
     },
     title: {
-        color: "white",
-        fontSize: 30,
-        fontWeight: "bold",
-        shadowColor: "black",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        elevation: 5,
+        color: "rgba(43,39,36,0.6)",
+        fontSize: 15,
+        fontWeight: "600",
+        marginBottom: 4,
     },
-    subtitle: {
+    challenge: {
+        color: INK,
+        fontSize: 22,
+        fontWeight: "bold",
+        lineHeight: 28,
+    },
+    question: {
         color: "white",
-        fontSize: 25,
+        fontSize: 20,
+        marginBottom: 8,
+    },
+    answerBox: {
+        backgroundColor: "white",
+        borderRadius: 15,
+        paddingHorizontal: 14,
+        paddingVertical: 12,
+        marginBottom: 18,
+        minHeight: 64,
+        color: INK,
+        fontSize: 17,
+        lineHeight: 23,
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 4,
+    },
+    footer: {
+        marginTop: "auto",
+        alignItems: "center",
+        paddingTop: 24,
+    },
+    buttonContainer: {
+        backgroundColor: "#FFC0A2",
+        width: 220,
+        height: 52,
+        borderRadius: 26,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    buttonText: {
+        color: INK,
+        fontSize: 18,
         fontWeight: "bold",
     },
-    body: {
-        color: "white",
-        fontSize: 25,
-        fontWeight: "normal",
-        shadowColor: "black",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        elevation: 5,
-    }
 });

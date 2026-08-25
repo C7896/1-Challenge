@@ -3,6 +3,7 @@ import { View, Text, Image, Pressable, Alert, ActivityIndicator, StyleSheet } fr
 import * as AppleAuthentication from "expo-apple-authentication";
 
 import { isAppleAvailable, signInWithApple, signInWithGoogle, friendlySocialError } from "../lib/socialAuth";
+import { useVerticalScale } from "../lib/verticalScale";
 
 const INK = "#2B2724";
 const googleBrandButton = require("../assets/google-signin-brand.png");
@@ -16,6 +17,7 @@ export default function SocialSignInButtons({
     googleLabel = "Continue with Google",
     muted,
 }) {
+    const s = useVerticalScale();
     const [appleReady, setAppleReady] = useState(false);
     const [busy, setBusy] = useState(null);
     const running = useRef(false);
@@ -54,23 +56,24 @@ export default function SocialSignInButtons({
     return (
         <View style={styles.wrap}>
             {appleReady ? (
-                <View style={styles.buttonRow}>
+                <View style={[styles.buttonRow, { marginBottom: 10 * s }]}>
                     {/* Apple's own button. Guideline 4.8 and their brand rules both
                         require the real control rather than an imitation. */}
                     <AppleAuthentication.AppleAuthenticationButton
                         buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
                         buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
                         cornerRadius={28}
-                        style={styles.appleButton}
+                        style={[styles.appleButton, { height: 52 * s }]}
                         onPress={() => run("apple", signInWithApple)}
                     />
                 </View>
             ) : null}
 
-            <View style={styles.buttonRow}>
+            <View style={[styles.buttonRow, { marginBottom: 10 * s }]}>
                 <Pressable
                     style={({ pressed }) => [
                         styles.googleButton,
+                        { height: 52 * s },
                         pressed && styles.googleButtonPressed,
                         busy !== null && styles.googleButtonDisabled,
                     ]}
@@ -96,7 +99,7 @@ export default function SocialSignInButtons({
                 </View>
             ) : null}
 
-            <View style={styles.dividerRow}>
+            <View style={[styles.dividerRow, { marginTop: 8 * s, marginBottom: 16 * s }]}>
                 <View style={[styles.rule, muted ? { backgroundColor: muted } : null]} />
                 <Text style={[styles.dividerText, muted ? { color: muted } : null]}>{dividerLabel}</Text>
                 <View style={[styles.rule, muted ? { backgroundColor: muted } : null]} />

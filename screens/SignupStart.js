@@ -3,21 +3,25 @@ import LargeImage from "../components/largeImage";
 import PolicyLinks from "../components/policyLinks";
 import SocialSignInButtons from "../components/socialSignInButtons";
 import { AUTH_SCHEMES } from "../constants/theme";
+import { useVerticalScale } from "../lib/verticalScale";
 
 const createAccount = require("../assets/auth-create-account.png");
 
 const scheme = AUTH_SCHEMES.green;
 
 export default function SignupStart( {navigation} ) {
+    // every fixed gap on this page shrinks together on a short phone, so the
+    // composition stays the same instead of running off the bottom edge
+    const s = useVerticalScale();
     return(
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.page}>
-                <View style={styles.topContainer}>
+            <View style={[styles.page, { paddingTop: 48 * s }]}>
+                <View style={[styles.topContainer, { marginBottom: 20 * s }]}>
                     <LargeImage src={createAccount}/>
-                    <Text style={styles.title}>Create your account</Text>
+                    <Text style={[styles.title, { marginTop: 12 * s, fontSize: 34 * s }]}>Create your account</Text>
                 </View>
 
-                <View style={styles.actions}>
+                <View style={[styles.actions, { marginTop: 36 * s }]}>
                     <SocialSignInButtons
                         muted={scheme.muted}
                         googleLabel="Sign up with Google"
@@ -32,16 +36,16 @@ export default function SignupStart( {navigation} ) {
                         }}
                     />
 
-                    <Pressable style={styles.buttoncontainer} onPress={() => navigation.navigate("SignupCredentials")}>
+                    <Pressable style={[styles.buttoncontainer, { height: 56 * s }]} onPress={() => navigation.navigate("SignupCredentials")}>
                         <Text style={styles.buttontext}>Sign up with email</Text>
                     </Pressable>
                 </View>
 
                 <View style={styles.footer}>
-                    <Pressable style={styles.loginLink} onPress={() => navigation.navigate("Login1")} hitSlop={{ top: 12, bottom: 12 }}>
+                    <Pressable style={[styles.loginLink, { marginTop: 24 * s }]} onPress={() => navigation.navigate("Login1")} hitSlop={{ top: 12, bottom: 12 }}>
                         <Text style={styles.loginText}>Already have an account? Log in</Text>
                     </Pressable>
-                    <PolicyLinks small color={scheme.muted} style={styles.policyLinks} />
+                    <PolicyLinks small color={scheme.muted} style={[styles.policyLinks, { marginTop: 15 * s }]} />
                 </View>
             </View>
         </SafeAreaView>

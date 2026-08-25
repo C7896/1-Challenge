@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { StackActions } from "@react-navigation/native";
 
 import { auth, db } from "../firebase";
+import { useVerticalScale } from "../lib/verticalScale";
 import { loadToday } from "../lib/challenge";
 
 // Two full sets rather than one set plus tintColor. tintColor applied to some of
@@ -29,6 +30,10 @@ const icons = {
 // the container ref.
 export default function TabBar( {nav, activeRoute} ) {
     const set = icons.light;
+    // Home lays itself out from a scaled design frame, so on a short phone its
+    // content rises to meet a bar pinned at a fixed number of points. The bar
+    // scales with it instead. Phones at the reference height are unaffected.
+    const s = useVerticalScale();
     const opening = useRef(false);
     const activeIndex = activeRoute === "Profile"
         ? 3
@@ -91,25 +96,30 @@ export default function TabBar( {nav, activeRoute} ) {
     };
 
     return (
-        <View style={styles.container}>
-            <Pressable style={styles.tabItem} onPress={() => openTab(0, "Home")} accessibilityRole="button" accessibilityLabel="Home" accessibilityState={{ selected: activeIndex === 0 }}>
-                <View style={[styles.slot, activeIndex === 0 && styles.slotActive]}>
-                    <Image source={set.home} style={styles.image} resizeMode="contain" />
+        <View style={[styles.container, {
+            width: 268 * s,
+            height: 55 * s,
+            bottom: 40 * s,
+            borderRadius: 100 * s,
+        }]}>
+            <Pressable style={[styles.tabItem, { width: 32 * s, height: 44 * s }]} onPress={() => openTab(0, "Home")} accessibilityRole="button" accessibilityLabel="Home" accessibilityState={{ selected: activeIndex === 0 }}>
+                <View style={[styles.slot, { width: 44 * s, height: 40 * s, borderRadius: 20 * s }, activeIndex === 0 && styles.slotActive]}>
+                    <Image source={set.home} style={[styles.image, { width: 32 * s, height: 32 * s }]} resizeMode="contain" />
                 </View>
             </Pressable>
-            <Pressable style={styles.tabItem} onPress={() => openToday(animationFor(1))} accessibilityRole="button" accessibilityLabel="Today's challenge" accessibilityState={{ selected: activeIndex === 1 }}>
-                <View style={[styles.slot, activeIndex === 1 && styles.slotActive]}>
-                    <Image source={set.today} style={styles.image} resizeMode="contain" />
+            <Pressable style={[styles.tabItem, { width: 32 * s, height: 44 * s }]} onPress={() => openToday(animationFor(1))} accessibilityRole="button" accessibilityLabel="Today's challenge" accessibilityState={{ selected: activeIndex === 1 }}>
+                <View style={[styles.slot, { width: 44 * s, height: 40 * s, borderRadius: 20 * s }, activeIndex === 1 && styles.slotActive]}>
+                    <Image source={set.today} style={[styles.image, { width: 32 * s, height: 32 * s }]} resizeMode="contain" />
                 </View>
             </Pressable>
-            <Pressable style={styles.tabItem} onPress={() => openTab(2, "Log")} accessibilityRole="button" accessibilityLabel="Past challenges" accessibilityState={{ selected: activeIndex === 2 }}>
-                <View style={[styles.slot, activeIndex === 2 && styles.slotActive]}>
-                    <Image source={set.log} style={styles.image} resizeMode="contain" />
+            <Pressable style={[styles.tabItem, { width: 32 * s, height: 44 * s }]} onPress={() => openTab(2, "Log")} accessibilityRole="button" accessibilityLabel="Past challenges" accessibilityState={{ selected: activeIndex === 2 }}>
+                <View style={[styles.slot, { width: 44 * s, height: 40 * s, borderRadius: 20 * s }, activeIndex === 2 && styles.slotActive]}>
+                    <Image source={set.log} style={[styles.image, { width: 32 * s, height: 32 * s }]} resizeMode="contain" />
                 </View>
             </Pressable>
-            <Pressable style={styles.tabItem} onPress={() => openTab(3, "Profile")} accessibilityRole="button" accessibilityLabel="Profile" accessibilityState={{ selected: activeIndex === 3 }}>
-                <View style={[styles.slot, activeIndex === 3 && styles.slotActive]}>
-                    <Image source={set.profile} style={styles.image} resizeMode="contain" />
+            <Pressable style={[styles.tabItem, { width: 32 * s, height: 44 * s }]} onPress={() => openTab(3, "Profile")} accessibilityRole="button" accessibilityLabel="Profile" accessibilityState={{ selected: activeIndex === 3 }}>
+                <View style={[styles.slot, { width: 44 * s, height: 40 * s, borderRadius: 20 * s }, activeIndex === 3 && styles.slotActive]}>
+                    <Image source={set.profile} style={[styles.image, { width: 32 * s, height: 32 * s }]} resizeMode="contain" />
                 </View>
             </Pressable>
         </View>
