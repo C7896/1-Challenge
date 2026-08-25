@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     ctaBlock: {
-        // pinned to the bottom edge, independent of how tall the copy is
-        position: "absolute",
-        left: 0,
-        right: 0,
-        bottom: 28,
+        alignSelf: "center",
         alignItems: "center",
+        marginTop: 20,
+        // the dots and button used to sit tight against the home indicator on a
+        // short screen; this keeps a clear gap below the last tappable thing
+        marginBottom: 28,
     },
     text: {
         color: "white",
