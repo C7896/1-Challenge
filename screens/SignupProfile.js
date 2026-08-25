@@ -177,10 +177,15 @@ export default function SignupProfile( {navigation, route} ) {
                     >
                         <Text style={styles.buttontext}>Create account</Text>
                     </Pressable>
-                    <Text style={styles.agreementText}>By creating an account you agree to our Privacy Policy.</Text>
-                    <PolicyLinks small color={scheme.muted} style={styles.policyLinks} />
                 </KeyboardAvoidingView>
             </ScrollView>
+
+            {/* the agreement and the links belong to the screen, not to the form,
+                so they sit outside the scroller and stay on the bottom edge */}
+            <View style={styles.footer}>
+                <Text style={styles.agreementText}>By creating an account you agree to our Privacy Policy.</Text>
+                <PolicyLinks small color={scheme.muted} style={styles.policyLinks} />
+            </View>
         </SafeAreaView>
     );
 }
@@ -254,12 +259,17 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
     },
+    footer: {
+        alignItems: "center",
+        paddingHorizontal: 24,
+        paddingBottom: 12,
+    },
     agreementText: {
         color: scheme.text,
         fontSize: 12,
-        marginTop: 10,
+        textAlign: "center",
     },
     policyLinks: {
-        marginTop: 24,
+        marginTop: 10,
     },
 });

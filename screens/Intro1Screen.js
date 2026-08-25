@@ -8,17 +8,15 @@ export default function Intro1Screen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <LargeImage src={joy} />
-            <View style={styles.hContainer} >
-                <View style={[styles.container, styles.textContainer]}>
-                    <Text style={[styles.text, styles.title]}>Our Mission</Text>
-                    <Text style={[styles.text, styles.body]}>Improve the world</Text>
-                    <Text style={[styles.text, styles.body]}>by 1% every day.</Text>
-                    <View style={styles.ctaBlock}>
-                        <IntroDots active={0} color={INK} />
-                        <ClearButton title="Next" nav={navigation} destination="Intro2" top={12} onLight/>
-                    </View>
-                </View>
+            <View style={styles.group}>
+                <LargeImage src={joy} trimBottom={0.13} />
+                <Text style={[styles.text, styles.title]}>Our Mission</Text>
+                <Text style={[styles.text, styles.body]}>Improve the world</Text>
+                <Text style={[styles.text, styles.body]}>by 1% every day.</Text>
+            </View>
+            <View style={styles.ctaBlock}>
+                <IntroDots active={0} color={INK} />
+                <ClearButton title="Next" nav={navigation} destination="Intro2" top={12} onLight/>
             </View>
         </SafeAreaView>
     );
@@ -31,26 +29,20 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#FFCF5B",
         alignItems: "center",
-        justifyContent: "space-evenly",
-        paddingTop: 56,
+        justifyContent: "center",
     },
-    textContainer: {
-        flex: 1,
+    group: {
+        // image and copy sit together as one block, centred on the screen
         alignItems: "center",
-        marginTop: 12,
+        justifyContent: "center",
     },
     ctaBlock: {
-        // pushed to the bottom of the screen rather than sitting under the text
-        marginTop: "auto",
-        alignSelf: "center",
+        // pinned to the bottom edge, independent of how tall the copy is
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 28,
         alignItems: "center",
-        marginBottom: 28,
-    },
-    hContainer: {
-        flex: 1,
-        flexDirection: "row",
-        alignSelf: "stretch",
-        justifyContent: "center",
     },
     text: {
         color: INK,

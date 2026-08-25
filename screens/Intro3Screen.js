@@ -39,21 +39,19 @@ export default function Intro3Screen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <LargeImage src={growth} />
-            <View style={styles.hContainer} >
-                <View style={[styles.container, styles.textContainer]}>
-                    <Text style={[styles.text, styles.title]}>Why</Text>
-                    <Text style={[styles.text, styles.body]}>A 1% improvement</Text>
-                    <Text style={[styles.text, styles.body]}>every day is a 37x</Text>
-                    <Text style={[styles.text, styles.body]}>improvement a year!</Text>
-                    <Text style={[styles.text, styles.reminder]}>We'll remind you at 9:00 AM.</Text>
-                    <View style={styles.ctaBlock}>
-                        <IntroDots active={2} color="white" />
-                        <Pressable style={styles.buttonContainer} onPress={checkChallenges}>
-                            <Text style={styles.buttonText}>Start Challenge!</Text>
-                        </Pressable>
-                    </View>
-                </View>
+            <View style={styles.group}>
+                <LargeImage src={growth} trimBottom={0.17} />
+                <Text style={[styles.text, styles.title]}>Why</Text>
+                <Text style={[styles.text, styles.body]}>A 1% improvement</Text>
+                <Text style={[styles.text, styles.body]}>every day is a 37x</Text>
+                <Text style={[styles.text, styles.body]}>improvement a year!</Text>
+                <Text style={[styles.text, styles.reminder]}>We'll remind you at 9:00 AM.</Text>
+            </View>
+            <View style={styles.ctaBlock}>
+                <IntroDots active={2} color="white" />
+                <Pressable style={styles.buttonContainer} onPress={checkChallenges}>
+                    <Text style={styles.buttonText}>Start Challenge!</Text>
+                </Pressable>
             </View>
         </SafeAreaView>
     );
@@ -66,22 +64,18 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    textContainer: {
-        flex: 1,
+    group: {
+        // image and copy sit together as one block, centred on the screen
+        alignItems: "center",
+        justifyContent: "center",
     },
     ctaBlock: {
-        alignSelf: "center",
+        // pinned to the bottom edge, independent of how tall the copy is
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 28,
         alignItems: "center",
-        marginTop: 20,
-        // the dots and button used to sit tight against the home indicator on a
-        // short screen; this keeps a clear gap below the last tappable thing
-        marginBottom: 28,
-    },
-    hContainer: {
-        flex: 1,
-        flexDirection: "row",
-        alignSelf: "stretch",
-        justifyContent: "center",
     },
     text: {
         color: "white",
