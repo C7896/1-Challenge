@@ -1,6 +1,5 @@
 import { SafeAreaView, View, Text, Image, TextInput, Pressable, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, useWindowDimensions } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
@@ -15,19 +14,20 @@ const INK = "#2B2724";
 // of the curve.
 const SHAPE_ASPECT = 430 / 274;
 // clear air between the bottom of the shape and the first question
-const SHAPE_GAP = 40;
+const SHAPE_TOP = -72;
+const SHAPE_GAP = 16;
 const CONTENT_TOP = 46;
+const HEADER_TEXT_LIFT = -56;
 
 export default function LogDetailsScreen({ navigation, route }) {
     const { journal } = route.params ?? {};
 
-    const insets = useSafeAreaInsets();
     const { width } = useWindowDimensions();
-    const shapeBottom = width / SHAPE_ASPECT;
+    const shapeBottom = SHAPE_TOP + width / SHAPE_ASPECT;
     // minHeight, so a long challenge pushes the questions further down rather
     // than overflowing the header. The gap is padding rather than part of the
     // box, so the date and challenge stay centred inside the light area.
-    const headerHeight = Math.max(96, shapeBottom + SHAPE_GAP - insets.top - CONTENT_TOP);
+    const headerHeight = Math.max(96, shapeBottom + SHAPE_GAP - CONTENT_TOP);
     const headerPadding = SHAPE_GAP;
 
     const [action, setAction] = useState(journal?.action ?? "");
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     },
     image: {
         position: "absolute",
-        top: 0,
+        top: SHAPE_TOP,
         width: "100%",
         aspectRatio: SHAPE_ASPECT,
     },
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
         // shape at runtime so the first question always clears the boundary.
         justifyContent: "center",
         paddingRight: 8,
+        transform: [{ translateY: HEADER_TEXT_LIFT }],
     },
     date: {
         color: "rgba(43,39,36,0.6)",
