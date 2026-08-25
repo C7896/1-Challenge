@@ -9,7 +9,7 @@ export default function Intro1Screen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.group}>
-                <LargeImage src={joy} trimBottom={0.13} />
+                <LargeImage src={joy} />
                 <Text style={[styles.text, styles.title]}>Our Mission</Text>
                 <Text style={[styles.text, styles.body]}>Improve the world</Text>
                 <Text style={[styles.text, styles.body]}>by 1% every day.</Text>
@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#FFCF5B",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        paddingTop: 56,
     },
     group: {
-        // image and copy sit together as one block, centred on the screen
         alignItems: "center",
-        justifyContent: "center",
+        marginTop: 12,
     },
     ctaBlock: {
         // pinned to the bottom edge, independent of how tall the copy is

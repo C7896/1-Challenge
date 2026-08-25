@@ -10,7 +10,7 @@ export default function Intro2Screen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.group}>
-                <LargeImage src={relationship} trimBottom={0.09} />
+                <LargeImage src={relationship} />
                 <Text style={[styles.text, styles.title]}>How</Text>
                 <Text style={[styles.text, styles.body]}>Daily challenges that</Text>
                 <Text style={[styles.text, styles.body]}>improve you and</Text>
@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#E4A7C1",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        paddingTop: 56,
     },
     group: {
-        // image and copy sit together as one block, centred on the screen
         alignItems: "center",
-        justifyContent: "center",
+        marginTop: 12,
     },
     ctaBlock: {
         // pinned to the bottom edge, independent of how tall the copy is

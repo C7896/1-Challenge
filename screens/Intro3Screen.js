@@ -40,7 +40,7 @@ export default function Intro3Screen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.group}>
-                <LargeImage src={growth} trimBottom={0.17} />
+                <LargeImage src={growth} />
                 <Text style={[styles.text, styles.title]}>Why</Text>
                 <Text style={[styles.text, styles.body]}>A 1% improvement</Text>
                 <Text style={[styles.text, styles.body]}>every day is a 37x</Text>
@@ -62,20 +62,20 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#9884BA",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        paddingTop: 56,
     },
     group: {
-        // image and copy sit together as one block, centred on the screen
         alignItems: "center",
-        justifyContent: "center",
+        marginTop: 12,
     },
     ctaBlock: {
-        alignSelf: "center",
+        // pinned to the bottom edge, independent of how tall the copy is
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 28,
         alignItems: "center",
-        marginTop: 20,
-        // the dots and button used to sit tight against the home indicator on a
-        // short screen; this keeps a clear gap below the last tappable thing
-        marginBottom: 28,
     },
     text: {
         color: "white",
