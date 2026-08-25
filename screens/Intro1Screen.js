@@ -34,22 +34,25 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
     },
     textContainer: {
-        flexGrow: 6,
-        alignItems: "flex-start",
-        paddingLeft: "10%",
+        flex: 1,
+        alignItems: "center",
     },
     ctaBlock: {
+        // pushed to the bottom of the screen rather than sitting under the text
+        marginTop: "auto",
         alignSelf: "center",
         alignItems: "center",
-        marginTop: 20,
-            marginBottom: 28,
+        marginBottom: 28,
     },
     hContainer: {
+        flex: 1,
         flexDirection: "row",
+        alignSelf: "stretch",
+        justifyContent: "center",
     },
     text: {
         color: INK,
-        paddingLeft: 3,
+        textAlign: "center",
     },
     title: {
         fontSize: 35,

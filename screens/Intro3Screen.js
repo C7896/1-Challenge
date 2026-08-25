@@ -63,12 +63,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#9884BA",
-        alignItems: "flex-start",
+        alignItems: "center",
         justifyContent: "center",
     },
     textContainer: {
         flex: 1,
-        paddingLeft: "10%",
     },
     ctaBlock: {
         alignSelf: "center",
@@ -79,11 +78,14 @@ const styles = StyleSheet.create({
         marginBottom: 28,
     },
     hContainer: {
+        flex: 1,
         flexDirection: "row",
+        alignSelf: "stretch",
+        justifyContent: "center",
     },
     text: {
         color: "white",
-        paddingLeft: 3,
+        textAlign: "center",
     },
     title: {
         fontSize: 35,
