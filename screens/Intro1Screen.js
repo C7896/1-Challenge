@@ -32,10 +32,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFCF5B",
         alignItems: "center",
         justifyContent: "space-evenly",
+        paddingTop: 56,
     },
     textContainer: {
         flex: 1,
         alignItems: "center",
+        marginTop: 12,
     },
     ctaBlock: {
         // pushed to the bottom of the screen rather than sitting under the text
