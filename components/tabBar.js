@@ -72,7 +72,9 @@ export default function TabBar( {nav, activeRoute} ) {
         }
         opening.current = true;
         try {
-            const { challenge, completed, streak } = await loadToday(db, user.uid);
+            // Home, launch and sign in all answer this for today already, so the
+            // usual case returns without a round trip
+            const { challenge, completed, streak } = await loadToday(db, user.uid, { preferCache: true });
             if (completed === null) {
                 Alert.alert("Could not check today", "We could not tell whether you have finished today's challenge. Check your connection and try again.");
                 return;

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { doc, runTransaction, serverTimestamp } from "firebase/firestore"
 import { auth, db } from "../firebase";
 import { todayParts } from "../lib/challenge";
+import { setCachedToday } from "../lib/userCache";
 
 import CloseKeyboard from "../components/closeKeyboard";
 import { useVerticalScale } from "../lib/verticalScale";
@@ -121,6 +122,15 @@ export default function Challenge3Screen({ navigation, route }) {
                 }, { merge: true });
 
                 return { alreadyDone: false, streak: newStreak };
+            });
+
+            // today is now done, so the tab must not offer the challenge again.
+            // Writing the answer rather than clearing it keeps the tab instant.
+            setCachedToday(user.uid, todayKey, {
+                challenge,
+                completed: true,
+                streak: result.streak,
+                source: "firestore",
             });
 
             if (result.alreadyDone) {

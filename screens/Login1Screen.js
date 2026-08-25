@@ -9,6 +9,7 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/aut
 import { auth, db } from "../firebase";
 import { friendlyAuthError } from "../authErrors";
 import { loadToday } from "../lib/challenge";
+import { prewarmCaches } from "../lib/prewarm";
 
 const location = require("../assets/Location.png");
 const mail = require("../assets/mail.png");
@@ -72,6 +73,7 @@ export default function Login0Screen( {navigation} ) {
             .then (async (userCredential) => {
                 console.log('User Signed In!');
 
+                prewarmCaches(db, userCredential.user.uid);
                 const { challenge, completed, streak } = await loadToday(db, userCredential.user.uid);
                 navigation.navigate("Home", { challenge, streak });
             })

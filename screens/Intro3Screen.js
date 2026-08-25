@@ -6,6 +6,7 @@ import { useIntroLayout } from "../lib/introLayout";
 
 import { auth, db } from "../firebase";
 import { loadToday } from "../lib/challenge";
+import { prewarmCaches } from "../lib/prewarm";
 
 const growth = require("../assets/Growth.png");
 
@@ -27,6 +28,7 @@ export default function Intro3Screen({ navigation }) {
             }
 
             try {
+                prewarmCaches(db, user.uid);
                 const { challenge, streak } = await loadToday(db, user.uid);
                 navigation.navigate("Home", { challenge, streak });
             } catch (error) {

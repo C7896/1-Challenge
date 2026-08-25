@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from "react";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from "../firebase";
 import { loadToday } from "../lib/challenge";
+import { prewarmCaches } from "../lib/prewarm";
 
 const INK = "#2B2724";
 
@@ -27,7 +28,9 @@ export default function SplashScreen({ navigation }) {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (isFocused) {
           if (user) {
-            // User is signed in.
+            // User is signed in. Warm what the other tabs read while the splash
+            // is still on screen, so the first tap on any of them is a cache hit.
+            prewarmCaches(db, user.uid);
             const { challenge, completed, streak } = await loadToday(db, user.uid);
 
             setTimeout(() => {
