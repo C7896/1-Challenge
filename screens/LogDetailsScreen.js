@@ -10,25 +10,25 @@ const topBlob = require("../assets/topBlob.png");
 
 const INK = "#2B2724";
 
-// Where the first question starts, as a fraction of the screen. The light shape
-// paints down to roughly 0.35 of the screen, which is not what its own layout
-// box reports, so this is set from the rendered pixels and left with a clear
-// margin under the shape rather than measured at runtime.
-const QUESTIONS_TOP = 0.4;
-const SHAPE_BOTTOM = 0.33;
+// The shape keeps the asset's own proportions, so its soft curved bottom is the
+// edge you see. Cropping it to a fixed height cut a hard line across the middle
+// of the curve.
+const SHAPE_ASPECT = 430 / 274;
+// clear air between the bottom of the shape and the first question
+const SHAPE_GAP = 40;
 const CONTENT_TOP = 46;
 
 export default function LogDetailsScreen({ navigation, route }) {
     const { journal } = route.params ?? {};
 
     const insets = useSafeAreaInsets();
-    const { height } = useWindowDimensions();
+    const { width } = useWindowDimensions();
+    const shapeBottom = width / SHAPE_ASPECT;
     // minHeight, so a long challenge pushes the questions further down rather
-    // than overflowing the header
-    const headerHeight = Math.max(96, height * QUESTIONS_TOP - insets.top - CONTENT_TOP);
-    // the gap under the shape is padding, not part of the box the date and
-    // challenge centre in, so they stay up inside the light area
-    const headerPadding = height * (QUESTIONS_TOP - SHAPE_BOTTOM);
+    // than overflowing the header. The gap is padding rather than part of the
+    // box, so the date and challenge stay centred inside the light area.
+    const headerHeight = Math.max(96, shapeBottom + SHAPE_GAP - insets.top - CONTENT_TOP);
+    const headerPadding = SHAPE_GAP;
 
     const [action, setAction] = useState(journal?.action ?? "");
     const [reflection, setReflection] = useState(journal?.reflection ?? "");
@@ -156,8 +156,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 0,
         width: "100%",
-        height: "26%",
-        resizeMode: "cover",
+        aspectRatio: SHAPE_ASPECT,
     },
     scroll: {
         flex: 1,
