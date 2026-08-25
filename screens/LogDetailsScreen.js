@@ -1,5 +1,6 @@
-import { SafeAreaView, View, Text, Image, TextInput, Pressable, ScrollView, KeyboardAvoidingView, Alert, StyleSheet } from "react-native";
+import { SafeAreaView, View, Text, Image, TextInput, Pressable, ScrollView, KeyboardAvoidingView, Alert, StyleSheet, useWindowDimensions } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
@@ -9,8 +10,25 @@ const topBlob = require("../assets/topBlob.png");
 
 const INK = "#2B2724";
 
+// Where the first question starts, as a fraction of the screen. The light shape
+// paints down to roughly 0.35 of the screen, which is not what its own layout
+// box reports, so this is set from the rendered pixels and left with a clear
+// margin under the shape rather than measured at runtime.
+const QUESTIONS_TOP = 0.4;
+const SHAPE_BOTTOM = 0.33;
+const CONTENT_TOP = 46;
+
 export default function LogDetailsScreen({ navigation, route }) {
     const { journal } = route.params ?? {};
+
+    const insets = useSafeAreaInsets();
+    const { height } = useWindowDimensions();
+    // minHeight, so a long challenge pushes the questions further down rather
+    // than overflowing the header
+    const headerHeight = Math.max(96, height * QUESTIONS_TOP - insets.top - CONTENT_TOP);
+    // the gap under the shape is padding, not part of the box the date and
+    // challenge centre in, so they stay up inside the light area
+    const headerPadding = height * (QUESTIONS_TOP - SHAPE_BOTTOM);
 
     const [action, setAction] = useState(journal?.action ?? "");
     const [reflection, setReflection] = useState(journal?.reflection ?? "");
@@ -83,7 +101,7 @@ export default function LogDetailsScreen({ navigation, route }) {
                     >
                         {/* the challenge sits inside the peach, where ink reads against
                             the light background rather than white on coral */}
-                        <View style={styles.header}>
+                        <View style={[styles.header, { minHeight: headerHeight, paddingBottom: headerPadding }]}>
                             <Text style={styles.date}>{journal.month} {journal.day}</Text>
                             <Text style={styles.challenge}>{journal.challenge}</Text>
                         </View>
@@ -147,7 +165,7 @@ const styles = StyleSheet.create({
     scrollContent: {
         flexGrow: 1,
         paddingHorizontal: 20,
-        paddingTop: 46,
+        paddingTop: CONTENT_TOP,
         paddingBottom: 24,
     },
     footer: {
@@ -156,12 +174,10 @@ const styles = StyleSheet.create({
         paddingTop: 24,
     },
     header: {
-        // sits wholly inside the light shape, with the first question falling
-        // below it on the coral rather than straddling the boundary
-        minHeight: 96,
+        // sits wholly inside the light shape. Its height is measured from the
+        // shape at runtime so the first question always clears the boundary.
         justifyContent: "center",
         paddingRight: 8,
-        marginBottom: 26,
     },
     date: {
         color: "rgba(43,39,36,0.6)",
